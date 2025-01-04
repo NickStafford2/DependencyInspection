@@ -21,9 +21,11 @@ const App = () => {
 
   const [graphData, setGraphData] = useState<GraphData>();
   const [tableData, setTableData] = useState<Node[]>([]);
+  const [scrollTo, setScrollTo] = useState<string>("");
 
   const onNodeSelected = (node: Node) => {
     setSelectedNode(node)
+    setScrollTo(node.id)
   }
 
   /* 
@@ -45,7 +47,7 @@ const App = () => {
       <Crudbar onResponse={onResponseChanged} />
       <div className="flex flex-row grow shrink overflow-hidden">
         <div className="">
-          <NodeTableContainer columns={columns} data={tableData}></NodeTableContainer>
+          <NodeTableContainer columns={columns} data={tableData} scrollTo={scrollTo}></NodeTableContainer>
         </div>
         <div className="w-full h-full">
           <div className="absolute z-10">{selectedNode?.id}</div>

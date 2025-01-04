@@ -26,11 +26,13 @@ import React from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  scrollTo: string;
 }
 
 export function NodeTableContainer<TData, TValue>({
   columns,
   data,
+  scrollTo,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -61,6 +63,7 @@ export function NodeTableContainer<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    getRowId: (originalRow) => { return originalRow.id },
     state: {
       sorting,
       columnFilters,
@@ -106,7 +109,7 @@ export function NodeTableContainer<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <NodeTable columns={columns} table={table}></NodeTable>
+      <NodeTable columns={columns} table={table} scrollTo={scrollTo}></NodeTable>
     </div>
   );
 }
