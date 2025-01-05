@@ -221,9 +221,9 @@ def _set_graph_metrics(graph_data: DataForFrontend, G):
     # Calculate various centrality measures and metrics
     betweenness_centrality = nx.betweenness_centrality(G, normalized=True, endpoints=False)
     closeness_centrality = nx.closeness_centrality(G)
-    n = len(G.nodes)
+    normalization = max(1, len(G.nodes)-1)
     normalized_closeness_centrality = {
-        node_id: value / (n - 1)  # Normalize by the maximum possible value
+        node_id: value / normalization  # Normalize by the maximum possible value
         for node_id, value in closeness_centrality.items()
     }
     eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000, tol=1e-4)
