@@ -1,5 +1,4 @@
 import random
-import json
 
 import networkx as nx
 from flask import Blueprint, jsonify
@@ -8,6 +7,7 @@ import npmvisual.utils as utils
 from npmvisual._models.package import PackageData
 from npmvisual.commonpackages import get_popular_package_names
 from npmvisual.data import database, main
+from . import dfs
 
 from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
 
@@ -99,6 +99,7 @@ def analyze_network(package_name: str):
         print(f"Error processing the request for {package_name}: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
+
 def _create_nx_graph(data: dict[str, PackageDataAnalyzed]):
     G: nx.DiGraph = nx.DiGraph()
     # print(f"\n\nValues:{data.values()}")
@@ -113,7 +114,9 @@ def _create_nx_graph(data: dict[str, PackageDataAnalyzed]):
     return G
 
 
-def format_as_nx(seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]) -> DataForFrontend:
+def format_as_nx(
+    seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]
+) -> DataForFrontend:
     """
     Converts the given package data into a NetworkX graph and formats it into a structure
     with in-degrees and colors based on SCCs.
@@ -127,7 +130,7 @@ def format_as_nx(seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]) -> 
         'color' properties for each node.
     """
     G = _create_nx_graph(data)
-        # Prepare the graph data in node-link format
+    # Prepare the graph data in node-link format
     print(f"data: {data}")
     multigraph = G.is_multigraph()
     if multigraph:
@@ -140,14 +143,9 @@ def format_as_nx(seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]) -> 
 
     nodes: list[PackageDataAnalyzed] = list(data.values())
     graph_data = DataForFrontend(
-        links = edges,
-        nodes = nodes,
-        multigraph = multigraph,
-        graph = G.graph,
-        directed = True
+        links=edges, nodes=nodes, multigraph=multigraph, graph=G.graph, directed=True
     )
     _set_indirect_relationships(graph_data, G)
-    _set_dependencies(graph_data, G)
     _set_in_degree(graph_data, G)
     _set_out_degree(graph_data, G)
     _set_graph_metrics(graph_data, G)
@@ -155,44 +153,22 @@ def format_as_nx(seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]) -> 
     _color_nodes(graph_data, G)
     _set_seed_nodes(graph_data, seed_nodes)
     _remove_unwanted_data(graph_data)
-
     return graph_data
-def _set_dependencies(graph_data: DataForFrontend, G: nx.DiGraph):
-    for node in graph_data.nodes:
-        if not node.package_data:
-            raise Exception(f"no package data on node:{node.id}")
-        node.dependencies = node.package_data.dependencies
+
 
 def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
-    """Does not actually get all of the dependencies. I think it just gets leaf nodes. 
-    Needs testing"""
-    # Dictionary to store the set of related package names for each node
-    successors: dict[str, list[str]] = nx.dfs_successors(G)
-    predecessors: dict[str, list[str]] = nx.dfs_predecessors(G)
-
-    for data in graph_data.nodes:
-        print(successors)
-        data.successors = successors.get(data.id, [])
-        data.predecessors = predecessors.get(data.id, [])
-
-
-def _set_indirect_relationships2(graph_data: DataForFrontend, G: nx.DiGraph):
-    """ I found this algorithm online to get all of the nodes and not just the leaf nodes 
-    (which I suspect the current algorithm is doing"""
-    #Here this list comprehension will get successors from all layers
-    list1 = [sum(nx.dfs_successors(L, i).values(), []) for i in L.nodes()]   
-
-    #All the nodes
-    list2 = [i for i in L.nodes()]
-
-    #cartesian product(cross product) within the lists of lists. This will 
-    #create all the (node, successor)
-    list3 = [j for i in range(len(list1)) for j in itertools.product([list2[i]],list1[i]) ]
+    successors = dfs.all_successors(G)
+    predecessors = dfs.all_predecessors(G)
+    for node in graph_data.nodes:
+        node.successors = list(successors.get(node.id, []))
+        print(node.successors)
+        node.predecessors = list(predecessors.get(node.id, []))
 
 
 def _set_seed_nodes(graph_data: DataForFrontend, seed_nodes: set[str]):
     for node in graph_data.nodes:
         node.is_seed = node.id in seed_nodes
+
 
 def _remove_unwanted_data(graph_data: DataForFrontend):
     for node in graph_data.nodes:
@@ -205,13 +181,13 @@ def _set_val(graph_data: DataForFrontend):
     size_multiplier = 4  # Adjust this to fine-tune node size scaling
 
     # Loop over nodes and apply stronger exponential scaling
-    
-    for node in graph_data.nodes: 
+
+    for node in graph_data.nodes:
         # Apply stronger exponential scaling
         if node.out_degree is None:
             raise Exception(f"node has no in degree to convert to val: {node}")
         node.val = (
-            (node.out_degree + 1)**size_exponent
+            (node.out_degree + 1) ** size_exponent
         ) * size_multiplier  # Apply quadratic scaling
 
     return graph_data  # pyright: ignore[reportUnknownVariableType]
@@ -219,9 +195,11 @@ def _set_val(graph_data: DataForFrontend):
 
 def _set_graph_metrics(graph_data: DataForFrontend, G):
     # Calculate various centrality measures and metrics
-    betweenness_centrality = nx.betweenness_centrality(G, normalized=True, endpoints=False)
+    betweenness_centrality = nx.betweenness_centrality(
+        G, normalized=True, endpoints=False
+    )
     closeness_centrality = nx.closeness_centrality(G)
-    normalization = max(1, len(G.nodes)-1)
+    normalization = max(1, len(G.nodes) - 1)
     normalized_closeness_centrality = {
         node_id: value / normalization  # Normalize by the maximum possible value
         for node_id, value in closeness_centrality.items()
@@ -229,7 +207,7 @@ def _set_graph_metrics(graph_data: DataForFrontend, G):
     eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000, tol=1e-4)
     pagerank = nx.pagerank(G)
     clustering_coefficient = nx.clustering(G)
-    
+
     # Assign the calculated metrics to nodes
     for node in graph_data.nodes:
         node.betweenness_centrality = betweenness_centrality[node.id]
@@ -239,17 +217,20 @@ def _set_graph_metrics(graph_data: DataForFrontend, G):
         node.clustering_coefficient = clustering_coefficient[node.id]
     return graph_data
 
+
 def _set_in_degree(graph_data: DataForFrontend, G):
     in_degrees: dict[str, int] = dict(G.in_degree())
-    for node in graph_data.nodes: 
+    for node in graph_data.nodes:
         node.in_degree = in_degrees[node.id]
-    return graph_data  
+    return graph_data
+
 
 def _set_out_degree(graph_data: DataForFrontend, G):
     out_degrees: dict[str, int] = dict(G.out_degree())
-    for node in graph_data.nodes: 
+    for node in graph_data.nodes:
         node.out_degree = out_degrees[node.id]
-    return graph_data 
+    return graph_data
+
 
 def _color_nodes(graph_data: DataForFrontend, G):
     undirected = G.copy().to_undirected()
