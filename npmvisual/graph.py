@@ -131,7 +131,7 @@ def format_as_nx(
     """
     G = _create_nx_graph(data)
     # Prepare the graph data in node-link format
-    print(f"data: {data}")
+    # print(f"data: {data}")
     multigraph = G.is_multigraph()
     if multigraph:
         edges = [
@@ -146,6 +146,7 @@ def format_as_nx(
         links=edges, nodes=nodes, multigraph=multigraph, graph=G.graph, directed=True
     )
     _set_indirect_relationships(graph_data, G)
+    _set_direct_relationships(graph_data, G)
     _set_in_degree(graph_data, G)
     _set_out_degree(graph_data, G)
     _set_graph_metrics(graph_data, G)
@@ -156,13 +157,19 @@ def format_as_nx(
     return graph_data
 
 
-def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
-    successors = dfs.all_successors(G)
-    predecessors = dfs.all_predecessors(G)
+def _set_direct_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
     for node in graph_data.nodes:
-        node.successors = list(successors.get(node.id, []))
-        print(node.successors)
-        node.predecessors = list(predecessors.get(node.id, []))
+        node.dependency_of = list(G.predecessors(node.id))
+        # node.dependency = list(G.predecessors(node))
+
+
+def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
+    all_dependencies = dfs.all_successors(G)
+    all_depends_on = dfs.all_predecessors(G)
+    for node in graph_data.nodes:
+        node.all_dependencies = list(all_dependencies.get(node.id, []))
+        # print(node.all_dependencies)
+        node.all_dependency_of = list(all_depends_on.get(node.id, []))
 
 
 def _set_seed_nodes(graph_data: DataForFrontend, seed_nodes: set[str]):
