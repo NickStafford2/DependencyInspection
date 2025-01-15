@@ -29,23 +29,38 @@ class Neo4j_Connection:
     _neo4j_host: Final[str]
     _neo4j_db: Final[str]
     _neo4j_port: Final[str]
-    neo4j_bolt_url: Final[str]
+    neo4j_neomodel_url: Final[str]
     _neo4j_uri: str = ""
     _neo4j_auth: tuple[str, str] = ("", "")
     _database2: str = ""
+    _is_aura: Final[bool]
 
     def __init__(self, config_class=Config, auto_connect=True):
+        print("Neo4j_Connection init()")
         self._neo4j_username = config_class.NEO4J_USERNAME
         self._neo4j_password = config_class.NEO4J_PASSWORD
         self._neo4j_host = config_class.NEO4J_HOST
         self._neo4j_db = config_class.NEO4J_DB
         self._neo4j_port = os.environ.get("NEO4J_PORT", "7687")
-
-        self.neo4j_bolt_url = (
-            f"bolt://{self._neo4j_username}:{self._neo4j_password}@localhost:7687"
-        )
+        self._neo4j_auth = (self._neo4j_username, self._neo4j_password)
+        if config_class.NEO4J_URI:
+            self._is_aura = True
+            self._neo4j_uri = config_class.NEO4J_URI 
+            method, db_path= self._neo4j_uri.split("//", 1)
+            self.neo4j_neomodel_url = (
+                f"{method}//{self._neo4j_username}:{self._neo4j_password}@{db_path}"
+            )
+        else: 
+            self._is_aura = False 
+            self._neo4j_uri = (
+                "neo4j://" + self._neo4j_host
+            )  # + ":" + current_app.config["NEO4J_PORT"]
+            self.neo4j_neomodel_url = (
+                f"bolt://{self._neo4j_username}:{self._neo4j_password}@localhost:7687"
+            )
+        neomodel_config.DATABASE_URL = self.neo4j_neomodel_url
+        self._database2 = self._neo4j_db # can't remember why I made this. 
         if auto_connect:
-            neomodel_config.DATABASE_URL = self.neo4j_bolt_url
             self._init_connection()
 
     def _init_connection(self):
@@ -55,6 +70,7 @@ class Neo4j_Connection:
         _ = important_do_not_delete.save()
 
     def init_app(self, app: Flask):
+        print("Neo4j_Connection init_app()")
         self._app = app
         app.n4j = self  # type: ignore
         if self.EXTENSION_ID in app.extensions:
@@ -68,11 +84,6 @@ class Neo4j_Connection:
         _ = app.teardown_appcontext(self._teardown)
 
     def _connect(self):
-        self._neo4j_uri = (
-            "neo4j://" + self._neo4j_host
-        )  # + ":" + current_app.config["NEO4J_PORT"]
-        self._neo4j_auth = (self._neo4j_username, self._neo4j_password)
-        self._database2 = self._neo4j_db
         self._driver = GraphDatabase.driver(uri=self._neo4j_uri, auth=self._neo4j_auth)
 
         # Configure Neomodel connection to use the same driver
