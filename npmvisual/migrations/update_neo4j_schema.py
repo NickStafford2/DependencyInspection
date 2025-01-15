@@ -6,7 +6,7 @@ from npmvisual.extensions.neo4j_connection import Neo4j_Connection
 
 def update_db_from_neomodel():
     connection = Neo4j_Connection(Config)
-    db_url = connection.neo4j_bolt_url
+    db_url = connection.neo4j_neomodel_url
     script_path = (
         ".venv/lib/python3.12/site-packages/neomodel/scripts/neomodel_install_labels.py"
     )
