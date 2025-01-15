@@ -127,6 +127,7 @@ celerybeat.pid
 # Environments
 .env
 .auraenv
+.envaura
 .envOld
 .venv
 env/
