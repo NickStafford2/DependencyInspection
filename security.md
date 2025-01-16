@@ -86,7 +86,7 @@ by being vigilant and implementing robust security measures, you can help protec
 3. Data Sanitization
    Validate Content: Before saving, validate the content type to ensure it matches expected formats (e.g., HTML, JSON). This helps prevent the storage of unexpected or harmful content.
 
-# Things I should do for NPM_Visual
+# Things I should do for DependencyInspection
 
 - input validation
 - move scraper to separate server.
