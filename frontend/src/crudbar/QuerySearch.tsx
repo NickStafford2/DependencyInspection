@@ -35,7 +35,7 @@ export default function QuerySearch({
 	};
 	return (
 		<div className="flex flex-row">
-			<div className="flex flex-col">
+			<div className="flex flex-col gap-2">
 				<AddPackage onPackageAdded={addPackage} />
 				<div className="flex flex-row w-full gap-1">
 					{/* <span className="text-white">URL: '{queryUrl}'</span> */}

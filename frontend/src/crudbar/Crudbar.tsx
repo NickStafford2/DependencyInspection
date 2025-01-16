@@ -18,7 +18,7 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
 	};
 
 	return (
-		<nav className="flex flex-row justify-between items-center gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
+		<nav className="px-3 py-2 flex flex-row justify-between items-center gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
 			<h2 className="text-white text-3xl whitespace-nowrap">
 				Dependency Inspection
 			</h2>

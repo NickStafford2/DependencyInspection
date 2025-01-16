@@ -9,6 +9,13 @@ export default function AddPackage({
 	const onAddPackageChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setAddPackageValue(event.target.value);
 	};
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			onPackageAdded(addPackageValue);
+			setAddPackageValue("");
+		}
+	};
 	return (
 		<div className="flex flex-row">
 			<Button
@@ -22,6 +29,7 @@ export default function AddPackage({
 				type="text"
 				value={addPackageValue}
 				onChange={onAddPackageChanged}
+				onKeyDown={handleKeyDown}
 			></Input>
 		</div>
 	);
