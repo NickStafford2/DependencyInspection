@@ -85,18 +85,31 @@ class Infinity:
 infinity = Infinity()
 
 
-def get_all_package_names(limit: int = 300, offset: int | None = None) -> set[str]:
-    names: set[str] = set()
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(dir_path, "data/names.json")
-    with open(file_path) as file:
-        data: list[str] = json.load(file)
-    num_lines = len(data)
-    if offset is None:
-        offset = random.randint(0, max(num_lines - limit, 0))
-    selected_names = data[offset : offset + limit]
-    names.update(selected_names)
-    print(f"Created a set of all package names with {len(names)} elements.")
+def get_all_package_names(max: int = 50, offset: int = 40) -> set[str]:
+    def _helper():
+        names = set()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(dir_path, "data/package_cache/names.json")
+
+        with open(file_path) as file:
+            data = json.load(file)
+
+        total_lines = len(data)
+        stop_line = min(offset + max, total_lines)
+
+        # Start processing the data from the offset
+        for _, package_name in enumerate(data[offset:stop_line], start=offset):
+            names.add(package_name)
+
+        return names, total_lines
+
+    names, total_lines = _helper()
+    skipped_lines = total_lines - len(names)
+    print(
+        f"Created a set of all package names with {len(names)} elements. "
+        f"This is {skipped_lines} less than the original file."
+    )
+
     return names
 
 
