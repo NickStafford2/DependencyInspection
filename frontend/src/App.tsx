@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GraphData, Node } from "./utils/models";
 import Crudbar from "./components/Crudbar";
 import BackendTools from "./components/BackendTools";
-import DIGraph3d from "./components/NpmVisualGraph3d";
+import DIGraph3d from "./components/DIGraph3d";
 import { NodeTableContainer } from "./components/table/NodeTableContainer";
 import { columns } from "./components/table/columns";
 
