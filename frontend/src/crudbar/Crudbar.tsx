@@ -58,31 +58,31 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
 	};
 
 	return (
-		<nav className="flex  flex-col bg-gradient-to-b from-black to-gray-800  w-full">
-			<div className="flex flex-row justify-between items-center">
-				<h2 className="text-white text-3xl whitespace-nowrap">
-					Dependency Inspection
-				</h2>
-				<Button className="button-48" onClick={() => getAllDBNetworks()}>
-					<span className="text">Get Full Network</span>
-				</Button>
-				{/* <Button className="button-48" onClick={() => getPopularNetwork()}> */}
-				{/* <span className="text">getPopularNetwork</span> */}
-				{/* </Button> */}
-				{/* <PackageJSONUpload></PackageJSONUpload> */}
+		<nav className="flex flex-row justify-between items-center gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
+			<h2 className="text-white text-3xl whitespace-nowrap">
+				Dependency Inspection
+			</h2>
+			<Button className="button-48" onClick={() => getAllDBNetworks()}>
+				<span className="text">Get Full Network</span>
+			</Button>
+			{/* <Button className="button-48" onClick={() => getPopularNetwork()}> */}
+			{/* <span className="text">getPopularNetwork</span> */}
+			{/* </Button> */}
+			{/* <PackageJSONUpload></PackageJSONUpload> */}
+			<div className="flex flex-col">
 				<AddPackage onPackageAdded={addPackage} />
-				<Button onClick={callBackend}>Search</Button>
-			</div>
-			<div className="flex flex-row w-full gap-1">
-				{/* <span className="text-white">URL: '{queryUrl}'</span> */}
+				<div className="flex flex-row w-full gap-1">
+					{/* <span className="text-white">URL: '{queryUrl}'</span> */}
 
-				<span className="text-white">
-					{query.packages.size > 1 ? "Seeds:" : "Seed:"}
-				</span>
-				{Array.from(query.packages).map((name) => (
-					<PackageTag name={name} onClose={removePackage} />
-				))}
+					<span className="text-white">
+						{query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
+					</span>
+					{Array.from(query.packages).map((name) => (
+						<PackageTag name={name} onClose={removePackage} />
+					))}
+				</div>
 			</div>
+			<Button onClick={callBackend}>Search</Button>
 		</nav>
 	);
 }
