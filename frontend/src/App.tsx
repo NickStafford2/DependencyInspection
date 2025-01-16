@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GraphData, Node } from "./utils/models";
-import Crudbar from "./components/Crudbar";
+import Crudbar from "./crudbar/Crudbar";
 import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
 import { NodeTableContainer } from "./components/table/NodeTableContainer";
