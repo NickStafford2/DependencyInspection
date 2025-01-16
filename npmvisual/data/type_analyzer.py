@@ -1,8 +1,8 @@
 from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Any
-from npmvisual._models.ns_pretty_printable import NSPrettyPrintable
-from npmvisual.data.alias_generator import NSAliasGenerator
+from dependencyinspection._models.ns_pretty_printable import NSPrettyPrintable
+from dependencyinspection.data.alias_generator import NSAliasGenerator
 
 COUNT = 1
 

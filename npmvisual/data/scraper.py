@@ -4,8 +4,8 @@ from typing import Any
 import requests
 from flask import current_app as app
 
-import npmvisual.utils as utils
-from npmvisual.models import Package, PackageData, Packument
+import dependencyinspection.utils as utils
+from dependencyinspection.models import Package, PackageData, Packument
 
 # I will set this up soon. Need some way to test it. I can probably just call a fake
 # server and log the errors.

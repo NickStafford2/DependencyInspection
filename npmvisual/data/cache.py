@@ -13,7 +13,7 @@ from typing import Any
 from flask import current_app as app
 from flask import json
 
-from npmvisual.utils import ns_hash
+from dependencyinspection.utils import ns_hash
 
 whitelist = set(string.ascii_letters + string.digits)
 _HASH_LENGTH = 40

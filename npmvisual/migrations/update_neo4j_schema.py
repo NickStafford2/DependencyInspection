@@ -1,7 +1,7 @@
 import subprocess
 
 from config import Config
-from npmvisual.extensions.neo4j_connection import Neo4j_Connection
+from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
 
 
 def update_db_from_neomodel():
@@ -11,7 +11,7 @@ def update_db_from_neomodel():
         ".venv/lib/python3.12/site-packages/neomodel/scripts/neomodel_install_labels.py"
     )
     command = ["python", script_path]
-    command.extend(["npmvisual._models.package"])
+    command.extend(["dependencyinspection._models.package"])
     command.extend(["--db", db_url])
 
     try:

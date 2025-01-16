@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from npmvisual._models.dependency import Dependency
-from npmvisual._models.package import PackageData
+from dependencyinspection._models.dependency import Dependency
+from dependencyinspection._models.package import PackageData
 
 
 @dataclass

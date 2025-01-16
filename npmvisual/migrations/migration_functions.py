@@ -1,6 +1,6 @@
 from neo4j._sync.work.transaction import ManagedTransaction
 
-from npmvisual import db
+from dependencyinspection import db
 
 """
 DO NOT EVER EDIT FUNCTIONS IN THIS FILE. I HAVE NOT MADE DOWNGRADE. 

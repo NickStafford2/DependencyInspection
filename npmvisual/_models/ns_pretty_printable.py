@@ -1,7 +1,7 @@
 import re
 import shutil
 
-from npmvisual import utils
+from dependencyinspection import utils
 
 
 class NSPrettyPrintable:

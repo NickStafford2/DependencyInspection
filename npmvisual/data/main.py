@@ -1,7 +1,7 @@
 from typing import Any
 
-from npmvisual import utils
-from npmvisual.models import Package, PackageData
+from dependencyinspection import utils
+from dependencyinspection.models import Package, PackageData
 
 from . import database, scraper
 
@@ -43,7 +43,9 @@ def search_and_scrape_recursive(
     return all_packages
 
 
-def _build_relationships(new_packages: dict[str, PackageData], cache: dict[str, PackageData]) -> None:
+def _build_relationships(
+    new_packages: dict[str, PackageData], cache: dict[str, PackageData]
+) -> None:
     """It is assumed that when this function is called, all the dependencies exist in
     the db for every single package. Make sure they exist before calling this function.
     Additionally, all the packages in all_package_data should already be saved in the db.

@@ -16,9 +16,9 @@ from neomodel import (
 from neomodel.properties import IntegerProperty
 from neomodel.sync_.relationship_manager import ZeroOrMore
 
-from npmvisual._models.dependency import Dependency
-from npmvisual._models.ns_pretty_printable import NSPrettyPrintable
-from npmvisual._models.packument import Packument
+from dependencyinspection._models.dependency import Dependency
+from dependencyinspection._models.ns_pretty_printable import NSPrettyPrintable
+from dependencyinspection._models.packument import Packument
 
 """Increment this and run a migration whenever you change the schema"""
 SCHEMA_VERSION = 1

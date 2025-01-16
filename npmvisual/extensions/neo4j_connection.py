@@ -10,7 +10,7 @@ from neo4j._sync.work.transaction import ManagedTransaction
 from neomodel import config as neomodel_config
 from typing_extensions import ParamSpec, TypeVar
 
-import npmvisual.models
+import dependencyinspection.models
 from config import Config
 
 # from graphdatascience import GraphDataScience
@@ -45,13 +45,13 @@ class Neo4j_Connection:
         self._neo4j_auth = (self._neo4j_username, self._neo4j_password)
         if config_class.NEO4J_URI:
             self._is_aura = True
-            self._neo4j_uri = config_class.NEO4J_URI 
-            method, db_path= self._neo4j_uri.split("//", 1)
+            self._neo4j_uri = config_class.NEO4J_URI
+            method, db_path = self._neo4j_uri.split("//", 1)
             self.neo4j_neomodel_url = (
                 f"{method}//{self._neo4j_username}:{self._neo4j_password}@{db_path}"
             )
-        else: 
-            self._is_aura = False 
+        else:
+            self._is_aura = False
             self._neo4j_uri = (
                 "neo4j://" + self._neo4j_host
             )  # + ":" + current_app.config["NEO4J_PORT"]
@@ -59,14 +59,14 @@ class Neo4j_Connection:
                 f"bolt://{self._neo4j_username}:{self._neo4j_password}@localhost:7687"
             )
         neomodel_config.DATABASE_URL = self.neo4j_neomodel_url
-        self._database2 = self._neo4j_db # can't remember why I made this. 
+        self._database2 = self._neo4j_db  # can't remember why I made this.
         if auto_connect:
             self._init_connection()
 
     def _init_connection(self):
         """This exists so that neomodel will be on the same thread as Flask. This function
         must be called before flask is created."""
-        important_do_not_delete = npmvisual.models.NeomodelConnectionTest()
+        important_do_not_delete = dependencyinspection.models.NeomodelConnectionTest()
         _ = important_do_not_delete.save()
 
     def init_app(self, app: Flask):

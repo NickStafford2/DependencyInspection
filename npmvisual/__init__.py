@@ -9,7 +9,7 @@ import flask
 from neomodel import db as neomodel_db
 
 from config import Config
-from npmvisual.extensions.neo4j_connection import Neo4j_Connection
+from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
 
 # Make this outside of flask so it is available ouside of flask context
 db = Neo4j_Connection(config_class=Config)
@@ -27,15 +27,15 @@ def create_app(config_class=Config):
 
 
 def _init_blueprints(app: flask.Flask):
-    from npmvisual.data import bp as data_bp
+    from dependencyinspection.data import bp as data_bp
 
     app.register_blueprint(data_bp, url_prefix="/data")
 
-    from npmvisual.graph import bp as graph_bp
+    from dependencyinspection.graph import bp as graph_bp
 
     app.register_blueprint(graph_bp)
 
-    from npmvisual.migrations import bp as migrations_bp
+    from dependencyinspection.migrations import bp as migrations_bp
 
     app.register_blueprint(migrations_bp, url_prefix="/migrations")
 

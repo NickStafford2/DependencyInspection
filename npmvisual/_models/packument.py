@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, RootModel, StringConstraints, ValidationE
 from pydantic.config import ConfigDict
 from typing_extensions import TypedDict
 
-from npmvisual._models.ns_pretty_printable import NSPrettyPrintable
+from dependencyinspection._models.ns_pretty_printable import NSPrettyPrintable
 
 
 """
@@ -586,7 +586,7 @@ class Manifest(BaseModel, NSPrettyPrintable):
 # from pydantic import BaseModel, Field, ValidationError
 # from pydantic.config import ConfigDict
 #
-# from npmvisual.models import Dependency
+# from dependencyinspection.models import Dependency
 #
 #
 # class Time(BaseModel):

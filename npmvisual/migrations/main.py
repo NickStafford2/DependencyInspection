@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from neo4j._sync.work.result import Result
 from neo4j._sync.work.transaction import ManagedTransaction
 
-from npmvisual import db
-from npmvisual.migrations import bp, migration_functions
-from npmvisual.migrations.migration_functions import *
+from dependencyinspection import db
+from dependencyinspection.migrations import bp, migration_functions
+from dependencyinspection.migrations.migration_functions import *
 
 
 # todo: clean this up. make a single node, make a cypher rule to prevent more than

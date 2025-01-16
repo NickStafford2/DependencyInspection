@@ -1,7 +1,7 @@
-from npmvisual.commonpackages import get_popular_package_names
-from npmvisual.data import bp
-from npmvisual.models import PackageData
-from npmvisual.utils import get_all_package_names
+from dependencyinspection.commonpackages import get_popular_package_names
+from dependencyinspection.data import bp
+from dependencyinspection.models import PackageData
+from dependencyinspection.utils import get_all_package_names
 
 from . import database, scraper
 

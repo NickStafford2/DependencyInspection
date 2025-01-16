@@ -1,7 +1,7 @@
 from neomodel import db
 
-import npmvisual.utils as utils
-from npmvisual.models import Dependency, Package, PackageData
+import dependencyinspection.utils as utils
+from dependencyinspection.models import Dependency, Package, PackageData
 
 
 def get_db_all_names() -> list[str]:

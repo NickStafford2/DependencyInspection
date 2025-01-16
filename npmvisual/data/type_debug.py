@@ -1,5 +1,5 @@
 from time import sleep
-from npmvisual.data import bp
+from dependencyinspection.data import bp
 
 from .type_analyzer import NSType, NSTypeDB
 from . import cache

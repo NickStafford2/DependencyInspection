@@ -3,10 +3,10 @@ import random
 import networkx as nx
 from flask import Blueprint, jsonify
 
-import npmvisual.utils as utils
-from npmvisual._models.package import PackageData
-from npmvisual.commonpackages import get_popular_package_names
-from npmvisual.data import database, main
+import dependencyinspection.utils as utils
+from dependencyinspection._models.package import PackageData
+from dependencyinspection.commonpackages import get_popular_package_names
+from dependencyinspection.data import database, main
 from . import dfs
 
 from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
