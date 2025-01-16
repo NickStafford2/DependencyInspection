@@ -1,15 +1,15 @@
-# NPM Visual
+# Dependency Inspection
 
 This tool creates a visual graph of popular NPM packages. Data is scraped from various package.json files. We then analyize them to identify interesting package relationships.
 
-One goal is to identify packages that are not well maintained, but are heavily relied on by massive companies. It would also be nice to find packages that are heavily relied on that have unusual liscences.
+One goal is to identify packages that are not well maintained, but are heavily relied on by massive companies. It would also be nice to find packages that are heavily relied on that have unusual licences.
 
 # Installation and Environment Setup
 
 Clone the repo to your local machine
 
 ```
-git clone git@github.com:PraveenKusuluri08/npm_visual.git
+git clone git@github.com:NickStafford2/DependencyInspection.github
 ```
 
 ## Install Python

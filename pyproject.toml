@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "npmvisual"
+name = "dependencyinspection"
 version = "0.1.0"
 description = ""
 authors = ["Nicholas Stafford <ngstafford1@gmail.com>"]
