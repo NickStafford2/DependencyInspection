@@ -1,25 +1,30 @@
 import { useState } from "react";
 import { Query } from "@/query";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "@/components/ui/button";
 import { GraphData, isGraphData } from "@/utils/models";
-import { PackageJSONUpload } from "./PackageJSONUpload";
+import { PackageJSONUpload } from "@/components/PackageJSONUpload";
+import PackageTag from "./PackageTag";
+import AddPackage from "./AddPackage";
 
 function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
 	const [query, setQuery] = useState<Query>(new Query());
 	const [queryUrl, setQueryUrl] = useState<string>("");
-	const [addPackageValue, setAddPackageValue] = useState<string>("");
 
-	const onAddPackageChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setAddPackageValue(event.target.value);
-	};
-	const addPackage = () => {
-		console.log("add Package");
+	const removePackage = (name: string) => {
+		console.log(name);
 		// const oldQuery = query;
-		query.packages.add(addPackageValue);
+		console.log(query);
+		query.packages.delete(name);
 		setQuery(query);
 		setQueryUrl(query.toUrl());
 		console.log(query);
+	};
+	const addPackage = (name: string) => {
+		if (name !== "") {
+			query.packages.add(name);
+			setQuery(query);
+			setQueryUrl(query.toUrl());
+		}
 	};
 
 	const fetchData = async (url: string) => {
@@ -55,31 +60,29 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
 	return (
 		<nav className="flex  flex-col bg-gradient-to-b from-black to-gray-800  w-full">
 			<div className="flex flex-row justify-between items-center">
-				<h2 className="text-white text-3xl">NPM Visual</h2>
+				<h2 className="text-white text-3xl whitespace-nowrap">
+					Dependency Inspection
+				</h2>
 				<Button className="button-48" onClick={() => getAllDBNetworks()}>
-					<span className="text">getAllDBNetworks</span>
+					<span className="text">Get Full Network</span>
 				</Button>
-				<Button className="button-48" onClick={() => getPopularNetwork()}>
-					<span className="text">getPopularNetwork</span>
-				</Button>
-				<PackageJSONUpload></PackageJSONUpload>
-				<div className="flex flex-row">
-					<Button
-						className="rounded-r-none border-2 border-r-0"
-						onClick={addPackage}
-					>
-						Add Package:
-					</Button>
-					<Input
-						className="grow-0 w-64 rounded-l-none border-2 border-l-0"
-						type="text"
-						value={addPackageValue}
-						onChange={onAddPackageChanged}
-					></Input>
-				</div>
-				<Button onClick={callBackend}>Call Backend</Button>
+				{/* <Button className="button-48" onClick={() => getPopularNetwork()}> */}
+				{/* <span className="text">getPopularNetwork</span> */}
+				{/* </Button> */}
+				{/* <PackageJSONUpload></PackageJSONUpload> */}
+				<AddPackage onPackageAdded={addPackage} />
+				<Button onClick={callBackend}>Search</Button>
 			</div>
-			<span className="text-white">URL: '{queryUrl}'</span>
+			<div className="flex flex-row w-full gap-1">
+				{/* <span className="text-white">URL: '{queryUrl}'</span> */}
+
+				<span className="text-white">
+					{query.packages.size > 1 ? "Seeds:" : "Seed:"}
+				</span>
+				{Array.from(query.packages).map((name) => (
+					<PackageTag name={name} onClose={removePackage} />
+				))}
+			</div>
 		</nav>
 	);
 }
