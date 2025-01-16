@@ -4,6 +4,7 @@ keep it around.
 IDEA: use this for testing. """
 
 import os
+import random
 import shutil
 import string
 from pathlib import Path
@@ -136,6 +137,36 @@ def load(package_name: str) -> dict[str, Any]:
     # print(path_to_file)
     # Use a try catch because file may be accessed between time we search for file and
     # the time we try to read the file
+    try:
+        with open(path_to_file) as open_file:
+            json_object = json.load(open_file)
+            return json_object
+    except Exception as e:
+        # file is inaccesable or does not exist
+        # call scraper and wait until file is saved.
+        raise e
+
+
+def get_random_filenames(num_files=100):
+    all_files = [
+        f for f in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, f))
+    ]
+    # Ensure we don't try to sample more files than are available
+    num_files = min(num_files, len(all_files))
+
+    # Randomly sample the files
+    return random.sample(all_files, num_files)
+
+
+def get_all_cache_filenames():
+    filenames = []
+    for filename in os.listdir(cache_path):
+        filenames.append(filename)
+    return filenames
+
+
+def load_cache_file(filename: str):
+    path_to_file = os.path.join(cache_path, filename)
     try:
         with open(path_to_file) as open_file:
             json_object = json.load(open_file)
