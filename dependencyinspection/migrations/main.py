@@ -121,7 +121,7 @@ def get_timestamp(migration_id: str) -> int:
 
 
 @bp.route("/upgrade", methods=["GET"])
-def upgrade():
+async def upgrade():
     """
     Run any migrations ahead of current. set current_timestamp in db after every migration
     """
@@ -167,7 +167,7 @@ def upgrade():
 
 # never use this unless you know what you are doing
 @bp.route("/reset")
-def reset():
+async def reset():
     """
     Remove all migrations and start fresh. rerun the first migration in the file, which
     creates the migration db object to track current migration.

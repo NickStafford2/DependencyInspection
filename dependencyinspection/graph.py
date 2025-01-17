@@ -1,7 +1,7 @@
 import random
 
 import networkx as nx
-from quart import Blueprint, jsonify
+from quart import Blueprint, jsonify, Response
 
 import dependencyinspection.utils as utils
 from dependencyinspection._models.package import PackageData
@@ -15,16 +15,14 @@ bp = Blueprint("network", __name__)
 
 
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
-def get_networks(package_names: str):  # todo add type
+async def get_networks(package_names: str) -> Response:  # todo add type
     as_list = package_names.split(",")
     if not package_names:
-        return jsonify({"error": "No package names provided"}), 400
+        return jsonify({"error": "No package names provided"})
     return _get_networks(as_list)
 
 
-def _get_networks(
-    package_names: list[str], max_count: int | utils.Infinity = utils.infinity
-):
+def _get_networks(package_names: list[str], max_count: int = 99999999):
     max_count = 100
     print(f"Fetching network for packages: {package_names}")
     found: dict[str, PackageData] = main.search_and_scrape_recursive(
@@ -36,19 +34,19 @@ def _get_networks(
 
 
 @bp.route("/getPopularNetworks", methods=["GET"])
-def get_popular_networks():
+async def get_popular_networks():
     to_search = get_popular_package_names()
     return _get_networks(list(to_search), max_count=10000)
 
 
 @bp.route("/getAllNetworks", methods=["GET"])
-def get_all_networks():
+async def get_all_networks():
     to_search = utils.get_all_package_names()
     return _get_networks(list(to_search))
 
 
 @bp.route("/getAllDBNetworks", methods=["GET"])
-def get_all_db_networks():
+async def get_all_db_networks():
     print("Getting all nodes in the db")
     found = database.get_db_all()
     print(f"Got all nodes in the db: {len(found)} packages")
@@ -59,20 +57,20 @@ def get_all_db_networks():
 
 
 @bp.route("/getNetwork/<package_name>", methods=["GET"])
-def get_network(package_name: str):
+async def get_network(package_name: str):
     return _get_networks([package_name])
 
 
 @bp.route("/analyzeNetwork/<package_name>", methods=["GET"])
-def analyze_network(package_name: str):
+async def analyze_network(package_name: str):
     try:
         response = _get_networks([package_name])
-        graph_data = response.get_json()
+        graph_data = await response.get_json()
 
         if not graph_data:
-            return jsonify({"error": "No graph data provided"}), 400
+            return jsonify({"error": "No graph data provided"})
         if "nodes" not in graph_data or "links" not in graph_data:
-            return jsonify({"error": "Invalid graph structure"}), 400
+            return jsonify({"error": "Invalid graph structure"})
 
         G = nx.DiGraph()
         for node in graph_data["nodes"]:
