@@ -34,7 +34,7 @@ export default function QuerySearch({
 		}
 	};
 	return (
-		<div className="flex flex-row">
+		<div className="flex flex-row gap-2 items-stretch">
 			<div className="flex flex-col gap-2">
 				<AddPackage onPackageAdded={addPackage} />
 				<div className="flex flex-row w-full gap-1">
@@ -48,7 +48,11 @@ export default function QuerySearch({
 					))}
 				</div>
 			</div>
-			<Button onClick={callBackend}>Search</Button>
+			<div className="">
+				<Button className="h-full " onClick={callBackend}>
+					Search
+				</Button>
+			</div>
 		</div>
 	);
 }
