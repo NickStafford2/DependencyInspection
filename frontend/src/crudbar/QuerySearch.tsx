@@ -35,18 +35,26 @@ export default function QuerySearch({
 	};
 	return (
 		<div className="flex flex-row gap-2 items-stretch">
-			<div className="flex flex-col gap-2">
+			{/* <span className="text-white">URL: '{queryUrl}'</span> */}
+			<div className="flex flex-col gap-2 grow-0">
 				<AddPackage onPackageAdded={addPackage} />
-				<div className="flex flex-row w-full gap-1">
-					{/* <span className="text-white">URL: '{queryUrl}'</span> */}
-
-					<span className="text-white">
-						{query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
-					</span>
-					{Array.from(query.packages).map((name) => (
-						<PackageTag name={name} onClose={removePackage} />
-					))}
-				</div>
+				{query.packages.size ? (
+					<div className="flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
+						<span className="text-white whitespace-nowrap ">
+							{query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
+						</span>
+						{Array.from(query.packages).map((name, index) => (
+							<PackageTag
+								className="flex-grow"
+								name={name}
+								onClose={removePackage}
+								key={index}
+							/>
+						))}
+					</div>
+				) : (
+					""
+				)}
 			</div>
 			<div className="">
 				<Button className="h-full " onClick={callBackend}>

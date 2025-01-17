@@ -18,13 +18,13 @@ export default function AddPackage({
 	};
 	return (
 		<div
-			className="flex flex-row 
+			className="flex flex-row w-64
            ring-offset-background file:border-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm
       "
 		>
 			<Input
-				className="grow-0 w-64 rounded-r-none border-2 border-r-0 focus-visible:ring-0"
-				placeholder="Package Search"
+				className="grow-0  rounded-r-none border-2 border-r-0 focus-visible:ring-0"
+				placeholder="Add Package"
 				type="text"
 				value={addPackageValue}
 				onChange={onAddPackageChanged}
