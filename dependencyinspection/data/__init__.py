@@ -6,7 +6,7 @@ We have several data sources. db, cached package.json pages, and online scraping
 tool decides where to retrieve data from.
 """
 
-from flask import Blueprint
+from quart import Blueprint
 
 bp = Blueprint("data", __name__)
 

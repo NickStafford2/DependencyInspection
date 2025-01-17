@@ -10,8 +10,8 @@ import string
 from pathlib import Path
 from typing import Any
 
-from flask import current_app as app
-from flask import json
+from quart import current_app as app
+from quart import json
 
 from dependencyinspection.utils import ns_hash
 

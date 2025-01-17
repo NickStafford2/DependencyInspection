@@ -1,7 +1,7 @@
 import random
 
 import networkx as nx
-from flask import Blueprint, jsonify
+from quart import Blueprint, jsonify
 
 import dependencyinspection.utils as utils
 from dependencyinspection._models.package import PackageData

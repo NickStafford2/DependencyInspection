@@ -2,7 +2,7 @@ import logging
 from typing import Any
 
 import requests
-from flask import current_app as app
+from quart import current_app as app
 
 import dependencyinspection.utils as utils
 from dependencyinspection.models import Package, PackageData, Packument

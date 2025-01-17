@@ -76,14 +76,14 @@ poetry install
 # Running Development Server
 
 ```
-poetry run flask run
+poetry run quart run
 ```
 
 # ToDo
 
 Add additional notes here. We should use Github tasks.
-Change React app configuration to compile to a static folder in Flask
-Change React dev server to connect to flask proxy.
+Change React app configuration to compile to a static folder in quart
+Change React dev server to connect to quart proxy.
 
 We should consider carefully if we want to commit poetry.toml to git. In the future, later, it may have sensitive user-specific information.
 

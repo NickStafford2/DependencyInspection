@@ -3,7 +3,7 @@ import os
 from collections.abc import Callable
 from typing import Concatenate, Final
 
-from flask.app import Flask
+from quart.app import Quart
 from neo4j import GraphDatabase
 from neo4j._sync.driver import Driver
 from neo4j._sync.work.transaction import ManagedTransaction
@@ -21,7 +21,7 @@ R = TypeVar("R")
 
 class Neo4j_Connection:
     EXTENSION_ID: Final[str] = "NEO4J_DB_CONNECTION"
-    _app: Flask | None = None
+    _app: Quart | None = None
     _config: Config | None = None
     _driver: Driver | None = None
     _neo4j_username: Final[str]
@@ -64,18 +64,18 @@ class Neo4j_Connection:
             self._init_connection()
 
     def _init_connection(self):
-        """This exists so that neomodel will be on the same thread as Flask. This function
-        must be called before flask is created."""
+        """This exists so that neomodel will be on the same thread as Quart. This function
+        must be called before quart is created."""
         important_do_not_delete = dependencyinspection.models.NeomodelConnectionTest()
         _ = important_do_not_delete.save()
 
-    def init_app(self, app: Flask):
+    def init_app(self, app: Quart):
         print("Neo4j_Connection init_app()")
         self._app = app
         app.n4j = self  # type: ignore
         if self.EXTENSION_ID in app.extensions:
             raise RuntimeError(
-                "A 'neo4j' instance has already been registered on this Flask app."
+                "A 'neo4j' instance has already been registered on this Quart app."
                 + " Import and use that instance instead."
             )
         app.extensions[self.EXTENSION_ID] = self
@@ -131,7 +131,7 @@ class Neo4j_Connection:
         types should be identical.
 
         This is needed because sessions are used short term, and there won't be a single
-        session for the flask app to access.
+        session for the quart app to access.
         """
         assert self._driver is not None, "Driver is not initialized!"
         with self._driver.session(database=self._database2) as session:
@@ -148,7 +148,7 @@ class Neo4j_Connection:
         types should be identical.
 
         This is needed because sessions are used short term, and there won't be a single
-        session for the flask app to access.
+        session for the quart app to access.
         """
         assert self._driver is not None, "Driver is not initialized!"
         with self._driver.session(database=self._database2) as session:
