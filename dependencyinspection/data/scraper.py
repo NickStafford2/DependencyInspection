@@ -87,7 +87,7 @@ def scrape_package_json(package_name: str) -> dict[str, Any] | None:
         r_dict = response.json()
         return r_dict
     except requests.exceptions.HTTPError as e:
-        app.logger.error(e)
+        # app.logger.error(e)
         print(f"HTTP error: {e}")
         if e.response.status_code == 401:
             print("Authentication required.")
