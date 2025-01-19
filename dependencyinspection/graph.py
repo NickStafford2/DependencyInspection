@@ -1,25 +1,79 @@
+import asyncio
 import random
 
 import networkx as nx
-from quart import Blueprint, jsonify, Response
+from quart import Blueprint, Response, abort, jsonify, make_response, request, json
 
 import dependencyinspection.utils as utils
 from dependencyinspection._models.package import PackageData
 from dependencyinspection.commonpackages import get_popular_package_names
 from dependencyinspection.data import database, main
-from . import dfs
+from dependencyinspection.server_sent_event import ServerSentEvent
 
+from . import dfs
 from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
 
 bp = Blueprint("network", __name__)
 
 
+@bp.get("/sse")
+async def sse():
+    if "text/event-stream" not in request.accept_mimetypes:
+        abort(400)
+
+    async def send_events():
+        data = "tesing1"
+        event = ServerSentEvent(data, "message")
+        yield event.encode()
+        data = "tesing2"
+        event = ServerSentEvent(data, "message")
+        yield event.encode()
+        data = "done"
+        event = ServerSentEvent(data, "message")
+        yield event.encode()
+
+    response = await make_response(
+        send_events(),
+        {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Transfer-Encoding": "chunked",
+        },
+    )
+    response.timeout = None
+    return response
+
+
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
-async def get_networks(package_names: str) -> Response:  # todo add type
-    as_list = package_names.split(",")
-    if not package_names:
-        return jsonify({"error": "No package names provided"})
-    return _get_networks(as_list)
+async def get_networks(package_names: str) -> Response:
+    async def send_events():
+        hello = ServerSentEvent("just saying hi", "message", "request_recieved")
+        yield hello.encode()
+        as_list = package_names.split(",")
+        list_msg = ServerSentEvent(as_list, "message", "starting_search")
+        yield list_msg.encode()
+        if not package_names:
+            error_message = ServerSentEvent(
+                {"error": "No package names provided"}, "message", "no_package_error"
+            )
+            yield error_message.encode()
+            # yield jsonify()
+        else:
+            networks = _get_networks(as_list)
+            networkEvent = ServerSentEvent(networks, "message", "network")
+            yield networkEvent.encode()
+
+    response = await make_response(
+        send_events(),
+        {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Transfer-Encoding": "chunked",
+        },
+    )
+
+    response.timeout = None
+    return response
 
 
 def _get_networks(package_names: list[str], max_count: int = 99999999):
@@ -270,6 +324,6 @@ def format_for_frontend(seed_nodes: set[str], data: dict[str, PackageData]):
     data_for_frontend: DataForFrontend = format_as_nx(seed_nodes, data_with_analysis)
     # print(f"\n\nnx_graph: {nx_graph}")
     serialized_data_for_frontend = data_for_frontend.to_dict()
-    x = jsonify(serialized_data_for_frontend)
+    x = json.dumps(serialized_data_for_frontend)
     # print(json.dumps(serialized_data_for_frontend))
     return x

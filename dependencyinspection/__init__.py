@@ -1,4 +1,5 @@
 # __init__.py
+import asyncio
 import logging
 import os
 import signal
@@ -7,9 +8,12 @@ from logging.handlers import RotatingFileHandler
 
 import quart
 from neomodel import db as neomodel_db
+from quart import copy_current_websocket_context, websocket
 
 from config import Config
 from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
+
+# from dependencyinspection.server_sent_event import ServerSentEvent
 
 # Make this outside of quart so it is available ouside of quart context
 db = Neo4j_Connection(config_class=Config)
@@ -23,6 +27,38 @@ def create_app(config_class=Config):
     db.init_app(app)
     _init_graceful_shutdown()
     _init_blueprints(app)
+
+    # async def consumer():
+    #     while True:
+    #         data = "sent data from backend"
+    #         await websocket.send(data)
+    #         print(f"sent{data}")
+    #
+    # async def producer():
+    #     while True:
+    #         data = await websocket.receive()
+    #         print(f"recieved {data}")
+    #
+    # @app.websocket("/ws")
+    # async def ws():
+    #     consumer_task = asyncio.ensure_future(
+    #         copy_current_websocket_context(consumer)(),
+    #     )
+    #     producer_task = asyncio.ensure_future(
+    #         copy_current_websocket_context(producer)(),
+    #     )
+    #     try:
+    #         await asyncio.gather(consumer_task, producer_task)
+    #     finally:
+    #         consumer_task.cancel()
+    #         producer_task.cancel()
+    #     # producer = asyncio.create_task(sending())
+    #     # consumer = asyncio.create_task(receiving())
+    #     # await asyncio.gather(producer, consumer)
+    #
+    # @app.websocket("/ws2")
+    # async def ws2():
+    #
     return app
 
 
@@ -48,6 +84,7 @@ def _init_graceful_shutdown():
             print("db connection closed")
         sys.exit(0)
 
+    print("Shutdown started...")
     _ = signal.signal(signal.SIGINT, handle_sigint)
 
 
@@ -64,5 +101,5 @@ def _load_logs(app: quart.Quart):
     app.logger.addHandler(file_handler)
 
     app.logger.setLevel(logging.INFO)
-    app.logger.info("logger setup")
+    # app.logger.info("logger setup")
     return

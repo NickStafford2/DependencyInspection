@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GraphData } from "@/utils/models";
 import { Button } from "@/components/ui/button";
 import { fetchGraphData } from "@/crudbar/api";
@@ -11,6 +11,8 @@ export default function QuerySearch({
 }: { onResponse: (data: GraphData) => void }) {
 	const [query, setQuery] = useState<Query>(new Query());
 	const [queryUrl, setQueryUrl] = useState<string>("");
+	const [messages, setMessages] = useState<string[]>([]);
+	const [sse, setSse] = useState<EventSource | null>(null); // State to manage the EventSource connection
 
 	const callBackend = async () => {
 		fetchGraphData(query.toUrl()).then((data) => {
@@ -33,6 +35,42 @@ export default function QuerySearch({
 			setQueryUrl(query.toUrl());
 		}
 	};
+
+	const startSSEConnection = () => {
+		console.log("startSSEConnection");
+		if (!sse) {
+			const sseConnection = new EventSource(query.toUrl(), {
+				withCredentials: false,
+			});
+			sseConnection.onmessage = (e) => {
+				console.log("Received data:", e);
+				setMessages((prevMessages) => [...prevMessages, e.lastEventId]);
+				if (e.lastEventId == "network") {
+					const graphData = JSON.parse(e.data);
+					console.log(graphData);
+					onResponse(graphData);
+				}
+			};
+			sseConnection.onerror = (e) => {
+				console.error("SSE error:", e);
+				sseConnection.close();
+				setSse(null);
+			};
+			sseConnection.onopen = (e) => {
+				console.log("SSE open ", e);
+			};
+			setSse(sseConnection);
+		}
+	};
+
+	useEffect(() => {
+		return () => {
+			if (sse) {
+				sse.close();
+			}
+		};
+	}, [sse]);
+
 	return (
 		<div className="flex flex-row gap-2 items-stretch">
 			{/* <span className="text-white">URL: '{queryUrl}'</span> */}
@@ -57,7 +95,8 @@ export default function QuerySearch({
 				)}
 			</div>
 			<div className="">
-				<Button className="h-full " onClick={callBackend}>
+				{/* <Button className="h-full " onClick={callBackend}> */}
+				<Button className="h-full " onClick={startSSEConnection}>
 					Search
 				</Button>
 			</div>
