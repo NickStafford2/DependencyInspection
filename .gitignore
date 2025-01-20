@@ -1,6 +1,6 @@
 **/package_cache/ 
 # jsScraper2
-logs/*
+backend/logs/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
