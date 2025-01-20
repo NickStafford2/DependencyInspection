@@ -27,7 +27,7 @@ ENV PATH ="/root/.local/bin:$PATH"
 RUN poetry config virtualenvs.create false
 
 # set working directory
-WORKDIR /app
+WORKDIR /backendApp
 
 # Copy only pyproject.toml first to cache dependencies
 COPY pyproject.toml ./
