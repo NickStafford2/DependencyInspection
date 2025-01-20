@@ -1,14 +1,14 @@
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "../ui/collapsible";
-import { Button } from "../ui/button";
-import { ChevronsUpDown } from "lucide-react";
-import React from "react";
+// import {
+// 	Collapsible,
+// 	CollapsibleContent,
+// 	CollapsibleTrigger,
+// } from "../ui/collapsible";
+// import { Button } from "../ui/button";
+// import { ChevronsUpDown } from "lucide-react";
+// import React from "react";
 
-export function CellDependencies({ cellData }: { cellData: any }) {
-	const [isOpen, setIsOpen] = React.useState(false);
+export function CellDependencies(/*{ cellData }: { cellData: any }*/) {
+	// const [isOpen, setIsOpen] = React.useState(false);
 
 	return <span>test</span>;
 	//    (

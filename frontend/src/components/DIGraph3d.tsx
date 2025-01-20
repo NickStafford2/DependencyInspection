@@ -2,7 +2,7 @@ import { ForceGraph3D } from "react-force-graph";
 import { useEffect, useState, useRef } from "react";
 import { GraphData } from "../utils/models";
 // import SpriteText from "https://esm.sh/three-spritetext";
-import SpriteText from "three-spritetext";
+// import SpriteText from "three-spritetext";
 
 const DIGraph3d = ({
 	graphData,

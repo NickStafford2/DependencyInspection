@@ -9,7 +9,7 @@ import {
 	getSortedRowModel,
 	Table,
 } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -66,6 +66,7 @@ export function NodeTableContainer<TData, TValue>({
 		getFilteredRowModel: getFilteredRowModel(),
 		onColumnVisibilityChange: setColumnVisibility,
 		getRowId: (originalRow) => {
+			// @ts-ignore
 			return originalRow.id;
 		},
 		state: {

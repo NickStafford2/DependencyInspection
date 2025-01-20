@@ -3,7 +3,7 @@ import {
 	flexRender,
 	Table as ReactTable,
 } from "@tanstack/react-table";
-import { elementScroll, useVirtualizer } from "@tanstack/react-virtual";
+// import { /*elementScroll, */ useVirtualizer } from "@tanstack/react-virtual";
 
 import {
 	Table,
@@ -40,13 +40,13 @@ export function NodeTable<TData, TValue>({
 				wrapperRef.current.clientHeight + "px";
 		}
 	};
-	const rowVirtualizer = useVirtualizer({
-		getScrollElement: () => tableScrollerRef.current,
-	});
+	// const rowVirtualizer = useVirtualizer({
+	// 	getScrollElement: () => tableScrollerRef.current,
+	// });
 	React.useEffect(() => {
 		// console.log(scrollTo)
 		if (scrollTo) {
-			const row = table.getRow(scrollTo);
+			// const row = table.getRow(scrollTo);
 			// console.log(row)
 			tableScrollerRef.current?.scrollTo;
 			// tableBodyRef.current?.scrollIntoView()

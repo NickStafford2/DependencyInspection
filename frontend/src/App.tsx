@@ -49,6 +49,7 @@ const App = () => {
 				<div className="">
 					<NodeTableContainer
 						columns={columns}
+						// @ts-ignore
 						data={tableData}
 						scrollTo={scrollTo}
 					></NodeTableContainer>

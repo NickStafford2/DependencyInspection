@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { GraphData } from "@/utils/models";
 import { Button } from "@/components/ui/button";
-import { fetchGraphData } from "@/crudbar/api";
+// import { fetchGraphData } from "@/crudbar/api";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
@@ -14,11 +14,11 @@ export default function QuerySearch({
 	const [messages, setMessages] = useState<string[]>([]);
 	const [sse, setSse] = useState<EventSource | null>(null); // State to manage the EventSource connection
 
-	const callBackend = async () => {
-		fetchGraphData(query.toUrl()).then((data) => {
-			if (data) onResponse(data);
-		});
-	};
+	// const callBackend = async () => {
+	// 	fetchGraphData(query.toUrl()).then((data) => {
+	// 		if (data) onResponse(data);
+	// 	});
+	// };
 	const removePackage = (name: string) => {
 		console.log(name);
 		// const oldQuery = query;
@@ -37,6 +37,7 @@ export default function QuerySearch({
 	};
 
 	const startSSEConnection = () => {
+		console.log(queryUrl);
 		console.log("startSSEConnection");
 		if (!sse) {
 			const sseConnection = new EventSource(query.toUrl(), {
@@ -55,6 +56,7 @@ export default function QuerySearch({
 				console.error("SSE error:", e);
 				sseConnection.close();
 				setSse(null);
+				console.log(messages);
 			};
 			sseConnection.onopen = (e) => {
 				console.log("SSE open ", e);
