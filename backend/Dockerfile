@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 # copy the rest of the application
-COPY my_app my_app
+COPY dependencyinspection dependencyinspection
 
 # install the root package
 RUN poetry install
@@ -52,11 +52,11 @@ RUN poetry install
 EXPOSE 5001
 
 # Define our command to be run when launching the container
-CMD poetry run hypercorn my_app.asgi:app -b 0.0.0.0:5001 --reload
+CMD poetry run hypercorn dependencyinspection.asgi:app -b 0.0.0.0:5001 --reload
 
 FROM base as production
 # Copy the rest of the application 
-COPY my_app my_app/
+COPY dependencyinspection dependencyinspection/
 
 # Install the root package 
 RUN poetry install 
@@ -65,6 +65,6 @@ RUN poetry install
 EXPOSE 5001 
 
 # Define our command to be run when launching the container 
-CMD poetry run hypercorn my_app.asgi:app -b 0.0.0.0:5001 
+CMD poetry run hypercorn dependencyinspection.asgi:app -b 0.0.0.0:5001 
 
 
