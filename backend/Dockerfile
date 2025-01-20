@@ -18,6 +18,7 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12.5
 
 # Install Poetry
 ENV POETRY_VERSION=1.4.2 
+
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 ENV PATH ="/root/.local/bin:$PATH"

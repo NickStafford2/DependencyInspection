@@ -2,14 +2,14 @@ version: "3.8"
 services:
   web: 
     build:
-      context: ./backend-service 
+      context: ./backend
       target: development
     ports:
       - "5001:5001"
     volumes:
-      - ./backend-service:/app
-    links:
-      - db:postgress
+      - ./backend:/app
+    # links:
+    #   - db:postgress
     container_name: app_web_1
     depends_on:
       - db
@@ -17,20 +17,22 @@ services:
       PORT: 5001
       SECRET_KEY: "you-will-never-guess"
       ENV_FOR_DYNACONF: docker
-      DB_USERNAME: app_user
-      DB_PASSWORD: app_password
-      DB_HOST: postgress
-      DATABASE_NAME: app
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: viIsBetterThanVSCode1
+      NEO4J_HOST: db
+      NEO4J_PORT: 7474
+      NEO4J_DB: neo4j
   db: 
     image: neo4j:5.26.1-bullseye
     restart: always
     container_name: app_db_1
     ports:
-      - "7474:7474"
+      - "7474:7474"  # Neo4j HTTP interface
+      - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
     environment:
       NEO4J_USERNAME: neo4j
       NEO4J_PASSWORD: viIsBetterThanVSCode1
-      NEO4J_HOST: localhost
+      NEO4J_HOST: db
       NEO4J_PORT: 7474
       NEO4J_DB: neo4j
 
