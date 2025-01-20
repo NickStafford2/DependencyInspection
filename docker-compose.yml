@@ -16,17 +16,12 @@ services:
     #   - db:postgress
     container_name: app_web_1
     depends_on:
-      - db
+      - neo4j-service
     environment:
       PORT: 5001
       SECRET_KEY: "you-will-never-guess"
       ENV_FOR_DYNACONF: docker
-      NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: viIsBetterThanVSCode1
-      NEO4J_HOST: db
-      NEO4J_PORT: 7474
-      NEO4J_DB: neo4j
-  db: 
+  neo4j-service: 
     image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
     # volumes: 
@@ -37,11 +32,12 @@ services:
       - "7474:7474"  # Neo4j HTTP interface
       - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
     environment:
-      NEO4J_USERNAME: neo4j
-      NEO4J_PASSWORD: viIsBetterThanVSCode1
-      NEO4J_HOST: db
-      NEO4J_PORT: 7474
-      NEO4J_DB: neo4j
+      - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
+    secrets:
+      - neo4j_auth_file
 
 # volumes:
 #   database:
+secrets:
+  neo4j_auth_file:
+    file: ./neo4j_auth.txt
