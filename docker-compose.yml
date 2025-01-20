@@ -1,6 +1,7 @@
 # version: "3.8"
 services:
   backend-service: 
+    container_name: di-backend_container
     build:
       context: ./backend
       target: development
@@ -14,7 +15,6 @@ services:
     #   - /usr/src/app/node_modules
     # links: # apparently depreciated??  
     #   - db:postgress
-    container_name: app_web_1
     depends_on:
       - neo4j-service
     environment:
@@ -22,12 +22,12 @@ services:
       SECRET_KEY: "you-will-never-guess"
       ENV_FOR_DYNACONF: docker
   neo4j-service: 
+    container_name: di-neo4j_container
     image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
     # volumes: 
     #   - database:/data/db
     restart: always
-    container_name: app_db_1
     ports:
       - "7474:7474"  # Neo4j HTTP interface
       - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
