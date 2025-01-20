@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  web: 
+  backend-service: 
     build:
       context: ./backend
       target: development
@@ -24,6 +24,8 @@ services:
       NEO4J_DB: neo4j
   db: 
     image: neo4j:5.26.1-bullseye
+    # volumes: 
+    #   - database:/data/db
     restart: always
     container_name: app_db_1
     ports:
@@ -36,3 +38,5 @@ services:
       NEO4J_PORT: 7474
       NEO4J_DB: neo4j
 
+# volumes:
+#   database:
