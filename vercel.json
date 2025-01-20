@@ -1,0 +1,33 @@
+{
+    "builds": [
+        {
+            "src": "api/app.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "api/app.py"
+        },
+        {
+            "src": "api/(.*)",
+            "headers": {"Access-Control-Allow-Origin": "*"},
+            "continue": true
+        }
+    ]
+}
+
+# File structure
+
++ = directory
+- = file
+
++ api
+  + controllers
+  + routes
+  + models
+  + other stuff...
+  - app.py
+- vercel.json
+- requirements.txt
