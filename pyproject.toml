@@ -27,6 +27,7 @@ types-networkx = "^3.4.2.20241115"
 igraph = "^0.11.8"
 leidenalg = "^0.10.2"
 quart = "^0.20.0"
+dynaconf = "^3.2.6"
 
 
 [build-system]

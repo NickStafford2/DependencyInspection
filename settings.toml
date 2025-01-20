@@ -1,0 +1,13 @@
+[default]
+NEO4J_USERNAME = "neo4j"
+NEO4J_PASSWORD = "viIsBetterThanVSCode1"
+NEO4J_HOST = "localhost"
+NEO4J_DB = "neo4j"
+NEO4J_PORT = "7474"
+
+
+[development]
+DB_HOST = "localhost"
+
+[docker]
+DB_HOST = "db"
