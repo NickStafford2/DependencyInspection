@@ -7,7 +7,9 @@ NEO4J_PORT = "7474"
 
 
 [development]
-DB_HOST = "localhost"
+# DB_HOST = "localhost"
+NEO4J_HOST = "localhost"
 
 [docker]
-DB_HOST = "db"
+# DB_HOST = "db"
+NEO4J_HOST = "neo4j-service"
