@@ -8,7 +8,11 @@ services:
       - "5001:5001"
     volumes:
       - ./backend:/app
-    # links:
+    # potential bind mount so local changes are reflected in docker container
+    # volumes: 
+    #   - ./app:/usr/src/app
+    #   - /usr/src/app/node_modules
+    # links: # apparently depreciated??  
     #   - db:postgress
     container_name: app_web_1
     depends_on:
@@ -24,6 +28,7 @@ services:
       NEO4J_DB: neo4j
   db: 
     image: neo4j:5.26.1-bullseye
+    # potential data mount so data is persistent across containers
     # volumes: 
     #   - database:/data/db
     restart: always
