@@ -18,7 +18,7 @@ from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
 db = Neo4j_Connection(config_class=Config)
 
 
-def create_app(config_class=Config):
+async def create_app(config_class=Config):
     app = quart.Quart(__name__)
     app.config.from_object(config_class)
     _load_logs(app)
