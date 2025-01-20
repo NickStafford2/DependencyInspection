@@ -27,7 +27,7 @@ services:
       NEO4J_PORT: 7474
       NEO4J_DB: neo4j
   db: 
-    image: neo4j:5.26.1-bullseye
+    image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
     # volumes: 
     #   - database:/data/db
