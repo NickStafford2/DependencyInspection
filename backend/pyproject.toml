@@ -29,6 +29,10 @@ leidenalg = "^0.10.2"
 quart = "^0.20.0"
 dynaconf = "^3.2.6"
 
+# [tool.poetry.scripts]
+# dev = "hypercorn"
+# prod = "hypercorn dependencyinspection.asgi:app -b 0.0.0.0:5001 --reload"
+
 
 [build-system]
 requires = ["poetry-core"]

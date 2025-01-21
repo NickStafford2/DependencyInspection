@@ -8,7 +8,7 @@ services:
     ports:
       - "5001:5001"
     volumes:
-      - ./backend:/app
+      - ./backend:/backendApp
     # potential bind mount so local changes are reflected in docker container
     # volumes: 
     #   - ./app:/usr/src/app

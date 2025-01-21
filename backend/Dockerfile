@@ -72,6 +72,7 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 ENV PATH="/root/.local/bin:$PATH"
+ENV POETRY_REQUESTS_TIMEOUT=1000
 
 # Configure Poetry
 RUN poetry config virtualenvs.create false
