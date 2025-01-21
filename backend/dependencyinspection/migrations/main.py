@@ -127,7 +127,7 @@ async def upgrade():
     """
     count = db.execute_read(_get_migration_count)
     if count == 0:
-        reset()
+        await reset()
     migrations = _create_migration_list()
     current_id = db.execute_write(_get_current_migration_id_tx)
     current_timestamp = get_timestamp(current_id)

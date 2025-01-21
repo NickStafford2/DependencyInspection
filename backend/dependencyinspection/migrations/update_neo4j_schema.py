@@ -1,15 +1,19 @@
 import subprocess
+from pathlib import Path
 
-from config import Config
+from dynaconf import settings
 from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
 
 
 def update_db_from_neomodel():
-    connection = Neo4j_Connection(Config)
+    import neomodel
+
+    print(neomodel.__file__)
+    neomodel_path = Path(neomodel.__file__).parent
+    labels_path = Path("scripts/neomodel_install_labels.py")
+    script_path = neomodel_path / labels_path
+    connection = Neo4j_Connection(settings)
     db_url = connection.neo4j_neomodel_url
-    script_path = (
-        ".venv/lib/python3.12/site-packages/neomodel/scripts/neomodel_install_labels.py"
-    )
     command = ["python", script_path]
     command.extend(["dependencyinspection._models.package"])
     command.extend(["--db", db_url])

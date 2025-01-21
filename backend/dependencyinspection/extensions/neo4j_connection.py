@@ -11,7 +11,6 @@ from neomodel import config as neomodel_config
 from typing_extensions import ParamSpec, TypeVar
 
 import dependencyinspection.models
-from config import Config
 
 # from graphdatascience import GraphDataScience
 
@@ -22,7 +21,6 @@ R = TypeVar("R")
 class Neo4j_Connection:
     EXTENSION_ID: Final[str] = "NEO4J_DB_CONNECTION"
     _app: Quart | None = None
-    _config: Config | None = None
     _driver: Driver | None = None
     _neo4j_username: Final[str]
     _neo4j_password: Final[str]
