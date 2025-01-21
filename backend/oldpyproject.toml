@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "dependencyinspection"
+version = "0.1.0"
+description = ""
+authors = ["Nicholas Stafford <ngstafford1@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.5"
+numpy = "^1.26.1"
+networkx = "^3.3"
+pandas = "^2.2.2"
+python-dotenv = "^1.0.1"
+requests = "^2.32.3"
+matplotlib = "^3.9.2"
+neo4j = "^5.25.0"
+typing-extensions = "^4.12.2"
+graphdatascience = { extras = ["ogb"], version = "^1.12" }
+pydantic = "^2.9.2"
+neomodel = "^5.4.0"
+psutil = "^6.1.0"
+packaging = "^24.2"
+colorama = "^0.4.6"
+python-louvain = "^0.16"
+types-networkx = "^3.4.2.20241115"
+igraph = "^0.11.8"
+leidenalg = "^0.10.2"
+quart = "^0.20.0"
+dynaconf = "^3.2.6"
+
+[tool.poetry.scripts]
+dev = "dev:start_hypercorn"
+# prod = "hypercorn dependencyinspection.asgi:app -b 0.0.0.0:5001 --reload"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 90
+target-version = "py312"
+
+[tool.ruff.lint]
+# select = ["ALL"] # Only uncomment if we want to get pedantic
+select = [
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # pyupgrade
+  "UP",
+  # flake8-bugbear
+  "B",
+  # flake8-simplify
+  "SIM",
+  # isort
+  "I",
+]
+
+[tool.ruff.format]
+quote-style = "double"

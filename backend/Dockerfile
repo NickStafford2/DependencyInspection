@@ -58,7 +58,7 @@ RUN echo "Python Version:" && python --version
 RUN echo "Python Path:" && which python
 
 # Install Poetry
-ENV POETRY_VERSION=1.8.4 \
+ENV POETRY_VERSION=2.0.1 \
   POETRY_HOME="/opt/poetry" \
   POETRY_VIRTUALENVS_IN_PROJECT=true \
   POETRY_NO_INTERACTION=1 \
@@ -85,6 +85,7 @@ COPY pyproject.toml ./
 
 RUN poetry lock && poetry install --no-root
 
+COPY README.md ./
 
 FROM base AS development
 # install development tools

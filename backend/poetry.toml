@@ -1,8 +1,0 @@
-readme = "README.md"
-
-[virtualenvs]
-in-project = true
-create = true
-
-[virtualenvs.options]
-always-copy = true
