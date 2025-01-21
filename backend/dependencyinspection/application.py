@@ -33,7 +33,7 @@ async def create_app(**config_overrides: Any) -> Quart:
     # Activate extensions after quart exists to tell db manager how to connect to it.
     db.init_app(app)
     _init_graceful_shutdown()
-    # _init_blueprints(app)
+    _init_blueprints(app)
 
     @app.route("/")
     async def home():
@@ -78,20 +78,20 @@ def _init_config(app: Quart, **config_overrides: Any) -> None:
     app.config.update(config_overrides)
 
 
-# def _init_blueprints(app: quart.Quart):
-#     from dependencyinspection.data import bp as data_bp
-#
-#     app.register_blueprint(data_bp, url_prefix="/data")
-#
-#     from dependencyinspection.graph import bp as graph_bp
-#
-#     app.register_blueprint(graph_bp)
-#
-#     from dependencyinspection.migrations import bp as migrations_bp
-#
-#     app.register_blueprint(migrations_bp, url_prefix="/migrations")
-#
-#
+def _init_blueprints(app: Quart):
+    from dependencyinspection.data import bp as data_bp
+
+    app.register_blueprint(data_bp, url_prefix="/data")
+
+    from dependencyinspection.graph import bp as graph_bp
+
+    app.register_blueprint(graph_bp)
+
+    from dependencyinspection.migrations import bp as migrations_bp
+
+    app.register_blueprint(migrations_bp, url_prefix="/migrations")
+
+
 def _init_graceful_shutdown():
     def handle_sigint(signal, frame):
         print("Shutting down gracefully...")

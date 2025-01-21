@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from neo4j._sync.work.result import Result
 from neo4j._sync.work.transaction import ManagedTransaction
 
-from dependencyinspection import db
+from dependencyinspection.application import db
 from dependencyinspection.migrations import bp, migration_functions
 from dependencyinspection.migrations.migration_functions import *
 
