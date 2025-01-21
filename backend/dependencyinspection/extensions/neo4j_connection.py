@@ -35,7 +35,7 @@ class Neo4j_Connection:
     _database2: str = ""
     _is_aura: Final[bool]
 
-    def __init__(self, config_class=Config, auto_connect=True):
+    def __init__(self, config_class, auto_connect=True):
         print("Neo4j_Connection init()")
         self._neo4j_username = config_class.NEO4J_USERNAME
         self._neo4j_password = config_class.NEO4J_PASSWORD
@@ -43,7 +43,7 @@ class Neo4j_Connection:
         self._neo4j_db = config_class.NEO4J_DB
         self._neo4j_port = os.environ.get("NEO4J_PORT", "7687")
         self._neo4j_auth = (self._neo4j_username, self._neo4j_password)
-        if config_class.NEO4J_URI:
+        if "NEO4J_URI" in config_class:
             self._is_aura = True
             self._neo4j_uri = config_class.NEO4J_URI
             method, db_path = self._neo4j_uri.split("//", 1)
