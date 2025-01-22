@@ -44,7 +44,11 @@ def scrape_packages(
 def scrape_package(package_name: str) -> PackageData | None:
     # utils.nsprint("scrape_package()", 3)
     # try:
-    json_dict = scrape_package_json(package_name)
+    json_dict = None
+    count = 0
+    while not json_dict and count < 3:
+        json_dict = scrape_package_json(package_name)
+        count += 1
     if not json_dict:
         logging.error(f"Failed to scrape package JSON for package: {package_name}")
         return None
