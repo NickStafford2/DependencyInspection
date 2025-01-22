@@ -46,30 +46,33 @@ def scrape_package(package_name: str) -> PackageData | None:
     # try:
     json_dict = None
     count = 0
-    while not json_dict and count < 3:
-        json_dict = scrape_package_json(package_name)
-        count += 1
-    if not json_dict:
-        logging.error(f"Failed to scrape package JSON for package: {package_name}")
+    try:
+        while not json_dict and count < 3:
+            json_dict = scrape_package_json(package_name)
+            count += 1
+        if not json_dict:
+            logging.error(f"Failed to scrape package JSON for package: {package_name}")
+            return None
+        # _print_json_var(json_dict)
+        packument = Packument.from_json(json_dict)
+        if not packument:
+            raise Exception(
+                "packument does not parse properly. fix this. This is unexpected."
+            )
+            logging.error(
+                f"Failed to convert scraped JSON to Packument for package: {package_name}"
+            )
+            return None
+        packageData: PackageData = Package.from_packument(packument)
+        if not packageData.package:
+            logging.error(
+                f"Failed to create Package object from Packument for package: {package_name}"
+            )
+            return None
+        packageData.package.save()
+        return packageData
+    except Exception as _:
         return None
-    # _print_json_var(json_dict)
-    packument = Packument.from_json(json_dict)
-    if not packument:
-        raise Exception(
-            "packument does not parse properly. fix this. This is unexpected."
-        )
-        logging.error(
-            f"Failed to convert scraped JSON to Packument for package: {package_name}"
-        )
-        return None
-    packageData: PackageData = Package.from_packument(packument)
-    if not packageData.package:
-        logging.error(
-            f"Failed to create Package object from Packument for package: {package_name}"
-        )
-        return None
-    packageData.package.save()
-    return packageData
 
 
 def scrape_package_json(package_name: str) -> dict[str, Any] | None:
