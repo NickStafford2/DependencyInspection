@@ -12,7 +12,7 @@ def update_db_from_neomodel():
     neomodel_path = Path(neomodel.__file__).parent
     labels_path = Path("scripts/neomodel_install_labels.py")
     script_path = neomodel_path / labels_path
-    connection = Neo4j_Connection(settings)
+    connection = Neo4j_Connection()
     db_url = connection.neo4j_neomodel_url
     command = ["python", script_path]
     command.extend(["dependencyinspection._models.package"])

@@ -9,7 +9,8 @@ import sys
 
 from typing import Any
 
-from dynaconf import FlaskDynaconf, settings
+from dynaconf import FlaskDynaconf
+from dependencyinspection.config import get_overrides
 from quart import Quart
 
 from neomodel import db as neomodel_db
@@ -21,7 +22,7 @@ from dependencyinspection.extensions.neo4j_connection import Neo4j_Connection
 
 # from dependencyinspection.server_sent_event import ServerSentEvent
 # Make this outside of quart so it is available ouside of quart context
-db = Neo4j_Connection(config_class=settings)
+db = Neo4j_Connection()
 
 
 # async def create_app(config_class=Config):
@@ -75,6 +76,7 @@ async def create_app(**config_overrides: Any) -> Quart:
 
 def _init_config(app: Quart, **config_overrides: Any) -> None:
     FlaskDynaconf(app)
+    app.config.update(get_overrides())
     app.config.update(config_overrides)
 
 

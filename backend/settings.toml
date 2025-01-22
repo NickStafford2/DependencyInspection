@@ -1,9 +1,9 @@
 [default]
 NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "your_password"
 NEO4J_HOST = "localhost"
 NEO4J_DB = "neo4j"
 NEO4J_PORT = "7474"
+IS_DOCKER = "false"
 
 
 [development]
@@ -12,3 +12,4 @@ NEO4J_HOST = "localhost"
 [docker]
 NEO4J_HOST = "neo4j-service"
 NEO4J_PORT = "7687"
+IS_DOCKER = "true"

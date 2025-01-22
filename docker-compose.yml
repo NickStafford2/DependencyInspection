@@ -5,6 +5,8 @@ services:
       context: ./frontend
       args: 
        - VITE_APP_BACKEND_ADDRESS=https://localhost/api/
+    depends_on: 
+      - backend-service
     restart: always
     ports: 
       - 3000:3000
@@ -27,11 +29,22 @@ services:
     # links: # apparently depreciated??  
     #   - db:postgress
     depends_on:
-      - neo4j-service
+      neo4j-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"] 
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    env_file: "backend/.env"
     environment:
-      PORT: 5001
-      SECRET_KEY: "you-will-never-guess"
-      ENV_FOR_DYNACONF: docker
+      - PORT=5001
+      - SECRET_KEY="you-will-never-guess"
+      - ENV_FOR_DYNACONF=docker
+    #   - NEO4J_PASSWORD=/run/secrets/neo4j_password
+    # secrets:
+    #   - neo4j_password
   neo4j-service: 
     container_name: di-neo4j_container
     image: neo4j:5.26.0-bullseye
@@ -43,14 +56,23 @@ services:
       - "7474:7474"  # Neo4j HTTP interface
       - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
     environment:
+      - NEO4J_AUTH=/run/secrets/neo4j_auth_file
       - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
     secrets:
       - neo4j_auth_file
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 2s
+      timeout: 10s
+      retries: 20
+      start_period: 3s
 
 # volumes:
 #   database:
 secrets:
   neo4j_auth_file:
+    file: ./neo4j_auth.txt
+  neo4j_password:
     file: ./neo4j_auth.txt
 # networks: 
 #   network

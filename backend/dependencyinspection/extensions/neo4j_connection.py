@@ -3,6 +3,7 @@ import os
 from collections.abc import Callable
 from typing import Concatenate, Final
 
+from dependencyinspection.config import get_config
 from quart.app import Quart
 from neo4j import GraphDatabase
 from neo4j._sync.driver import Driver
@@ -33,7 +34,8 @@ class Neo4j_Connection:
     _database2: str = ""
     _is_aura: Final[bool]
 
-    def __init__(self, config_class, auto_connect=True):
+    def __init__(self, auto_connect=True):
+        config_class = get_config()
         print("Neo4j_Connection init()")
         self._neo4j_username = config_class.NEO4J_USERNAME
         self._neo4j_password = config_class.NEO4J_PASSWORD
