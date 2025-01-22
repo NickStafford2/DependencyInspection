@@ -11,7 +11,7 @@ T = TypeVar("T")
 
 
 def nsprint(text: str, num_tabs: int = 0, tab: str = "    "):
-    if is_docker:
+    if is_docker():
         return
     terminal_width = shutil.get_terminal_size().columns
     indent = tab * num_tabs
