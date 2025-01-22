@@ -5,11 +5,14 @@ import random
 import shutil
 from collections.abc import Iterable
 from typing import TypeVar, final, override
+from dependencyinspection.config import is_docker
 
 T = TypeVar("T")
 
 
 def nsprint(text: str, num_tabs: int = 0, tab: str = "    "):
+    if is_docker:
+        return
     terminal_width = shutil.get_terminal_size().columns
     indent = tab * num_tabs
     max_line_length = terminal_width - len(indent)

@@ -2,6 +2,10 @@ import os
 from dynaconf import settings
 
 
+def is_docker() -> bool:
+    return "IS_DOCKER" in settings
+
+
 def get_overrides() -> dict[str, str]:
     if settings["IS_DOCKER"]:
         return {"NEO4J_PASSWORD": _get_docker_secret()}

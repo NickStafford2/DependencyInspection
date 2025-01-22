@@ -78,11 +78,11 @@ async def get_networks(package_names: str) -> Response:
 
 def _get_networks(package_names: list[str], max_count: int = 99999999):
     max_count = 100
-    print(f"Fetching network for packages: {package_names}")
+    # print(f"Fetching network for packages: {package_names}")
     found: dict[str, PackageData] = main.search_and_scrape_recursive(
         set(package_names), max_count
     )
-    print(f"Found: {len(found)} packages")
+    # print(f"Found: {len(found)} packages")
     formatted_data = format_for_frontend(set(package_names), found)
     return formatted_data
 
@@ -101,12 +101,12 @@ async def get_all_networks():
 
 @bp.route("/getAllDBNetworks", methods=["GET"])
 async def get_all_db_networks():
-    print("Getting all nodes in the db")
+    # print("Getting all nodes in the db")
     found = database.get_db_all()
-    print(f"Got all nodes in the db: {len(found)} packages")
+    # print(f"Got all nodes in the db: {len(found)} packages")
 
     formatted_data = format_for_frontend(set(found.keys()), found)
-    print(f"Formatted graph data: {formatted_data}")
+    # print(f"Formatted graph data: {formatted_data}")
     return formatted_data
 
 
@@ -143,12 +143,12 @@ async def analyze_network(package_name: str):
             "betweenness_centrality": betweenness_centrality,
         }
 
-        print("Analysis Results:", analysis_results)
+        # print("Analysis Results:", analysis_results)
 
         return jsonify(analysis_results), 200
 
     except Exception as e:
-        print(f"Error processing the request for {package_name}: {str(e)}")
+        # print(f"Error processing the request for {package_name}: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 

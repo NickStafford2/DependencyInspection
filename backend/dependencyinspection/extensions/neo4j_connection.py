@@ -36,7 +36,7 @@ class Neo4j_Connection:
 
     def __init__(self, auto_connect=True):
         config_class = get_config()
-        print("Neo4j_Connection init()")
+        # print("Neo4j_Connection init()")
         self._neo4j_username = config_class.NEO4J_USERNAME
         self._neo4j_password = config_class.NEO4J_PASSWORD
         self._neo4j_host = config_class.NEO4J_HOST
@@ -68,7 +68,7 @@ class Neo4j_Connection:
         _ = important_do_not_delete.save()
 
     def init_app(self, app: Quart):
-        print("Neo4j_Connection init_app()")
+        # print("Neo4j_Connection init_app()")
         self._app = app
         app.n4j = self  # type: ignore
         if self.EXTENSION_ID in app.extensions:
@@ -108,10 +108,10 @@ class Neo4j_Connection:
         return self._driver
 
     def _teardown(self, exception: BaseException | None):
-        print(f"closing db. exception: {exception}")
+        # print(f"closing db. exception: {exception}")
         if self._driver:
             self._driver.close()
-            print("db connection closed for driver")
+            # print("db connection closed for driver")
 
     def run(self, command):
         assert self._driver is not None, "Driver is not initialized!"
