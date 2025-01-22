@@ -49,7 +49,7 @@ const App = () => {
 				<div className="">
 					<NodeTableContainer
 						columns={columns}
-						// @ts-ignore
+						// @ts-expect-error-todo fix this later
 						data={tableData}
 						scrollTo={scrollTo}
 					></NodeTableContainer>
