@@ -1,23 +1,13 @@
-# Start your image with a node base image
-FROM node:18-alpine
+FROM node:20-alpine as builder
+WORKDIR /app
+COPY . .
+ARG VITE_APP_BACKEND_ADDRESS
+ENV VITE_APP_BACKEND_ADDRESS $VITE_APP_BACKEND_ADDRESS
+RUN npm install
+RUN npm run build
 
-# The /app directory should act as the main application directory
-WORKDIR /frontendApp
-
-# Copy the app package and package-lock.json file
-COPY package*.json ./
-
-# Copy local directories to the current local directory of our docker image (/frontendApp)
-COPY ./src ./src
-COPY ./public ./public
-
-# Install node packages, install serve, build the app, and remove dependencies at the end
-RUN npm install \
-  && npm install -g serve \
-  && npm run build \
-  && rm -fr node_modules
-
+FROM nginx:1.25.4-alpine-slim as prod
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf  /etc/nginx/conf.d
 EXPOSE 3000
-
-# Start the app using serve command
-CMD [ "serve", "-s", "build" ]
+CMD ["nginx", "-g", "daemon off;"]

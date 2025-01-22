@@ -1,10 +1,21 @@
-# version: "3.8"
 services:
+  frontend-service:
+    container_name: di-frontend_container
+    build:
+      context: ./frontend
+      args: 
+       - VITE_APP_BACKEND_ADDRESS=https://localhost/api/
+    restart: always
+    ports: 
+      - 3000:3000
+    # networks:
+    #   network
   backend-service: 
     container_name: di-backend_container
     build:
       context: ./backend
-      target: development
+      # target: development
+      target: production
     ports:
       - "5001:5001"
     volumes:
@@ -41,3 +52,5 @@ services:
 secrets:
   neo4j_auth_file:
     file: ./neo4j_auth.txt
+# networks: 
+#   network
