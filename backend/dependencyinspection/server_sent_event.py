@@ -28,5 +28,5 @@ class ServerSentEvent:
         if self.retry is not None:
             message = f"{message}\nretry: {self.retry}"
         message = f"{message}\r\n\r\n"
-        print(message)
+        # print(message)
         return message.encode("utf-8")
