@@ -53,9 +53,7 @@ class Neo4j_Connection:
             self._neo4j_uri = (
                 "neo4j://" + self._neo4j_host
             )  # + ":" + current_app.config["NEO4J_PORT"]
-            self.neo4j_neomodel_url = (
-                f"bolt://{self._neo4j_username}:{self._neo4j_password}@localhost:7687"
-            )
+            self.neo4j_neomodel_url = f"bolt://{self._neo4j_username}:{self._neo4j_password}@{self._neo4j_host}:7687"
         neomodel_config.DATABASE_URL = self.neo4j_neomodel_url
         self._database2 = self._neo4j_db  # can't remember why I made this.
         if auto_connect:
@@ -64,6 +62,11 @@ class Neo4j_Connection:
     def _init_connection(self):
         """This exists so that neomodel will be on the same thread as Quart. This function
         must be called before quart is created."""
+        print(neomodel_config.DATABASE_URL)
+        print(neomodel_config.DATABASE_URL)
+        print(neomodel_config.DATABASE_URL)
+        print(neomodel_config.DATABASE_URL)
+        print(neomodel_config.DATABASE_URL)
         important_do_not_delete = dependencyinspection.models.NeomodelConnectionTest()
         _ = important_do_not_delete.save()
 
