@@ -36,41 +36,10 @@ async def create_app(**config_overrides: Any) -> Quart:
     _init_graceful_shutdown()
     _init_blueprints(app)
 
-    @app.route("/")
-    async def home():
-        return "hi"
+    @app.route("/healthcheck")
+    async def healthcheck():
+        return "healthy", 200
 
-    # async def consumer():
-    #     while True:
-    #         data = "sent data from backend"
-    #         await websocket.send(data)
-    #         print(f"sent{data}")
-    #
-    # async def producer():
-    #     while True:
-    #         data = await websocket.receive()
-    #         print(f"recieved {data}")
-    #
-    # @app.websocket("/ws")
-    # async def ws():
-    #     consumer_task = asyncio.ensure_future(
-    #         copy_current_websocket_context(consumer)(),
-    #     )
-    #     producer_task = asyncio.ensure_future(
-    #         copy_current_websocket_context(producer)(),
-    #     )
-    #     try:
-    #         await asyncio.gather(consumer_task, producer_task)
-    #     finally:
-    #         consumer_task.cancel()
-    #         producer_task.cancel()
-    #     # producer = asyncio.create_task(sending())
-    #     # consumer = asyncio.create_task(receiving())
-    #     # await asyncio.gather(producer, consumer)
-    #
-    # @app.websocket("/ws2")
-    # async def ws2():
-    #
     return app
 
 
