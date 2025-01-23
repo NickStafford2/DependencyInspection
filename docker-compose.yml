@@ -10,7 +10,7 @@ services:
         condition: service_healthy
     restart: always
     ports: 
-      - 3000:3000
+      - 8080:8080
     # networks:
     #   network
   backend-service: 
