@@ -38,14 +38,13 @@ services:
       retries: 3
       start_period: 10s
       timeout: 5s
-    env_file: "backend/.env"
     environment:
       - PORT=5001
       - SECRET_KEY="you-will-never-guess"
       - ENV_FOR_DYNACONF=docker
-    #   - NEO4J_PASSWORD=/run/secrets/neo4j_password
-    # secrets:
-    #   - neo4j_password
+      - NEO4J_PASSWORD=/run/secrets/neo4j_auth_file
+    secrets:
+      - neo4j_auth_file
   neo4j-service: 
     container_name: di-neo4j_container
     image: neo4j:5.26.0-bullseye
@@ -72,8 +71,6 @@ services:
 #   database:
 secrets:
   neo4j_auth_file:
-    file: ./neo4j_auth.txt
-  neo4j_password:
     file: ./neo4j_auth.txt
 # networks: 
 #   network
