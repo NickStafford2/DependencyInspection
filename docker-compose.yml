@@ -23,6 +23,7 @@ services:
       - "5001:5001"
     volumes:
       - ./backend:/backendApp
+      - ./neo4j_auth.txt:/app/neo4j_auth.txt
     # potential bind mount so local changes are reflected in docker container
     # volumes: 
     #   - ./app:/usr/src/app

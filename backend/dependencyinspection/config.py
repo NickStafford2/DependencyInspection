@@ -23,9 +23,9 @@ def get_config() -> dict[str, str]:
 
 def _get_docker_secret() -> str:
     try:
-        with open("../neo4j_auth.txt", "r") as file:
+        with open("/app/neo4j_auth.txt", "r") as file:
             secret_value = file.read()
-            secret_value = secret_value.split("/")[-1]
+            secret_value = secret_value.split("/")[-1].strip()
         return secret_value
     except FileNotFoundError:
         print("The file ../neo4j_auth.txt was not found.")

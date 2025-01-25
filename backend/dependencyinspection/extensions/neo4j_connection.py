@@ -64,6 +64,11 @@ class Neo4j_Connection:
     def _init_connection(self):
         """This exists so that neomodel will be on the same thread as Quart. This function
         must be called before quart is created."""
+        print(self.neo4j_neomodel_url)
+        print(self.neo4j_neomodel_url)
+        print(self.neo4j_neomodel_url)
+        print(self.neo4j_neomodel_url)
+        print(self.neo4j_neomodel_url)
         important_do_not_delete = dependencyinspection.models.NeomodelConnectionTest()
         _ = important_do_not_delete.save()
 
