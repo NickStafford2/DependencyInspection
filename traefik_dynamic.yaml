@@ -12,6 +12,9 @@ http:
           - main: "dependencyinspection.com"
             sans:
               - "www.dependencyinspection.com"
+      middlewares: 
+        - www-redirect
+      #   - nick-only
     backend-service:
       rule: "Host(`dependencyinspection.com`) && PathPrefix(`/api`)"
       entryPoints:
@@ -23,6 +26,10 @@ http:
           - main: "dependencyinspection.com"
             sans:
               - "www.dependencyinspection.com"
+      middlewares: 
+        - www-redirect
+      #   - nick-only
+      #   - strip-api-prefix
   middlewares:
     strip-api-prefix:
       stripPrefix:
@@ -42,17 +49,10 @@ http:
       loadbalancer: 
         servers:
           - url: "http://frontend-service:8081"
-      middlewares: 
-        - www-redirect
-      #   - nick-only
     backend-service:
       loadbalancer: 
         servers:
           - url: "http://backend-service:5001"
-      middlewares: 
-        - www-redirect
-      #   - nick-only
-      #   - strip-api-prefix
     neo4j-service:
       loadbalancer: 
         servers:
