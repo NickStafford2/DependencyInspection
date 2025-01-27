@@ -35,7 +35,7 @@ http:
     strip-api-prefix:
       stripPrefix:
         prefixes:
-          - "/api"
+          - /api
     nick-only:
       ipAllowList:
         sourceRange:
