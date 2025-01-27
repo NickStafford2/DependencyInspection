@@ -12,27 +12,27 @@ http:
     #     certResolver: lets-encrypt
     #
     frontend-service:
-      rule: "Host(`dependendyinspection.com`)"
+      rule: "Host(`dependencyinspection.com`)"
       entryPoints:
         - websecure
       service: "frontend-service"  
       tls:
         certResolver: myresolver
         domains:
-          - main: "dependendyinspection.com"
+          - main: "dependencyinspection.com"
             sans:
-              - "www.dependendyinspection.com"
+              - "www.dependencyinspection.com"
     backend-service:
-      rule: "Host(`dependendyinspection.com`) && PathPrefix(`/api`)"
+      rule: "Host(`dependencyinspection.com`) && PathPrefix(`/api`)"
       entryPoints:
         - websecure
       service: "backend-service"  
       tls:
         certResolver: myresolver
         domains:
-          - main: "dependendyinspection.com"
+          - main: "dependencyinspection.com"
             sans:
-              - "www.dependendyinspection.com"
+              - "www.dependencyinspection.com"
 #   middlewares:
 #     simpleAuth:
 #       basicAuth:
