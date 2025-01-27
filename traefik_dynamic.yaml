@@ -43,7 +43,7 @@ http:
     www-redirect:
       redirectRegex:
         regex: ^http?://(?:www\.)dependencyinspection.com?(.+)
-        replacement: https://dependencyinspection.com${1}/
+        replacement: http://dependencyinspection.com${1}/
   services:
     frontend-service:
       loadbalancer: 
