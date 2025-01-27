@@ -1,18 +1,8 @@
 #traefik_dynamic.yaml
 http:
   routers:
-    # api:
-    #   rule: "Host(`monitor.dependencyinspection`)"
-    #   entryPoints:
-    #     - websecure
-    #   middlewares:
-    #     - simpleAuth
-    #   service: "api@internal"
-    #   tls:
-    #     certResolver: lets-encrypt
-    #
     frontend-service:
-      rule: "Host(`dependencyinspection.com`)"
+      rule: "Host(`dependencyinspection.com`) && PathPrefix(`/`)"
       entryPoints:
         - websecure
       service: "frontend-service"  
@@ -38,11 +28,6 @@ http:
       stripPrefix:
         prefixes:
           - "/api"
-#   middlewares:
-#     simpleAuth:
-#       basicAuth:
-#         users:
-#           - "admin:something here"
   services:
     frontend-service:
       loadbalancer: 
