@@ -11,7 +11,7 @@ from typing import Any
 
 from dynaconf import FlaskDynaconf
 from dependencyinspection.config import get_overrides
-from quart import Quart, request, before_request
+from quart import Quart, request
 
 from neomodel import db as neomodel_db
 

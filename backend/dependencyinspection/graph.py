@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import random
 
 import networkx as nx
@@ -46,22 +47,24 @@ async def sse():
 
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
 async def get_networks(package_names: str) -> Response:
+    logging.warning("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHH. ")
+
     async def send_events():
         hello = ServerSentEvent("just saying hi", "message", "request_recieved")
         yield hello.encode()
-        as_list = package_names.split(",")
-        list_msg = ServerSentEvent(as_list, "message", "starting_search")
-        yield list_msg.encode()
-        if not package_names:
-            error_message = ServerSentEvent(
-                {"error": "No package names provided"}, "message", "no_package_error"
-            )
-            yield error_message.encode()
-            # yield jsonify()
-        else:
-            networks = _get_networks(as_list)
-            networkEvent = ServerSentEvent(networks, "message", "network")
-            yield networkEvent.encode()
+        # as_list = package_names.split(",")
+        # list_msg = ServerSentEvent(as_list, "message", "starting_search")
+        # yield list_msg.encode()
+        # if not package_names:
+        #     error_message = ServerSentEvent(
+        #         {"error": "No package names provided"}, "message", "no_package_error"
+        #     )
+        #     yield error_message.encode()
+        #     # yield jsonify()
+        # else:
+        #     networks = _get_networks(as_list)
+        #     networkEvent = ServerSentEvent(networks, "message", "network")
+        #     yield networkEvent.encode()
 
     response = await make_response(
         send_events(),
@@ -101,6 +104,7 @@ async def get_all_networks():
 
 @bp.route("/getAllDBNetworks", methods=["GET"])
 async def get_all_db_networks():
+    logging.warning("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHH22222. ")
     # print("Getting all nodes in the db")
     found = database.get_db_all()
     # print(f"Got all nodes in the db: {len(found)} packages")
