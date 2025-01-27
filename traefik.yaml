@@ -1,3 +1,4 @@
+# traefik.yaml
 global:
   checkNewVersion: false
   sendAnonymousUsage: false
@@ -24,18 +25,7 @@ providers:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
   file:
-    filename: "traefik_dynamic.yaml"
-# certificatesResolvers:
-#   myresolver:
-#     acme:
-#       tlsChallenge:
-#         true
-#       email: 
-#         ngstafford1@gmail.com 
-#       storage:
-#         /letsencrypt/acme.json
-    # exposedByDefault: true
-    # network: internal
+    filename: "/etc/traefik/traefik_dynamic.yaml"
     
 certificatesResolvers:
   myresolver:
@@ -43,15 +33,11 @@ certificatesResolvers:
     acme:
 
       # Email address used for registration.
-      #
       # Required
-      #
       email: "ngstafford1@gmail.com"
 
       # File or key used for certificates storage.
-      #
       # Required
-      #
       storage: "/letsencrypt/acme.json"
 
       # CA server to use.
