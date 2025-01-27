@@ -107,7 +107,7 @@ certificatesResolvers:
       #
       # Optional (but recommended)
       #
-      tlsChallenge:
+      tlsChallenge: {}
 
       # Use a HTTP-01 ACME challenge.
       #
