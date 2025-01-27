@@ -1,4 +1,5 @@
-import os
+# import os
+import logging
 from dynaconf import settings
 
 
@@ -28,8 +29,8 @@ def _get_docker_secret() -> str:
             secret_value = secret_value.split("/")[-1].strip()
         return secret_value
     except FileNotFoundError:
-        # print("The file ../neo4j_auth.txt was not found.")
+        logging.error("The file ../neo4j_auth.txt was not found.")
         return "neo4j"
     except Exception as e:
-        # print(f"An error occurred: {e}")
+        logging.error(f"An error occurred: {e}")
         return "neo4j"
