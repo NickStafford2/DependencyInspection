@@ -43,7 +43,7 @@ http:
     www-redirect:
       redirectRegex:
         regex: ^(http|https)?://(?:www\.)?(.+)
-        replacement: https://$${2}/
+        replacement: https://${2}/
   services:
     frontend-service:
       loadbalancer: 
