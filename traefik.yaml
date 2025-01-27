@@ -19,6 +19,21 @@ entryPoints:
   websecure:
     address: :443
   
+accessLog:
+  # JSON format
+  format: common
+  fields:
+    # Keep all the fields by default
+    defaultMode: keep
+    headers:
+      # Keep all the headers by default
+      defaultMode: keep
+      names:
+        # Redact the User-Agent header value
+        User-Agent: redact
+        # Drop the Authorization header value
+        Authorization: drop
+
 
 providers:
   docker: 
