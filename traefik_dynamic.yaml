@@ -30,7 +30,7 @@ http:
           - "/api"
         # forceSlash: true
     nick-only:
-      ipWhiteList:
+      ipAllowList:
         sourceRange:
           - "107.10.235.119/32"
   services:
