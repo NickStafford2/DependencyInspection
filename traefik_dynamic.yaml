@@ -23,7 +23,7 @@ http:
             sans:
               - "www.dependendyinspection.com"
     backend-service:
-      rule: "Host(`dependendyinspection.com/api`)"
+      rule: "Host(`dependendyinspection.com`) && PathPrefix(`/api`)"
       entryPoints:
         - websecure
       service: "backend-service"  
