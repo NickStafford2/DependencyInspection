@@ -4,6 +4,7 @@ global:
   sendAnonymousUsage: false
 log:
   level: DEBUG
+accessLog: {}
 api: 
   dashboard: true
   insecure: true
