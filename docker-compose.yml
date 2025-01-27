@@ -32,7 +32,7 @@ services:
       # - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  
       - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  
       # - "traefik.http.routers.frontend-service.entrypoint=web"
-      - "traefik.http.routers.frontend-service.entrypoint=websecure"
+      # - "traefik.http.routers.frontend-service.entrypoint=websecure"
       - "traefik.http.routers.frontend-service.tsl.certresolver=myresolver"
     build:
       context: ./frontend
@@ -54,7 +54,7 @@ services:
       # - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)" 
       - "traefik.http.services.backend-service.loadbalancer.server.port=5001"
       # - "traefik.http.routers.backend-service.entrypoint=web"
-      - "traefik.http.routers.backend-service.entrypoint=websecure"
+      # - "traefik.http.routers.backend-service.entrypoint=websecure"
       - "traefik.http.routers.backend-service.tsl.certresolver=myresolver"
     build:
       context: ./backend

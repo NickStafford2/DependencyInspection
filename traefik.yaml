@@ -18,17 +18,22 @@ entryPoints:
     address: :443
   
 
-# http:
-#   routers:
-#     frontend-service:
-#       rule: "Host(`localhost`)"
-#       entryPoints:
-#         - web
-#       service: "frontend-service"
-#       # tls: {}
-#   services:
-#     frontend-service:
-#       loadbalancer: 
+http:
+  routers:
+    frontend-service:
+      rule: "Host(`dependendyinspection.com`)"
+      entryPoints:
+        - websecure
+      service: "frontend-service"
+    backend-service:
+      rule: "Host(`dependendyinspection.com/api`)"
+      entryPoints:
+        - websecure
+      service: "backend-service"
+      # tls: {}
+  # services:
+  #   frontend-service:
+  #     loadbalancer: 
 providers:
   docker: 
     endpoint: "unix:///var/run/docker.sock"
