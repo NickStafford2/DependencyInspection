@@ -33,6 +33,11 @@ http:
           - main: "dependencyinspection.com"
             sans:
               - "www.dependencyinspection.com"
+  middlewares:
+    strip-api-prefix:
+      stripPrefix:
+        prefixes:
+          - "/api"
 #   middlewares:
 #     simpleAuth:
 #       basicAuth:
@@ -47,6 +52,8 @@ http:
       loadbalancer: 
         servers:
           - url: "http://backend-service:5001"
+      middlewares:
+        - strip-api-prefix
     neo4j-service:
       loadbalancer: 
         servers:
