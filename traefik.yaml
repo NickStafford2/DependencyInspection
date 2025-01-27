@@ -9,8 +9,14 @@ api:
 entryPoints: 
   web: 
     address: :80 
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
   websecure:
     address: :443
+  
 
 # http:
 #   routers:
@@ -26,8 +32,17 @@ entryPoints:
 providers:
   docker: 
     endpoint: "unix:///var/run/docker.sock"
-    # exposedByDefault: false
-    exposedByDefault: true
+    exposedByDefault: false
+# certificatesResolvers:
+#   myresolver:
+#     acme:
+#       tlsChallenge:
+#         true
+#       email: 
+#         ngstafford1@gmail.com 
+#       storage:
+#         /letsencrypt/acme.json
+    # exposedByDefault: true
     # network: internal
     
 

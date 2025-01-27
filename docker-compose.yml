@@ -3,8 +3,12 @@ services:
     container_name: di-reverse-proxy
     image: traefik:v3.2
     command:
-      - "--api.insecure=true"
-      - "providers.docker"
+      # - "--api.insecure=true"
+      # - "providers.docker"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=ngstafford1@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # The http Port
       - "80:80"
@@ -17,20 +21,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # config
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - letsencrypt:/letsencrypt
     # networks:
     #   internal:
   frontend-service:
     container_name: di-frontend_container
-
     labels:
-      - "traefik.enable=true"  # Enable Traefik for this service
-      - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  # Set the routing rule
-      - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  # Backend port of the service
-      # - "traefik.http.routers.frontend-service.entrypoint=web"
+      - "traefik.enable=true" 
+      - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  
+      - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  
+      - "traefik.http.routers.frontend-service.entrypoint=web"
+      # - "traefik.http.routers.frontend-service.entrypoint=websecure"
+      - "traefik.http.routers.frontend-service.tsl.certresolver=myresolver"
     build:
       context: ./frontend
       args: 
-       - VITE_APP_BACKEND_ADDRESS=https://localhost/api/
+       - VITE_APP_BACKEND_ADDRESS=https://backend-service/api/
     depends_on: 
       backend-service:
         condition: service_healthy
@@ -40,13 +46,20 @@ services:
     # networks:
     #   internal:
   backend-service: 
-    container_name: di-backend_container
+    # container_name: di-backend_container
+    labels:
+      - "traefik.enable=true"  
+      - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)" 
+      - "traefik.http.services.backend-service.loadbalancer.server.port=5001"
+      # - "traefik.http.routers.backend-service.entrypoint=web"
+      # - "traefik.http.routers.backend-service.entrypoint=websecure"
+      - "traefik.http.routers.backend-service.tsl.certresolver=myresolver"
     build:
       context: ./backend
       # target: development
       target: production
-    ports:
-      - "5001:5001"
+    # ports:
+    #   - "5001:5001"
     volumes:
       - ./backend:/backendApp
       - ./neo4j_auth.txt:/app/neo4j_auth.txt
@@ -60,7 +73,7 @@ services:
       neo4j-service:
         condition: service_healthy
     healthcheck:
-      test: wget http://localhost:5001/healthcheck || exit 1
+      test: wget http://backend-service:5001/healthcheck || exit 1
       interval: 30s
       retries: 3
       start_period: 10s
@@ -69,25 +82,30 @@ services:
       - PORT=5001
       - SECRET_KEY="you-will-never-guess"
       - ENV_FOR_DYNACONF=docker
+    deploy:
+      mode: replicated
+      replicas: 3
     # networks:
     #   internal:
   neo4j-service: 
     container_name: di-neo4j_container
+    labels:
+      - "traefik.enable=true"  
     image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
     # volumes: 
     #   - database:/data/db
     restart: always
-    ports:
-      - "7474:7474"  # Neo4j HTTP interface
-      - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
+    # ports:
+    #   - "7474:7474"  # Neo4j HTTP interface
+    #   - "7687:7687"  # Neo4j Bolt protocol (typically used for database access)
     environment:
       - NEO4J_AUTH=/run/secrets/neo4j_auth_file
       - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
     secrets:
       - neo4j_auth_file
     healthcheck:
-      test: wget http://localhost:7474 || exit 1
+      test: wget http://neo4j-service:7474 || exit 1
       interval: 2s
       timeout: 10s
       retries: 20
@@ -95,7 +113,8 @@ services:
     # networks:
     #   internal:
 
-# volumes:
+volumes:
+  letsencrypt:
 #   database:
 secrets:
   neo4j_auth_file:
