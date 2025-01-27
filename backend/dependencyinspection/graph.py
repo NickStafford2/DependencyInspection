@@ -104,7 +104,7 @@ async def get_all_networks():
 
 @bp.route("/getAllDBNetworks", methods=["GET"])
 async def get_all_db_networks():
-    logging.warning("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHH22222. ")
+    # logging.warning("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHH22222. ")
     # print("Getting all nodes in the db")
     found = database.get_db_all()
     # print(f"Got all nodes in the db: {len(found)} packages")
