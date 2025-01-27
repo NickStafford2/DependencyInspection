@@ -28,7 +28,8 @@ services:
     container_name: di-frontend_container
     labels:
       - "traefik.enable=true" 
-      - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  
+      - "traefik.http.routers.frontend-service.rule=Host(`dependencyinspection.com`)"  
+      # - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  
       - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  
       # - "traefik.http.routers.frontend-service.entrypoint=web"
       - "traefik.http.routers.frontend-service.entrypoint=websecure"
@@ -49,7 +50,8 @@ services:
     # container_name: di-backend_container
     labels:
       - "traefik.enable=true"  
-      - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)" 
+      - "traefik.http.routers.backend-service.rule=Host(`dependencyinspection.com`)" 
+      # - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)" 
       - "traefik.http.services.backend-service.loadbalancer.server.port=5001"
       # - "traefik.http.routers.backend-service.entrypoint=web"
       - "traefik.http.routers.backend-service.entrypoint=websecure"
