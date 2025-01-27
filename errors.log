@@ -1,0 +1,13 @@
+
+unable to generate a certificate for the domains [dependendyinspection.com www.dependendyinspection.com]: 
+  error: one or more domains had a problem:\n[dependendyinspection.com] acme: 
+  error: 400 :: urn:ietf:params:acme:error:dns :: 
+    DNS problem: NXDOMAIN looking up A for dependendyinspection.com 
+      - check that a DNS record exists for this domain; 
+    DNS problem: NXDOMAIN looking up AAAA for dependendyinspection.com 
+      - check that a DNS record exists for this domain\n[www.dependendyinspection.com] 
+  acme: error: 400 :: urn:ietf:params:acme:error:dns :: 
+    DNS problem: NXDOMAIN looking up A for www.dependendyinspection.com 
+      - check that a DNS record exists for this domain; 
+    DNS problem: NXDOMAIN looking up AAAA for www.dependendyinspection.com 
+      - check that a DNS record exists for this domain\n

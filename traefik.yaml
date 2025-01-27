@@ -6,7 +6,7 @@ log:
   level: DEBUG
 api: 
   dashboard: true
-  # insecure: true
+  insecure: true
 
 entryPoints: 
   web: 
