@@ -5,7 +5,8 @@ log:
   level: DEBUG
 api: 
   dashboard: true
-  insecure: true
+  # insecure: true
+
 entryPoints: 
   web: 
     address: :80 
@@ -18,26 +19,12 @@ entryPoints:
     address: :443
   
 
-http:
-  routers:
-    frontend-service:
-      rule: "Host(`dependendyinspection.com`)"
-      entryPoints:
-        - websecure
-      service: "frontend-service"
-    backend-service:
-      rule: "Host(`dependendyinspection.com/api`)"
-      entryPoints:
-        - websecure
-      service: "backend-service"
-      # tls: {}
-  # services:
-  #   frontend-service:
-  #     loadbalancer: 
 providers:
   docker: 
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
+  file:
+    filename: "traefik_dynamic.yaml"
 # certificatesResolvers:
 #   myresolver:
 #     acme:

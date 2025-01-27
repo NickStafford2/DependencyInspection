@@ -1,0 +1,44 @@
+
+http:
+#   middlewares:
+#     simpleAuth:
+#       basicAuth:
+#         users:
+#           - "admin:something here"
+  routers:
+    # api:
+    #   rule: "Host(`monitor.dependencyinspection`)"
+    #   entryPoints:
+    #     - websecure
+    #   middlewares:
+    #     - simpleAuth
+    #   service: "api@internal"
+    #   tls:
+    #     certResolver: lets-encrypt
+    #
+    frontend-service:
+      rule: "Host(`dependendyinspection.com`)"
+      entryPoints:
+        - websecure
+      service: "frontend-service"
+      tls:
+        certResolver: myresolver
+        domains: 
+          - main: "dependendyinspection.com"
+            sans: 
+              - "www.dependendyinspection.com"
+    backend-service:
+      rule: "Host(`dependendyinspection.com/api`)"
+      entryPoints:
+        - websecure
+      service: "backend-service"
+      tls:
+        certResolver: myresolver
+        domains: 
+          - main: "dependendyinspection.com"
+            sans: 
+              - "www.dependendyinspection.com"
+      # tls: {}
+  # services:
+  #   frontend-service:
+  #     loadbalancer: 

@@ -1,7 +1,7 @@
 services:
   reverse-proxy:
     container_name: di-reverse-proxy
-    image: traefik:v3.2
+    image: traefik:v3.3
     # command:
       # - "--api.insecure=true"
       # - "providers.docker"
@@ -21,6 +21,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # config
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml:ro
       - letsencrypt:/letsencrypt
     # networks:
     #   internal:
