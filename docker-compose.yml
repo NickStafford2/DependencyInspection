@@ -1,6 +1,32 @@
 services:
+  reverse-proxy:
+    container_name: di-reverse-proxy
+    image: traefik:v3.2
+    command:
+      - "--api.insecure=true"
+      - "providers.docker"
+    ports:
+      # The http Port
+      - "80:80"
+      # The https Port 
+      - "443:443"
+      # The traefik Web UI (neabled by --api.insecure=true)
+      - "8080:8080"
+    volumes: 
+      # So that Traefik can listen to Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      # config
+      - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+    # networks:
+    #   internal:
   frontend-service:
     container_name: di-frontend_container
+
+    labels:
+      - "traefik.enable=true"  # Enable Traefik for this service
+      - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  # Set the routing rule
+      - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  # Backend port of the service
+      # - "traefik.http.routers.frontend-service.entrypoint=web"
     build:
       context: ./frontend
       args: 
@@ -9,10 +35,10 @@ services:
       backend-service:
         condition: service_healthy
     restart: always
-    ports: 
-      - 8080:8080
+    # ports: 
+    #   - 8081:8081
     # networks:
-    #   network
+    #   internal:
   backend-service: 
     container_name: di-backend_container
     build:
@@ -43,6 +69,8 @@ services:
       - PORT=5001
       - SECRET_KEY="you-will-never-guess"
       - ENV_FOR_DYNACONF=docker
+    # networks:
+    #   internal:
   neo4j-service: 
     container_name: di-neo4j_container
     image: neo4j:5.26.0-bullseye
@@ -64,6 +92,8 @@ services:
       timeout: 10s
       retries: 20
       start_period: 3s
+    # networks:
+    #   internal:
 
 # volumes:
 #   database:
@@ -71,4 +101,4 @@ secrets:
   neo4j_auth_file:
     file: ./neo4j_auth.txt
 # networks: 
-#   network
+#   internal:
