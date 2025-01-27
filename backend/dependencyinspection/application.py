@@ -11,7 +11,7 @@ from typing import Any
 
 from dynaconf import FlaskDynaconf
 from dependencyinspection.config import get_overrides
-from quart import Quart, request
+from quart import Quart
 
 from neomodel import db as neomodel_db
 
@@ -36,13 +36,6 @@ async def create_app(**config_overrides: Any) -> Quart:
     _init_graceful_shutdown()
     _init_blueprints(app)
 
-    @app.before_request
-    async def add_api_prefix():
-        # Check if the request path does not already start with /api
-        if not request.path.startswith("/api"):
-            # If not, prepend the /api prefix
-            request.path = "/api" + request.path
-
     @app.route("/healthcheck")
     async def healthcheck():
         return "healthy", 200
@@ -59,15 +52,15 @@ def _init_config(app: Quart, **config_overrides: Any) -> None:
 def _init_blueprints(app: Quart):
     from dependencyinspection.data import bp as data_bp
 
-    app.register_blueprint(data_bp, url_prefix="/data")
+    app.register_blueprint(data_bp, url_prefix="/api/data")
 
     from dependencyinspection.graph import bp as graph_bp
 
-    app.register_blueprint(graph_bp)
+    app.register_blueprint(graph_bp, url_prefix="/api")
 
     from dependencyinspection.migrations import bp as migrations_bp
 
-    app.register_blueprint(migrations_bp, url_prefix="/migrations")
+    app.register_blueprint(migrations_bp, url_prefix="/api/migrations")
 
 
 def _init_graceful_shutdown():
