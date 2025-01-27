@@ -14,7 +14,7 @@ http:
               - "www.dependencyinspection.com"
       middlewares: 
         - www-redirect
-        - strip-api-prefix
+        # - strip-api-prefix
       #   - nick-only
     backend-service:
       rule: "Host(`dependencyinspection.com`) && PathPrefix(`/api`) || Host(`www.dependencyinspection.com`) && PathPrefix(`/api`)"
