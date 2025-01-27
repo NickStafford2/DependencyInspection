@@ -42,8 +42,9 @@ http:
     frontend-service:
       loadbalancer: 
         servers:
-          - address: "frontend-service:8081"
+          - url: "frontend-service:8081"
     backend-service:
       loadbalancer: 
         servers:
-          - address: "backend-service:5001"
+          - url: "backend-service:5001"
+
