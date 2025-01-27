@@ -15,29 +15,35 @@ http:
       rule: "Host(`dependendyinspection.com`)"
       entryPoints:
         - websecure
-      service: "frontend-service"
+      service: "frontend-service"  
       tls:
         certResolver: myresolver
-        domains: 
+        domains:
           - main: "dependendyinspection.com"
-            sans: 
+            sans:
               - "www.dependendyinspection.com"
     backend-service:
       rule: "Host(`dependendyinspection.com/api`)"
       entryPoints:
         - websecure
-      service: "backend-service"
+      service: "backend-service"  
       tls:
         certResolver: myresolver
-        domains: 
+        domains:
           - main: "dependendyinspection.com"
-            sans: 
+            sans:
               - "www.dependendyinspection.com"
 #   middlewares:
 #     simpleAuth:
 #       basicAuth:
 #         users:
 #           - "admin:something here"
-  # services:
-  #   frontend-service:
-  #     loadbalancer: 
+  services:
+    frontend-service:
+      loadbalancer: 
+        servers:
+          - address: "frontend-service:8081"
+    backend-service:
+      loadbalancer: 
+        servers:
+          - address: "backend-service:5001"
