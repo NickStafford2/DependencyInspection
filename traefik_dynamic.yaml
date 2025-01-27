@@ -35,8 +35,8 @@ http:
           - "107.10.235.119/32"
     www-redirect:
       redirectRegex:
-        regex: "https://www.my-site.com/*"
-        replacement: "https://sub.my-site.com/*"
+        regex: "https://www.dependencyinspection.com/*"
+        replacement: "https://dependencyinspection.com/*"
   services:
     frontend-service:
       loadbalancer: 
