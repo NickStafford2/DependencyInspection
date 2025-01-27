@@ -11,7 +11,7 @@ from typing import Any
 
 from dynaconf import FlaskDynaconf
 from dependencyinspection.config import get_overrides
-from quart import Quart
+from quart import Quart, request, before_request
 
 from neomodel import db as neomodel_db
 
@@ -35,6 +35,13 @@ async def create_app(**config_overrides: Any) -> Quart:
     db.init_app(app)
     _init_graceful_shutdown()
     _init_blueprints(app)
+
+    @app.before_request
+    async def add_api_prefix():
+        # Check if the request path does not already start with /api
+        if not request.path.startswith("/api"):
+            # If not, prepend the /api prefix
+            request.path = "/api" + request.path
 
     @app.route("/healthcheck")
     async def healthcheck():

@@ -28,6 +28,7 @@ http:
       stripPrefix:
         prefixes:
           - "/api"
+        # forceSlash: true
   services:
     frontend-service:
       loadbalancer: 
@@ -37,8 +38,8 @@ http:
       loadbalancer: 
         servers:
           - url: "http://backend-service:5001"
-      middlewares:
-        - strip-api-prefix
+      # middlewares:
+      #   - strip-api-prefix
     neo4j-service:
       loadbalancer: 
         servers:
