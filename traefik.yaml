@@ -2,16 +2,16 @@
 global:
   checkNewVersion: false
   sendAnonymousUsage: false
-log:
-  level: DEBUG
-accessLog: 
-  fields:
-    defaultMode: keep
-    headers:
-      defaultMode: keep
-api: 
-  dashboard: true
-  insecure: true
+# log:
+#   level: DEBUG
+# accessLog: 
+#   fields:
+#     defaultMode: keep
+#     headers:
+#       defaultMode: keep
+# api: 
+#   dashboard: true
+#   insecure: true
 
 entryPoints: 
   web: 
@@ -24,27 +24,12 @@ entryPoints:
   websecure:
     address: :443
   
-# accessLog:
-#   filePath: "/path/to/access.log"
-#   # JSON format
-#   format: common
-#   fields:
-#     # Keep all the fields by default
-#     defaultMode: keep
-#     headers:
-#       # Keep all the headers by default
-#       defaultMode: keep
-#       names:
-#         # Redact the User-Agent header value
-#         User-Agent: redact
-#         # Drop the Authorization header value
-#         Authorization: drop
-experimental:
-  plugins:
-    traefiklogger:
-      moduleName: "github.com/fzoli/traefiklogger"
-      version: "v0.11.0"
-
+# experimental:
+#   plugins:
+#     traefiklogger:
+#       moduleName: "github.com/fzoli/traefiklogger"
+#       version: "v0.11.0"
+#
 providers:
   docker: 
     endpoint: "unix:///var/run/docker.sock"
