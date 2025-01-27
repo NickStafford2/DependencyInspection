@@ -57,7 +57,7 @@ http:
       loadbalancer: 
         servers:
           - url: "http://neo4j-service:7687"
-      middlewares: 
-        - www-redirect
+      # middlewares: 
+      #   - www-redirect
       #   - nick-only
 
