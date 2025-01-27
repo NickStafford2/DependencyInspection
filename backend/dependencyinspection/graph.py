@@ -109,6 +109,8 @@ async def get_all_db_networks():
     found = database.get_db_all()
     # print(f"Got all nodes in the db: {len(found)} packages")
 
+    if not found:
+        return "Nothing in db", 200
     formatted_data = format_for_frontend(set(found.keys()), found)
     # print(f"Formatted graph data: {formatted_data}")
     return formatted_data
