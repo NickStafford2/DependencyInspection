@@ -33,9 +33,15 @@ http:
       #   - nick-only
   middlewares:
     strip-api-prefix:
-      stripPrefix:
-        prefixes:
-          - /api
+      stripPrefixRegex:
+        replacePathRegex:
+          regex: "^/api/(.*)"
+          replacement: "/$1"
+        # regex:
+        #   - "/foo/[a-z0-9]+/[0-9]+/"
+      # stripPrefix:
+      #   prefixes:
+      #     - "/api"
     nick-only:
       ipAllowList:
         sourceRange:
