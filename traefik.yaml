@@ -4,7 +4,9 @@ global:
   sendAnonymousUsage: false
 log:
   level: DEBUG
-accessLog: {}
+accessLog: 
+  fields:
+    defaultMode: keep
 api: 
   dashboard: true
   insecure: true
