@@ -97,8 +97,12 @@ services:
       - "traefik.enable=true"  
     image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
-    # volumes: 
+    volumes: 
     #   - database:/data/db
+        - /$HOME/neo4j/logs:/logs
+        - /$HOME/neo4j/config:/config
+        - /$HOME/neo4j/data:/data
+        - /$HOME/neo4j/plugin:/plugins
     restart: always
     # ports:
     #   - "7474:7474"  # Neo4j HTTP interface
