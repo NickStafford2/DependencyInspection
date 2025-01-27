@@ -38,19 +38,19 @@ http:
       loadbalancer: 
         servers:
           - url: "http://frontend-service:8081"
-      middlewares: 
-        - nick-only
+      # middlewares: 
+      #   - nick-only
     backend-service:
       loadbalancer: 
         servers:
           - url: "http://backend-service:5001"
-      middlewares: 
-        - nick-only
+      # middlewares: 
+      #   - nick-only
       #   - strip-api-prefix
     neo4j-service:
       loadbalancer: 
         servers:
           - url: "http://neo4j-service:7687"
-      middlewares: 
-        - nick-only
+      # middlewares: 
+      #   - nick-only
 
