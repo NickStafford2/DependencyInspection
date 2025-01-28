@@ -4,11 +4,11 @@ global:
   sendAnonymousUsage: false
 log:
   level: DEBUG
-# accessLog: 
-#   fields:
-#     defaultMode: keep
-#     headers:
-#       defaultMode: keep
+accessLog: 
+  fields:
+    defaultMode: keep
+    headers:
+      defaultMode: keep
 # api: 
 #   dashboard: true
 #   insecure: true
@@ -24,12 +24,12 @@ entryPoints:
   websecure:
     address: :443
   
-# experimental:
-#   plugins:
-#     traefiklogger:
-#       moduleName: "github.com/fzoli/traefiklogger"
-#       version: "v0.11.0"
-#
+experimental:
+  plugins:
+    traefiklogger:
+      moduleName: "github.com/fzoli/traefiklogger"
+      version: "v0.11.0"
+
 providers:
   docker: 
     endpoint: "unix:///var/run/docker.sock"
