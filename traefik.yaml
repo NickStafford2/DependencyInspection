@@ -2,8 +2,8 @@
 global:
   checkNewVersion: false
   sendAnonymousUsage: false
-# log:
-#   level: DEBUG
+log:
+  level: DEBUG
 # accessLog: 
 #   fields:
 #     defaultMode: keep
