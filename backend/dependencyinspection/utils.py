@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def dev_only(f):
-    logging.debug(f"dev_only() called. {current_app.config}")
+    # logging.debug(f"dev_only() called. {current_app.config}")
 
     def wrapper(*args, **kwargs):
         logging.debug(f"dev_only() called. {current_app.config}")
