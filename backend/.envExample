@@ -1,1 +1,2 @@
 NEO4J_PASSWORD=
+QUART_ENV=development

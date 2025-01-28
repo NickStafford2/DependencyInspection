@@ -137,6 +137,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# Keep .envExample and .quartenv
+!.envExample
+!.quartenv
+
 # Spyder project settings
 .spyderproject
 .spyproject

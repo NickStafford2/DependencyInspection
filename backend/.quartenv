@@ -1,5 +1,5 @@
 QUART_APP="dependencyinspection/manage.py"
-FLASK_ENV=development
+QUART_ENV=development
 
 # Since we are only using flask as a backend and is not serving the web page, the browser
 # based debugger is irrelevant. Errors should still be visible on command line. 
