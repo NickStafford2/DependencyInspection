@@ -5,8 +5,18 @@ import shutil
 from collections.abc import Iterable
 from typing import TypeVar, final, override
 from dependencyinspection.config import is_docker
+from quart import current_app, abort
 
 T = TypeVar("T")
+
+
+def dev_only(f):
+    def wrapper(*args, **kwargs):
+        if current_app.config["QUART_ENV"] != "development":
+            abort(404)
+        return f(*args, **kwargs)
+
+    return wrapper
 
 
 def nsprint(text: str, num_tabs: int = 0, tab: str = "    "):
