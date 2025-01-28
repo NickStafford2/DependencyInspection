@@ -1,5 +1,6 @@
 import hashlib
 import json
+import logging
 import os
 import shutil
 from collections.abc import Iterable
@@ -12,6 +13,7 @@ T = TypeVar("T")
 
 def dev_only(f):
     def wrapper(*args, **kwargs):
+        logging.debug(f"dev_only() called. {current_app.config}")
         if current_app.config["QUART_ENV"] != "development":
             abort(404)
         return f(*args, **kwargs)
