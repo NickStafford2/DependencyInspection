@@ -4,10 +4,12 @@ NEO4J_HOST = "localhost"
 NEO4J_DB = "neo4j"
 NEO4J_PORT = "7474"
 IS_DOCKER = "false"
+FLASK_ENV = "production"
 
 
 [development]
 NEO4J_HOST = "localhost"
+FLASK_ENV = "development"
 
 [docker]
 NEO4J_HOST = "neo4j-service"
