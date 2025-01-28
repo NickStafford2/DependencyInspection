@@ -4,7 +4,7 @@ NEO4J_HOST = "localhost"
 NEO4J_DB = "neo4j"
 NEO4J_PORT = "7474"
 IS_DOCKER = "false"
-FLASK_ENV = "production"
+QUART_ENV = "production"
 
 
 [development]
