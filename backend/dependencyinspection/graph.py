@@ -94,6 +94,13 @@ async def get_popular_networks():
     return _get_networks(list(to_search), max_count=10000)
 
 
+@utils.dev_only
+@bp.route("/dev_only", methods=["GET"])
+async def dev_only_test():
+    return "success", 200
+
+
+@utils.dev_only
 @bp.route("/getAllNetworks", methods=["GET"])
 async def get_all_networks():
     to_search = utils.get_all_package_names()
