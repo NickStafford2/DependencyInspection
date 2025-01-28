@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_URL = "/auth"; // Flask backend URL with Blueprint prefix
+const API_URL = "/auth";
 
 const App: React.FC = () => {
 	const [username, setUsername] = useState("");
@@ -107,7 +107,7 @@ const App: React.FC = () => {
 
 	return (
 		<div>
-			<h1>React Flask Authentication</h1>
+			<h1>React Quart Authentication</h1>
 
 			<input
 				type="text"
