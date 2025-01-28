@@ -9,7 +9,7 @@ QUART_ENV = "production"
 
 [development]
 NEO4J_HOST = "localhost"
-FLASK_ENV = "development"
+QUART_ENV = "development"
 
 [docker]
 NEO4J_HOST = "neo4j-service"
