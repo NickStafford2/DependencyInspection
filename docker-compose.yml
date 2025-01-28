@@ -86,9 +86,9 @@ services:
       - PORT=5001
       - SECRET_KEY="you-will-never-guess"
       - ENV_FOR_DYNACONF=docker
-    deploy:
-      mode: replicated
-      replicas: 3
+    # deploy:
+    #   mode: replicated
+    #   replicas: 3
     # networks:
     #   internal:
   neo4j-service: 
