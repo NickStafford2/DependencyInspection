@@ -100,6 +100,11 @@ async def dev_only_test():
     return "success", 200
 
 
+@bp.route("/not_dev_only", methods=["GET"])
+async def not_dev_only_test():
+    return "success", 200
+
+
 @utils.dev_only
 @bp.route("/getAllNetworks", methods=["GET"])
 async def get_all_networks():
