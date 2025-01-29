@@ -7,21 +7,23 @@ from quart import current_app as app
 import dependencyinspection.utils as utils
 from dependencyinspection.models import Package, PackageData, Packument
 
-# I will set this up soon. Need some way to test it. I can probably just call a fake
-# server and log the errors.
-# # Setup retry strategy in case they dislike the spam of requests
-# retry_strategy = Retry(
-#   total=3,  # Total number of retries
-#   status_forcelist=[429, 500, 502, 503, 504],  # Status codes to retry for
-#   allowed_methods=["GET", "POST"],  # HTTP methods to retry
-#   backoff_factor=1  # Backoff time between retries
-# )
-#
-# adapter = HTTPAdapter(max_retries=retry_strategy)
-# http = requests.Session()
-# # Mount the adapter to the session for all HTTP and HTTPS requests
-# http.mount("https://", adapter)
-# http.mount("http://", adapter)
+"""IDEA:
+I will set this up soon. Need some way to test it. I can probably just call a fake
+server and log the errors.
+# Setup retry strategy in case they dislike the spam of requests
+retry_strategy = Retry(
+  total=3,  # Total number of retries
+  status_forcelist=[429, 500, 502, 503, 504],  # Status codes to retry for
+  allowed_methods=["GET", "POST"],  # HTTP methods to retry
+  backoff_factor=1  # Backoff time between retries
+)
+
+adapter = HTTPAdapter(max_retries=retry_strategy)
+http = requests.Session()
+# Mount the adapter to the session for all HTTP and HTTPS requests
+http.mount("https://", adapter)
+http.mount("http://", adapter)
+"""
 
 
 def scrape_packages(
