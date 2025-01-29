@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
+import { useMyContext } from "@/context";
 
 export default function QuerySearch({
 	onResponse,
 }: { onResponse: (data: GraphData) => void }) {
 	const [query, setQuery] = useState<Query>(new Query());
 	const [queryUrl, setQueryUrl] = useState<string>("");
-	const [messages, setMessages] = useState<string[]>([]);
+	const { messages, setMessages } = useMyContext();
 	const [sse, setSse] = useState<EventSource | null>(null);
 	const pageload_query_has_run = useRef(false);
 
@@ -95,7 +96,7 @@ export default function QuerySearch({
 	return (
 		<div className="flex flex-col gap-2 ">
 			<h3 className="text-xl">Create a New Query:</h3>
-			<div className="flex flex-row gap-2 items-stretch">
+			<div className="flex flex-row gap-2 items-stretch relative">
 				{/* <span className="text-white">URL: '{queryUrl}'</span> */}
 				<div className="flex flex-col gap-2 grow-0">
 					<AddPackage onPackageAdded={addPackage} />
@@ -104,7 +105,7 @@ export default function QuerySearch({
 							<span className="text-white whitespace-nowrap ">
 								{query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
 							</span>
-							<div className="flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
+							<div className=" bg-blue-500 relative flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
 								{Array.from(query.packages).map((name, index) => (
 									<PackageTag
 										className="flex-grow"
@@ -119,6 +120,7 @@ export default function QuerySearch({
 						""
 					)}
 				</div>
+
 				<div className="">
 					{/* <Button className="h-full " onClick={callBackend}> */}
 					<Button className="" onClick={startSSEConnection}>

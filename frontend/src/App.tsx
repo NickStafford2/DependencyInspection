@@ -5,6 +5,7 @@ import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
 import { NodeTableContainer } from "./components/table/NodeTableContainer";
 import { columns } from "./components/table/columns";
+import Messages from "./components/Messages";
 
 const App = () => {
 	const [selectedNode, setSelectedNode] = useState<Node>();
@@ -56,6 +57,7 @@ const App = () => {
 				</div>
 				<div className="w-full h-full">
 					<div className="absolute z-10">{selectedNode?.id}</div>
+					<Messages />
 					<DIGraph3d
 						graphData={graphData}
 						onNodeSelected={onNodeSelected}
