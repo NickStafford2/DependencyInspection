@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GraphData } from "@/utils/models";
 import { Button } from "@/components/ui/button";
 // import { fetchGraphData } from "@/crudbar/api";
@@ -13,6 +13,7 @@ export default function QuerySearch({
 	const [queryUrl, setQueryUrl] = useState<string>("");
 	const [messages, setMessages] = useState<string[]>([]);
 	const [sse, setSse] = useState<EventSource | null>(null); // State to manage the EventSource connection
+	const pageload_query_has_run = useRef(false);
 
 	// const callBackend = async () => {
 	// 	fetchGraphData(query.toUrl()).then((data) => {
@@ -72,6 +73,17 @@ export default function QuerySearch({
 			}
 		};
 	}, [sse]);
+
+	useEffect(() => {
+		if (!pageload_query_has_run.current) {
+			// Function to be executed only the first time
+			addPackage("npm");
+			startSSEConnection();
+
+			// Mark the flag as true so it won't run again
+			pageload_query_has_run.current = true;
+		}
+	}, [addPackage, startSSEConnection]);
 
 	return (
 		<div className="flex flex-row gap-2 items-stretch">
