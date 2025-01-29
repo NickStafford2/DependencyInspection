@@ -15,6 +15,10 @@ export default function QuerySearch({
 	const [sse, setSse] = useState<EventSource | null>(null); // State to manage the EventSource connection
 	const pageload_query_has_run = useRef(false);
 
+	if (messages || queryUrl) {
+		console.log();
+	}
+
 	// const callBackend = async () => {
 	// 	fetchGraphData(query.toUrl()).then((data) => {
 	// 		if (data) onResponse(data);
@@ -67,7 +71,7 @@ export default function QuerySearch({
 			};
 			setSse(sseConnection);
 		}
-	}, [setSse, messages, onResponse, query, queryUrl, sse]);
+	}, [setSse, onResponse, query, sse]);
 
 	useEffect(() => {
 		return () => {
