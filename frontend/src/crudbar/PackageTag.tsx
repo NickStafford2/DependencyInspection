@@ -13,13 +13,13 @@ const PackageTag = React.forwardRef<HTMLDivElement, Props>(
 			<div
 				ref={ref}
 				className={cn(
-					"inline-flex flex-row justify-between whitespace-nowrap rounded-md items-center border-black border-1 bg-red-600 text-black font-semibold h-[1.5em]",
+					"inline-flex flex-row justify-between whitespace-nowrap rounded-md items-center border border-gray-500 text-text font-semibold h-[1.5em]",
 					className,
 				)}
 			>
 				<span className="h-[1.5em] px-2">{name}</span>
 				<button
-					className="rounded-r-md bg-transparent hover:bg-red-900 "
+					className="rounded-r-md bg-transparent hover:text-red-600 "
 					onClick={() => onClose(name)}
 				>
 					<IoMdClose size="1.5em" />
