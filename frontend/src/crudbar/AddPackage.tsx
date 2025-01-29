@@ -16,6 +16,10 @@ export default function AddPackage({
 			setAddPackageValue("");
 		}
 	};
+	const plusClicked = () => {
+		onPackageAdded(addPackageValue);
+		setAddPackageValue("");
+	};
 	return (
 		<div
 			className="flex flex-row w-64
@@ -32,7 +36,7 @@ export default function AddPackage({
 			></Input>
 			<button
 				className="rounded-l-none px-4 border-2 border-l-0 bg-transparent rounded-r-md hover:bg-white/5 font-bold text-lg text-green-300"
-				onClick={() => onPackageAdded(addPackageValue)}
+				onClick={plusClicked}
 			>
 				+
 			</button>

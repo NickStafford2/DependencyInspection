@@ -12,18 +12,13 @@ export default function QuerySearch({
 	const [query, setQuery] = useState<Query>(new Query());
 	const [queryUrl, setQueryUrl] = useState<string>("");
 	const [messages, setMessages] = useState<string[]>([]);
-	const [sse, setSse] = useState<EventSource | null>(null); // State to manage the EventSource connection
+	const [sse, setSse] = useState<EventSource | null>(null);
 	const pageload_query_has_run = useRef(false);
 
 	if (messages || queryUrl) {
 		console.log();
 	}
 
-	// const callBackend = async () => {
-	// 	fetchGraphData(query.toUrl()).then((data) => {
-	// 		if (data) onResponse(data);
-	// 	});
-	// };
 	const removePackage = (name: string) => {
 		// console.log(name);
 		// const oldQuery = query;
@@ -33,6 +28,7 @@ export default function QuerySearch({
 		setQueryUrl(query.toUrl());
 		// console.log(query);
 	};
+
 	const addPackage = useCallback(
 		(name: string) => {
 			if (name !== "") {
