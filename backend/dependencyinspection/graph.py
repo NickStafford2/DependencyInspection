@@ -3,6 +3,7 @@ import logging
 import random
 
 import networkx as nx
+from dependencyinspection import config
 from quart import Blueprint, Response, abort, jsonify, make_response, request, json
 
 import dependencyinspection.utils as utils
@@ -94,20 +95,9 @@ async def get_popular_networks():
     return _get_networks(list(to_search), max_count=10000)
 
 
-@utils.dev_only
-@bp.route("/dev_only", methods=["GET"])
-async def dev_only_test():
-    return "success", 200
-
-
-@bp.route("/not_dev_only", methods=["GET"])
-async def not_dev_only_test():
-    return "success", 200
-
-
-@utils.dev_only
 @bp.route("/getAllNetworks", methods=["GET"])
 async def get_all_networks():
+    config.dev_only()
     to_search = utils.get_all_package_names()
     return _get_networks(list(to_search))
 

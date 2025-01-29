@@ -1,9 +1,15 @@
 import logging
+from quart import abort
 from dynaconf import settings
 
 
+def dev_only():
+    if settings["QUART_ENV"] != "development":
+        abort(404)
+
+
 def is_docker() -> bool:
-    return "IS_DOCKER" in settings
+    return settings["IS_DOCKER"] == "true"
 
 
 def get_overrides() -> dict[str, str]:

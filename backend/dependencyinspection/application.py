@@ -9,8 +9,9 @@ import sys
 
 from typing import Any
 
+from dependencyinspection import config
 from dynaconf import FlaskDynaconf
-from dependencyinspection.config import get_overrides
+from dependencyinspection.config import get_overrides, is_docker
 from quart import Quart
 
 from neomodel import db as neomodel_db
@@ -50,28 +51,29 @@ def _init_config(app: Quart, **config_overrides: Any) -> None:
 
 
 def _init_blueprints(app: Quart):
+    prefix = "/api" if is_docker() else ""
     from dependencyinspection.data import bp as data_bp
 
-    app.register_blueprint(data_bp, url_prefix="/api/data")
+    app.register_blueprint(data_bp, url_prefix=f"{prefix}/data")
 
     from dependencyinspection.graph import bp as graph_bp
 
-    app.register_blueprint(graph_bp, url_prefix="/api")
+    app.register_blueprint(graph_bp, url_prefix=f"{prefix}/")
 
     from dependencyinspection.migrations import bp as migrations_bp
 
-    app.register_blueprint(migrations_bp, url_prefix="/api/migrations")
+    app.register_blueprint(migrations_bp, url_prefix=f"{prefix}/migrations")
 
 
 def _init_graceful_shutdown():
     def handle_sigint(signal, frame):
-        print("Shutting down gracefully...")
+        logging.info("Shutting down gracefully...")
         if neomodel_db.driver:  # Ensure the driver exists and is connected
             neomodel_db.driver.close()
-            print("db connection closed")
+            logging.info("db connection closed")
         sys.exit(0)
 
-    print("Shutdown started...")
+    logging.info("Shutdown started...")
     _ = signal.signal(signal.SIGINT, handle_sigint)
 
 
