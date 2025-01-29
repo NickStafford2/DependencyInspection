@@ -18,34 +18,6 @@ from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
 bp = Blueprint("network", __name__)
 
 
-@bp.get("/sse")
-async def sse():
-    if "text/event-stream" not in request.accept_mimetypes:
-        abort(400)
-
-    async def send_events():
-        data = "tesing1"
-        event = ServerSentEvent(data, "message")
-        yield event.encode()
-        data = "tesing2"
-        event = ServerSentEvent(data, "message")
-        yield event.encode()
-        data = "done"
-        event = ServerSentEvent(data, "message")
-        yield event.encode()
-
-    response = await make_response(
-        send_events(),
-        {
-            "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Transfer-Encoding": "chunked",
-        },
-    )
-    response.timeout = None
-    return response
-
-
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
 async def get_networks(package_names: str) -> Response:
     async def send_events():
@@ -92,7 +64,7 @@ def _get_networks(package_names: list[str], max_count: int = 99999999):
 @bp.route("/getPopularNetworks", methods=["GET"])
 async def get_popular_networks():
     to_search = get_popular_package_names()
-    return _get_networks(list(to_search), max_count=10000)
+    return _get_networks(list(to_search), max_count=1000)
 
 
 @bp.route("/getAllNetworks", methods=["GET"])
@@ -115,13 +87,9 @@ async def get_all_db_networks():
     return formatted_data
 
 
-@bp.route("/getNetwork/<package_name>", methods=["GET"])
-async def get_network(package_name: str):
-    return _get_networks([package_name])
-
-
 @bp.route("/analyzeNetwork/<package_name>", methods=["GET"])
 async def analyze_network(package_name: str):
+    config.dev_only()
     try:
         response = _get_networks([package_name])
         graph_data = await response.get_json()
