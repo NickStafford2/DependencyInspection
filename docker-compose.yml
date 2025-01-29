@@ -110,7 +110,7 @@ services:
     environment:
       - NEO4J_AUTH=/run/secrets/neo4j_auth_file
       - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
-      - NEO4J_SEND_METRICS=false
+      - NEO4J_client_allow__telemetry=false
     secrets:
       - neo4j_auth_file
     healthcheck:
