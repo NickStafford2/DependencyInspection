@@ -8,6 +8,10 @@ def dev_only():
         abort(404)
 
 
+def is_development():
+    return settings["QUART_ENV"] != "development"
+
+
 def is_docker() -> bool:
     return settings["IS_DOCKER"] == "true"
 

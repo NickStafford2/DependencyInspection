@@ -6,15 +6,13 @@ import os
 import shutil
 from collections.abc import Iterable
 from typing import TypeVar, final, override
-from dependencyinspection import config
-from dependencyinspection.config import is_docker
-from quart import current_app, abort
+from dependencyinspection.config import is_development
 
 T = TypeVar("T")
 
 
 def nsprint(text: str, num_tabs: int = 0, tab: str = "    "):
-    if is_docker():
+    if not is_development():
         return
     terminal_width = shutil.get_terminal_size().columns
     indent = tab * num_tabs
