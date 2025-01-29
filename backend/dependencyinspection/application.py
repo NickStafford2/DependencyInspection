@@ -51,17 +51,18 @@ def _init_config(app: Quart, **config_overrides: Any) -> None:
 
 
 def _init_blueprints(app: Quart):
+    prefix = "/api" if is_docker() else ""
     from dependencyinspection.data import bp as data_bp
 
-    app.register_blueprint(data_bp, url_prefix="/data")
+    app.register_blueprint(data_bp, url_prefix=f"{prefix}/data")
 
     from dependencyinspection.graph import bp as graph_bp
 
-    app.register_blueprint(graph_bp, url_prefix="/")
+    app.register_blueprint(graph_bp, url_prefix=f"{prefix}/")
 
     from dependencyinspection.migrations import bp as migrations_bp
 
-    app.register_blueprint(migrations_bp, url_prefix="/migrations")
+    app.register_blueprint(migrations_bp, url_prefix=f"{prefix}/migrations")
 
 
 def _init_graceful_shutdown():
