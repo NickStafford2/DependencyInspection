@@ -54,6 +54,10 @@ export default function QuerySearch({
 					const graphData = JSON.parse(e.data);
 					// console.log(graphData);
 					onResponse(graphData);
+					query.packages.forEach((name: string) => {
+						removePackage(name);
+					});
+					setQuery(new Query());
 				}
 			};
 			sseConnection.onerror = (e) => {
