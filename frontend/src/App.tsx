@@ -62,7 +62,7 @@ const App = () => {
 					></DIGraph3d>
 				</div>
 			</div>
-			<BackendTools></BackendTools>
+			{import.meta.env.MODE == "production" || <BackendTools />}
 		</div>
 	);
 };
