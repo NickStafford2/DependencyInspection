@@ -84,7 +84,7 @@ def scrape_package_json(package_name: str) -> dict[str, Any] | None:
     :param package_name: The name of the package to scrape.
     :return: A dictionary representing the package.json or None in case of an error.
     """
-    # print(f"scraping package named {name}")
+    # logging.error(f"scraping package named {name}")
     url = f"https://registry.npmjs.org/{package_name}"
     # app.logger.info(f"scraping package.json from {url}")
     utils.nsprint(f"scraping package.json from {url}", 4)
@@ -97,23 +97,23 @@ def scrape_package_json(package_name: str) -> dict[str, Any] | None:
         return r_dict
     except requests.exceptions.HTTPError as e:
         # app.logger.error(e)
-        print(f"HTTP error: {e}")
+        logging.error(f"HTTP error: {e}")
         if e.response.status_code == 401:
-            print("Authentication required.")
+            logging.error("Authentication required.")
         elif e.response.status_code == 403:
-            print("Access denied.")
+            logging.error("Access denied.")
         elif e.response.status_code == 404:
-            print("Resource not found.")
+            logging.error("Resource not found.")
         elif e.response.status_code == 429:
-            print("Too Many Requests.")
+            logging.error("Too Many Requests.")
         elif e.response.status_code == 500:
-            print("Server error.")
+            logging.error("Server error.")
 
     except requests.exceptions.ConnectionError:
-        print("Connection error.")
+        logging.error("Connection error.")
     except requests.exceptions.Timeout:
-        print("Request timed out.")
+        logging.error("Request timed out.")
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        logging.error(f"Request failed: {e}")
 
     return None
