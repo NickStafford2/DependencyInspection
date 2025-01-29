@@ -39,7 +39,7 @@ services:
     build:
       context: ./frontend
       args: 
-        - VITE_APP_BACKEND_ADDRESS=http://backend-service:5001/api/
+        - VITE_APP_BACKEND_ADDRESS=http://backend-service:5001/
     depends_on: 
       backend-service:
         condition: service_healthy
