@@ -53,9 +53,14 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
 
 	return (
 		<nav className="px-3 py-2 flex flex-row justify-between items-center gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
-			<h2 className="text-white text-3xl whitespace-nowrap">
-				Dependency Inspection
-			</h2>
+			<div className="flex flex-row flex-shrink flex-grow-0 ">
+				<h1 className="text-white text-3xl whitespace-nowrap ">
+					Dependency Inspection
+				</h1>
+				<h2 className="text-red-600 text-4xl font-bold rotate-[-15deg]">
+					BETA
+				</h2>
+			</div>
 			{/* <Button onClick={() => startSSEConnection()}>Start</Button> */}
 			<Button className="button-48" onClick={() => getAllDBNetworks()}>
 				<span className="text">Get Full Network</span>
