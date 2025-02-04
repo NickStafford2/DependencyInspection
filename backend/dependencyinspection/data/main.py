@@ -17,28 +17,36 @@ def search_and_scrape_recursive(
     all_packages: dict[str, PackageData] = {}
     all_scraped: dict[str, PackageData] = {}
 
+    retries = 0
     depth = 0
-    while len(to_search) > 0:
-        # bad_keys = [key for key in to_search if key in all_packages]
-        # assert not any(bad_keys)
-        utils.nsprint(f"Searching round {depth}: db searching for: {to_search}", 1)
-        (in_db, not_in_db) = database.search_db_recursive(
-            to_search, all_packages, max_package_count, depth
-        )
-        all_packages.update(in_db)
-        to_search -= set(in_db.keys())
-        if not_in_db:
-            utils.nsprint(f"  Some packages not in db. Searching online: {not_in_db}")
-            scraped: dict[str, PackageData] = scraper.scrape_packages(not_in_db)
-            all_scraped.update(scraped)
-            all_packages.update(scraped)
+    while retries < 3:
+        while len(to_search) > 0:
+            # bad_keys = [key for key in to_search if key in all_packages]
+            # assert not any(bad_keys)
+            utils.nsprint(f"Searching round {depth}: db searching for: {to_search}", 1)
+            (in_db, not_in_db) = database.search_db_recursive(
+                to_search, all_packages, max_package_count, depth
+            )
+            all_packages.update(in_db)
+            to_search -= set(in_db.keys())
+            if not_in_db:
+                utils.nsprint(
+                    f"  Some packages not in db. Searching online: {not_in_db}"
+                )
+                scraped: dict[str, PackageData] = scraper.scrape_packages(not_in_db)
+                all_scraped.update(scraped)
+                all_packages.update(scraped)
 
-            to_search = set()
-            for package_data in scraped.values():
-                for dependency in package_data.dependencies:
-                    if dependency.package_id not in all_packages:
-                        to_search.add(dependency.package_id)
-        depth += 1
+                to_search = set()
+                for package_data in scraped.values():
+                    for dependency in package_data.dependencies:
+                        if dependency.package_id not in all_packages:
+                            to_search.add(dependency.package_id)
+            depth += 1
+        for package_data in all_packages.values():
+            if package_data.package.di_scrape_status == "id_only":
+                to_search.add
+        retries += 1
     _build_relationships(all_scraped, all_packages)
     return all_packages
 

@@ -1,4 +1,6 @@
 # import asyncio
+import uuid
+
 # import logging
 import random
 
@@ -18,6 +20,10 @@ from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
 bp = Blueprint("network", __name__)
 
 
+async def send_frontend_message(message: str):
+    return ServerSentEvent(message, "message", str(uuid.uuid4())).encode()
+
+
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
 async def get_networks(package_names: str) -> Response:
     async def send_events():
@@ -29,7 +35,7 @@ async def get_networks(package_names: str) -> Response:
             yield error_message.encode()
             # yield jsonify()
         else:
-            for event in _get_networks(as_list):
+            async for event in _get_networks(as_list):
                 yield event
             # print(networks)
             # networkEvent = ServerSentEvent(networks, "message", "network")
@@ -48,23 +54,19 @@ async def get_networks(package_names: str) -> Response:
     return response
 
 
-def _get_networks(package_names: list[str], max_count: int = 99999999):
+async def _get_networks(package_names: list[str], max_count: int = 99999999):
     max_count = 10000
     # print(f"Fetching network for packages: {package_names}")
-    yield ServerSentEvent(
-        f"Fetching network for {package_names}", "message", "request_recieved"
-    ).encode()
+    yield await send_frontend_message(f"Fetching network for {package_names}.")
     found: dict[str, PackageData] = main.search_and_scrape_recursive(
         set(package_names), max_count
     )
-    yield ServerSentEvent(
-        f"Found: {len(found)} packages", "message", "found_packages"
-    ).encode()
-    yield ServerSentEvent("Analysing the network...", "message", "Analysis").encode()
+    yield await send_frontend_message(f"Found: {len(found)} packages.")
+    yield await send_frontend_message("Analysing the network...")
     formatted_data = format_for_frontend(set(package_names), found)
     # yield formatted_data
     yield ServerSentEvent(formatted_data, "network", "network").encode()
-    yield ServerSentEvent("Network complete.", "message", "finished").encode()
+    yield await send_frontend_message("Network complete.")
 
 
 @bp.route("/getPopularNetworks", methods=["GET"])
