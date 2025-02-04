@@ -1,5 +1,5 @@
-import asyncio
-import logging
+# import asyncio
+# import logging
 import random
 
 import networkx as nx
@@ -21,11 +21,7 @@ bp = Blueprint("network", __name__)
 @bp.route("/getNetworks/<package_names>", methods=["GET"])
 async def get_networks(package_names: str) -> Response:
     async def send_events():
-        hello = ServerSentEvent("just saying hi", "message", "request_recieved")
-        yield hello.encode()
         as_list = package_names.split(",")
-        list_msg = ServerSentEvent(as_list, "message", "starting_search")
-        yield list_msg.encode()
         if not package_names:
             error_message = ServerSentEvent(
                 {"error": "No package names provided"}, "message", "no_package_error"
@@ -33,9 +29,11 @@ async def get_networks(package_names: str) -> Response:
             yield error_message.encode()
             # yield jsonify()
         else:
-            networks = _get_networks(as_list)
-            networkEvent = ServerSentEvent(networks, "message", "network")
-            yield networkEvent.encode()
+            for event in _get_networks(as_list):
+                yield event
+            # print(networks)
+            # networkEvent = ServerSentEvent(networks, "message", "network")
+            # networkEvent.encode()
 
     response = await make_response(
         send_events(),
@@ -51,14 +49,22 @@ async def get_networks(package_names: str) -> Response:
 
 
 def _get_networks(package_names: list[str], max_count: int = 99999999):
-    max_count = 100
+    max_count = 10000
     # print(f"Fetching network for packages: {package_names}")
+    yield ServerSentEvent(
+        f"Fetching network for {package_names}", "message", "request_recieved"
+    ).encode()
     found: dict[str, PackageData] = main.search_and_scrape_recursive(
         set(package_names), max_count
     )
-    # print(f"Found: {len(found)} packages")
+    yield ServerSentEvent(
+        f"Found: {len(found)} packages", "message", "found_packages"
+    ).encode()
+    yield ServerSentEvent("Analysing the network...", "message", "Analysis").encode()
     formatted_data = format_for_frontend(set(package_names), found)
-    return formatted_data
+    # yield formatted_data
+    yield ServerSentEvent(formatted_data, "network", "network").encode()
+    yield ServerSentEvent("Network complete.", "message", "finished").encode()
 
 
 @bp.route("/getPopularNetworks", methods=["GET"])
