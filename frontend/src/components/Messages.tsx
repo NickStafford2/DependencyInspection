@@ -2,6 +2,12 @@ import { useMyContext } from "@/context";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { FaRegTrashAlt, FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Messages() {
   const { messages, setMessages } = useMyContext();
@@ -15,18 +21,39 @@ export default function Messages() {
       <div className="absolute top-4 flex flex-col max-w-[20rem] right-4 z-50">
         <div className="justify-end gap-4 p-4 flex-row flex w-full">
           {isVisible && messages.length > 0 && (
-            <div className="pr-4 group relative" onClick={closeMessages}>
-              <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0 " />
-              <FaRegTrashAlt className="text-red-600 absolute opacity-0 group-hover:opacity-100  " />
-            </div>
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="pr-4 group relative" onClick={closeMessages}>
+                    <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0 " />
+                    <FaRegTrashAlt className="text-red-600 absolute opacity-0 group-hover:opacity-100  " />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Clear Messages.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
-          <button
-            className="self-end  hover:text-gray-500"
-            onClick={() => setIsVisible(!isVisible)}
-          >
-            {!isVisible && <MdExpandMore />}
-            {isVisible && <MdExpandLess />}
-          </button>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="self-end  hover:text-gray-500"
+                  onClick={() => setIsVisible(!isVisible)}
+                >
+                  {!isVisible && <MdExpandMore />}
+                  {isVisible && <MdExpandLess />}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  {!isVisible && "Show Messages"}
+                  {isVisible && "Hide Messages"}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         {isVisible && (
