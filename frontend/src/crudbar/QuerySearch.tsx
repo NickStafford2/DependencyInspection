@@ -109,7 +109,7 @@ export default function QuerySearch({
               <span className="text-white whitespace-nowrap ">
                 {query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
               </span>
-              <div className=" bg-blue-500 relative flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
+              <div className="  relative flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
                 {Array.from(query.packages).map((name, index) => (
                   <PackageTag
                     className="flex-grow"
