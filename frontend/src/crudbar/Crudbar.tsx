@@ -55,6 +55,7 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
         </HoverCard>
       </div>
       {/* <Button onClick={() => startSSEConnection()}>Start</Button> */}
+      <QuerySearch onResponse={onResponse} />
       <Dialog>
         <DialogTrigger>
           <Button className="button-48">
@@ -81,7 +82,6 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
       {/* <span className="text">getPopularNetwork</span> */}
       {/* </Button> */}
       {/* <PackageJSONUpload></PackageJSONUpload> */}
-      <QuerySearch onResponse={onResponse} />
     </nav>
   );
 }
