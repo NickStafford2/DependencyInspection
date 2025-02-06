@@ -1,7 +1,5 @@
 # import asyncio
 import uuid
-
-# import logging
 import random
 
 import networkx as nx
@@ -57,7 +55,10 @@ async def get_networks(package_names: str) -> Response:
 async def _get_networks(package_names: list[str], max_count: int = 99999999):
     max_count = 10000
     # print(f"Fetching network for packages: {package_names}")
-    yield await send_frontend_message(f"Fetching network for {package_names}.")
+    yield await send_frontend_message(f"Creating network for {package_names}.")
+    yield await send_frontend_message(
+        "Searching db and scraping package info online. This may take a while."
+    )
     found: dict[str, PackageData] = main.search_and_scrape_recursive(
         set(package_names), max_count
     )
