@@ -6,30 +6,31 @@ import DIGraph3d from "./components/DIGraph3d";
 import { NodeTableContainer } from "./components/table/NodeTableContainer";
 import { columns } from "./components/table/columns";
 import Messages from "./components/Messages";
+import GraphMenu from "./GraphMenu/GraphMenu";
 
 const App = () => {
-	const [selectedNode, setSelectedNode] = useState<Node>();
-	const manageGraphData = (data: GraphData) => {
-		return data;
-	};
-	const onResponseChanged = (data: GraphData) => {
-		// console.log(JSON.parse(JSON.stringify(data)));
-		console.log(data);
-		data = manageGraphData(data);
-		setGraphData(data);
-		setTableData(data.nodes);
-	};
+  const [selectedNode, setSelectedNode] = useState<Node>();
+  const manageGraphData = (data: GraphData) => {
+    return data;
+  };
+  const onResponseChanged = (data: GraphData) => {
+    // console.log(JSON.parse(JSON.stringify(data)));
+    console.log(data);
+    data = manageGraphData(data);
+    setGraphData(data);
+    setTableData(data.nodes);
+  };
 
-	const [graphData, setGraphData] = useState<GraphData>();
-	const [tableData, setTableData] = useState<Node[]>([]);
-	const [scrollTo, setScrollTo] = useState<string>("");
+  const [graphData, setGraphData] = useState<GraphData>();
+  const [tableData, setTableData] = useState<Node[]>([]);
+  const [scrollTo, setScrollTo] = useState<string>("");
 
-	const onNodeSelected = (node: Node) => {
-		setSelectedNode(node);
-		setScrollTo(node.id);
-	};
+  const onNodeSelected = (node: Node) => {
+    setSelectedNode(node);
+    setScrollTo(node.id);
+  };
 
-	/* 
+  /* 
   useEffect(() => {
     if (packageName !== "") {
       const url = `/analyzeNetwork/react`;
@@ -43,30 +44,31 @@ const App = () => {
   }, [packageName]);
   */
 
-	return (
-		<div className="flex flex-col w-full h-full justify-between">
-			<Crudbar onResponse={onResponseChanged} />
-			<div className="flex flex-row grow shrink overflow-hidden">
-				<div className="">
-					<NodeTableContainer
-						columns={columns}
-						// @ts-expect-error-todo fix this later
-						data={tableData}
-						scrollTo={scrollTo}
-					></NodeTableContainer>
-				</div>
-				<div className="w-full h-full">
-					<div className="absolute z-10">{selectedNode?.id}</div>
-					<Messages />
-					<DIGraph3d
-						graphData={graphData}
-						onNodeSelected={onNodeSelected}
-					></DIGraph3d>
-				</div>
-			</div>
-			{import.meta.env.MODE == "production" || <BackendTools />}
-		</div>
-	);
+  return (
+    <div className="flex flex-col w-full h-full justify-between">
+      <Crudbar onResponse={onResponseChanged} />
+      <div className="flex flex-row grow shrink overflow-hidden">
+        <div className="">
+          <NodeTableContainer
+            columns={columns}
+            // @ts-expect-error-todo fix this later
+            data={tableData}
+            scrollTo={scrollTo}
+          ></NodeTableContainer>
+        </div>
+        <div className="w-full h-full">
+          <div className="absolute z-10">{selectedNode?.id}</div>
+          <GraphMenu />
+
+          <DIGraph3d
+            graphData={graphData}
+            onNodeSelected={onNodeSelected}
+          ></DIGraph3d>
+        </div>
+      </div>
+      {import.meta.env.MODE == "production" || <BackendTools />}
+    </div>
+  );
 };
 
 export default App;
