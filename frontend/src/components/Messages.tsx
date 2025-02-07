@@ -20,13 +20,16 @@ const Messages = React.forwardRef<
     setMessages([]);
   };
   return (
-    <div ref={ref} className={cn("", className)} {...props}>
-      <div className="justify-end gap-4 p-4 flex-row flex w-full">
+    <div ref={ref} className={cn("relative", className)} {...props}>
+      <div className="absolute right-0 top-0 ">
         {messages.length > 0 && (
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="pr-4 group relative" onClick={closeMessages}>
+                <div
+                  className="pr-2 top-[-15px] group relative"
+                  onClick={closeMessages}
+                >
                   <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0 " />
                   <FaRegTrashAlt className="text-red-600 absolute opacity-0 group-hover:opacity-100  " />
                 </div>
