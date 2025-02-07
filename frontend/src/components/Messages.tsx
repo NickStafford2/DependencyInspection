@@ -1,7 +1,5 @@
 import { useMyContext } from "@/context";
-import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { FaRegTrashAlt, FaTrashAlt } from "react-icons/fa";
-import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -18,15 +16,13 @@ const Messages = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const { messages, setMessages } = useMyContext();
-  const [isVisible, setIsVisible] = useState<boolean>(true);
   const closeMessages = () => {
     setMessages([]);
-    setIsVisible(false);
   };
   return (
     <div ref={ref} className={cn("", className)} {...props}>
       <div className="justify-end gap-4 p-4 flex-row flex w-full">
-        {isVisible && messages.length > 0 && (
+        {messages.length > 0 && (
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -41,34 +37,13 @@ const Messages = React.forwardRef<
             </Tooltip>
           </TooltipProvider>
         )}
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                className="self-end  hover:text-gray-500"
-                onClick={() => setIsVisible(!isVisible)}
-              >
-                {!isVisible && <MdExpandMore />}
-                {isVisible && <MdExpandLess />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {!isVisible && "Show Messages"}
-                {isVisible && "Hide Messages"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
       </div>
 
-      {isVisible && (
-        <ol className="list-disc pl-8 flex flex-col gap-1">
-          {messages.map((message, index) => (
-            <li key={index}>{message}</li>
-          ))}
-        </ol>
-      )}
+      <ol className="list-disc pl-8 flex flex-col gap-1">
+        {messages.map((message, index) => (
+          <li key={index}>{message}</li>
+        ))}
+      </ol>
     </div>
   );
 });
