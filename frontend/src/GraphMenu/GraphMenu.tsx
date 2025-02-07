@@ -18,44 +18,56 @@ export default function GraphMenu() {
   return (
     <div className="relative">
       <Card className=" absolute top-4 flex flex-col max-w-[20rem] right-4 z-50">
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                className="self-end rounded-bl-lg border-l border-b p-4 text-card-foreground shadow-sm"
-                onClick={() => setIsVisible(!isVisible)}
-              >
-                {!isVisible && <MdExpandMore />}
-                {isVisible && <MdExpandLess />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                {!isVisible && "Show Messages"}
-                {isVisible && "Hide Messages"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        {isVisible && (
-          <Tabs defaultValue="info" className="">
-            <TabsList>
-              <TabsTrigger value="info">Info</TabsTrigger>
-              <TabsTrigger value="Messages">Messages</TabsTrigger>
-            </TabsList>
-            <TabsContent value="info">
-              <p>
-                Use DependencyInspection to review the dependencies of your npm
-                packages. Query any number of packages, and DependencyInspection
-                build a network of all the dependencies, their vulnerabilities,
-                and all sorts of information.
-              </p>
-            </TabsContent>
-            <TabsContent value="Messages">
-              <Messages />
-            </TabsContent>
-          </Tabs>
-        )}
+        <Tabs defaultValue="info" className="">
+          <TabsList className="w-full justify-around relative">
+            {isVisible && (
+              <>
+                <TabsTrigger value="info">Info</TabsTrigger>
+                <TabsTrigger value="messages">Messages</TabsTrigger>
+                <TabsTrigger value="network">Network</TabsTrigger>
+              </>
+            )}
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    className="p-3 text-card-background"
+                    onClick={() => setIsVisible(!isVisible)}
+                  >
+                    {!isVisible && <MdExpandMore />}
+                    {isVisible && <MdExpandLess />}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {!isVisible && "Show Messages"}
+                    {isVisible && "Hide Messages"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </TabsList>
+
+          {isVisible && (
+            <>
+              <TabsContent className="p-4" value="info">
+                <p>
+                  Use DependencyInspection to review the dependencies of your
+                  npm packages. Query any number of packages, and
+                  DependencyInspection build a network of all the dependencies,
+                  their vulnerabilities, and all sorts of information.
+                </p>
+              </TabsContent>
+
+              <TabsContent className="p-4" value="network">
+                <p>Network info here</p>
+              </TabsContent>
+              <TabsContent className="p-4" value="messages">
+                <Messages />
+              </TabsContent>
+            </>
+          )}
+        </Tabs>
       </Card>
     </div>
   );
