@@ -1,4 +1,5 @@
 import Messages from "@/components/Messages";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import {
   Tooltip,
@@ -36,7 +37,25 @@ export default function GraphMenu() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        {isVisible && <Messages></Messages>}
+        {isVisible && (
+          <Tabs defaultValue="info" className="">
+            <TabsList>
+              <TabsTrigger value="info">Info</TabsTrigger>
+              <TabsTrigger value="Messages">Messages</TabsTrigger>
+            </TabsList>
+            <TabsContent value="info">
+              <p>
+                Use DependencyInspection to review the dependencies of your npm
+                packages. Query any number of packages, and DependencyInspection
+                build a network of all the dependencies, their vulnerabilities,
+                and all sorts of information.
+              </p>
+            </TabsContent>
+            <TabsContent value="Messages">
+              <Messages />
+            </TabsContent>
+          </Tabs>
+        )}
       </Card>
     </div>
   );
