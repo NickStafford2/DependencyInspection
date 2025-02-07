@@ -57,10 +57,8 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
       {/* <Button onClick={() => startSSEConnection()}>Start</Button> */}
       <QuerySearch onResponse={onResponse} />
       <Dialog>
-        <DialogTrigger>
-          <Button className="button-48">
-            <span className="text">Get Full Network</span>
-          </Button>
+        <DialogTrigger asChild>
+          <Button>Get Full Network</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
