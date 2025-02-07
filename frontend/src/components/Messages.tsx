@@ -9,7 +9,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function Messages() {
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const Messages = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
   const { messages, setMessages } = useMyContext();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const closeMessages = () => {
@@ -17,7 +24,7 @@ export default function Messages() {
     setIsVisible(false);
   };
   return (
-    <>
+    <div ref={ref} className={cn("", className)} {...props}>
       <div className="justify-end gap-4 p-4 flex-row flex w-full">
         {isVisible && messages.length > 0 && (
           <TooltipProvider delayDuration={200}>
@@ -56,14 +63,13 @@ export default function Messages() {
       </div>
 
       {isVisible && (
-        <>
-          <ol className="list-disc flex flex-col gap-1">
-            {messages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ol>
-        </>
+        <ol className="list-disc pl-8 flex flex-col gap-1">
+          {messages.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ol>
       )}
-    </>
+    </div>
   );
-}
+});
+export default Messages;
