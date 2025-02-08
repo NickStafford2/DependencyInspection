@@ -21,19 +21,21 @@ import {
 
 // import { NodeTable2 } from "./NodeTable2"
 import { NodeTable } from "./NodeTable";
-import React from "react";
+import React, { useContext } from "react";
+import { CountContext } from "@/context";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
   scrollTo: string;
 }
 
+/** @useSignals **/
 export function NodeTableContainer<TData, TValue>({
   columns,
-  data,
   scrollTo,
 }: DataTableProps<TData, TValue>) {
+  const { tableData } = useContext(CountContext);
+  const data = tableData.value;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

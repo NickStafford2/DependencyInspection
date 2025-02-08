@@ -10,19 +10,13 @@ import GraphMenu from "./GraphMenu/GraphMenu";
 
 const App = () => {
   const [selectedNode, setSelectedNode] = useState<Node>();
-  const manageGraphData = (data: GraphData) => {
-    return data;
-  };
-  const onResponseChanged = (data: GraphData) => {
-    // console.log(JSON.parse(JSON.stringify(data)));
-    console.log(data);
-    data = manageGraphData(data);
-    setGraphData(data);
-    setTableData(data.nodes);
-  };
+  // const onResponseChanged = (data: GraphData) => {
+  //   setGraphData(data);
+  //   setTableData(data.nodes);
+  // };
 
-  const [graphData, setGraphData] = useState<GraphData>();
-  const [tableData, setTableData] = useState<Node[]>([]);
+  // const [graphData, setGraphData] = useState<GraphData>();
+  // const [tableData, setTableData] = useState<Node[]>([]);
   const [scrollTo, setScrollTo] = useState<string>("");
 
   const onNodeSelected = (node: Node) => {
@@ -46,13 +40,11 @@ const App = () => {
 
   return (
     <div className="flex flex-col w-full h-full justify-between">
-      <Crudbar onResponse={onResponseChanged} />
+      <Crudbar />
       <div className="flex flex-row grow shrink overflow-hidden">
         <div className="">
           <NodeTableContainer
             columns={columns}
-            // @ts-expect-error-todo fix this later
-            data={tableData}
             scrollTo={scrollTo}
           ></NodeTableContainer>
         </div>
@@ -60,10 +52,7 @@ const App = () => {
           <div className="absolute z-10">{selectedNode?.id}</div>
           <GraphMenu />
 
-          <DIGraph3d
-            graphData={graphData}
-            onNodeSelected={onNodeSelected}
-          ></DIGraph3d>
+          <DIGraph3d onNodeSelected={onNodeSelected}></DIGraph3d>
         </div>
       </div>
       {import.meta.env.MODE == "production" || <BackendTools />}

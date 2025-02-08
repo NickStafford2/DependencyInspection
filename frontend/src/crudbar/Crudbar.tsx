@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { GraphData } from "@/utils/models";
+// import { GraphData } from "@/utils/models";
 // import { PackageJSONUpload } from "@/components/PackageJSONUpload";
 import { fetchGraphData } from "@/crudbar/api";
 // import { useEffect, useState } from "react";
@@ -18,11 +18,17 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useContext } from "react";
+import { CountContext } from "@/context";
 
-function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
+function Crudbar() {
+  const { graphData, tableData } = useContext(CountContext);
   const getAllDBNetworks = async () => {
     fetchGraphData("api/getAllDBNetworks").then((data) => {
-      if (data) onResponse(data);
+      if (data) {
+        graphData.value = data;
+        tableData.value = data.nodes;
+      }
     });
   };
   return (
@@ -53,7 +59,7 @@ function Crudbar({ onResponse }: { onResponse: (data: GraphData) => void }) {
           </HoverCardContent>
         </HoverCard>
       </div>
-      <QuerySearch onResponse={onResponse} />
+      <QuerySearch />
       <Dialog>
         <DialogTrigger asChild>
           <Button>Get Full Network</Button>

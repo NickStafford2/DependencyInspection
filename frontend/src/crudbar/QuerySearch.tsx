@@ -6,18 +6,16 @@ import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
 import { CountContext } from "@/context";
+import { table } from "console";
 
-export default function QuerySearch({
-  onResponse,
-}: {
-  onResponse: (data: GraphData) => void;
-}) {
+export default function QuerySearch() {
   const [query, setQuery] = useState<Query>(new Query());
   const [queryUrl, setQueryUrl] = useState<string>("");
   const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
-  const { messages, currentTab } = useContext(CountContext);
+  const { messages, currentTab, graphData, tableData } =
+    useContext(CountContext);
 
   const addMessage = (newMessage: string) => {
     messages.value = [...messages.value, newMessage];
@@ -54,8 +52,8 @@ export default function QuerySearch({
         addMessage(e.data);
       };
       sseConnection.addEventListener("network", (e) => {
-        const graphData = JSON.parse(e.data);
-        onResponse(graphData);
+        graphData.value = JSON.parse(e.data);
+        tableData.value = graphData.value.nodes;
         query.packages.forEach((name: string) => {
           removePackage(name);
         });
@@ -75,7 +73,7 @@ export default function QuerySearch({
       };
       setSse(sseConnection);
     }
-  }, [setSse, onResponse, query, sse]);
+  }, [setSse, query, sse]);
 
   useEffect(() => {
     return () => {
