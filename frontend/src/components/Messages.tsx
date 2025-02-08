@@ -17,9 +17,9 @@ const Messages = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { messages, setMessages } = useContext(CountContext);
+  const { messages, addMessages } = useContext(CountContext);
   const closeMessages = () => {
-    setMessages([]);
+    addMessages([]);
   };
   return (
     <div ref={ref} className={cn("relative", className)} {...props}>
