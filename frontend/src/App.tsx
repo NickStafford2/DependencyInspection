@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { signal } from "@preact/signals-react";
 import { GraphData, Node } from "./utils/models";
 import Crudbar from "./crudbar/Crudbar";
 import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
 import { NodeTableContainer } from "./components/table/NodeTableContainer";
 import { columns } from "./components/table/columns";
-import Messages from "./components/Messages";
 import GraphMenu from "./GraphMenu/GraphMenu";
 
 const App = () => {
