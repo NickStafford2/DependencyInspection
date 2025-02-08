@@ -1,4 +1,4 @@
-import { useMyContext } from "@/context";
+// import { useMyContext } from "@/context";
 import { FaRegTrashAlt, FaTrashAlt } from "react-icons/fa";
 import {
   Tooltip,
@@ -10,19 +10,21 @@ import {
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { CountContext } from "@/context";
+import { useContext } from "react";
 
 const Messages = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { messages, setMessages } = useMyContext();
+  const { messages, setMessages } = useContext(CountContext);
   const closeMessages = () => {
     setMessages([]);
   };
   return (
     <div ref={ref} className={cn("relative", className)} {...props}>
       <div className="absolute right-0 top-0 ">
-        {messages.length > 0 && (
+        {messages.value.length > 0 && (
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -43,7 +45,7 @@ const Messages = React.forwardRef<
       </div>
 
       <ol className="list-disc pl-8 flex flex-col gap-1">
-        {messages.map((message, index) => (
+        {messages.value.map((message, index) => (
           <li key={index}>{message}</li>
         ))}
       </ol>

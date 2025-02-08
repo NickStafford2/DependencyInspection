@@ -1,29 +1,10 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext } from "react";
 import { Signal, signal } from "@preact/signals-react";
 
-// Create the context
-const MyContext = createContext();
-
-// Create a provider component
-export const MyContextProvider = ({ children }) => {
-  const [messages, setMessages] = useState<string[]>([]);
-
-  return (
-    <MyContext.Provider value={{ messages, setMessages }}>
-      {children}
-    </MyContext.Provider>
-  );
-};
-
-// Create a custom hook for consuming the context
-export const useMyContext = () => useContext(MyContext);
-//
-//
-//
-//
 interface GlobalState {
   count: Signal<number>;
   messages: Signal<string[]>;
+  addMessage: (newMessage: string) => void;
 }
 
 export const CountContext = createContext<GlobalState | null>(null);
@@ -32,8 +13,11 @@ export const CountContext = createContext<GlobalState | null>(null);
 function createAppState() {
   const count: Signal<number> = signal(0);
   const messages: Signal<string[]> = signal([]);
+  const addMessage = (newMessage: string) => {
+    messages.value = [...messages.value, newMessage];
+  };
 
-  return { count, messages };
+  return { count, messages, addMessage };
 }
 
 export const CounterProvider = ({

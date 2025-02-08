@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useContext } from "react";
 import { GraphData } from "@/utils/models";
 import { Button } from "@/components/ui/button";
 // import { fetchGraphData } from "@/crudbar/api";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
-import { useMyContext } from "@/context";
+import { CountContext } from "@/context";
 
 export default function QuerySearch({
   onResponse,
@@ -14,9 +14,10 @@ export default function QuerySearch({
 }) {
   const [query, setQuery] = useState<Query>(new Query());
   const [queryUrl, setQueryUrl] = useState<string>("");
-  const { messages, setMessages } = useMyContext();
+  // const { messages, setMessages } = useMyContext();
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
+  const { messages, addMessage } = useContext(CountContext);
 
   if (messages || queryUrl) {
     console.log();
@@ -52,7 +53,7 @@ export default function QuerySearch({
       });
       sseConnection.onmessage = (e) => {
         // console.log("Received data:", e);
-        setMessages((prevMessages) => [...prevMessages, e.data]);
+        addMessage(e.data);
       };
       sseConnection.addEventListener("network", (e) => {
         const graphData = JSON.parse(e.data);
