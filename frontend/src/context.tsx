@@ -3,25 +3,17 @@ import { Signal, signal } from "@preact/signals-react";
 
 interface GlobalState {
   count: Signal<number>;
+  // currentTab: Signal<string>;
   messages: Signal<string[]>;
-  addMessage: (newMessage: string) => void;
-  clearMessages: () => void;
 }
 
 export const CountContext = createContext<GlobalState | null>(null);
 
-function createAppState() {
-  const count: Signal<number> = signal(0);
-  const messages: Signal<string[]> = signal([]);
-  const addMessage = (newMessage: string) => {
-    messages.value = [...messages.value, newMessage];
+function createAppState(): GlobalState {
+  return {
+    count: signal(0),
+    messages: signal([]),
   };
-  const clearMessages = () => {
-    console.log("clearMessages");
-    messages.value = [];
-  };
-
-  return { count, messages, addMessage, clearMessages };
 }
 
 export const CounterProvider = ({

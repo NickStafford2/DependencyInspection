@@ -17,11 +17,14 @@ export default function QuerySearch({
   // const { messages, setMessages } = useMyContext();
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
-  const { messages, addMessage } = useContext(CountContext);
+  const { messages } = useContext(CountContext);
 
-  if (messages || queryUrl) {
-    console.log();
-  }
+  const addMessage = (newMessage: string) => {
+    messages.value = [...messages.value, newMessage];
+  };
+  // if (messages || queryUrl) {
+  //   console.log();
+  // }
 
   const removePackage = (name: string) => {
     // console.log(name);

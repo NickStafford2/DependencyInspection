@@ -12,11 +12,16 @@ import { cn } from "@/lib/utils";
 import { CountContext } from "@/context";
 import { useContext } from "react";
 
+/** @useSignals */
 const Messages = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { messages, clearMessages } = useContext(CountContext);
+  const { messages } = useContext(CountContext);
+
+  const clearMessages = () => {
+    messages.value = [];
+  };
 
   return (
     <div ref={ref} className={cn("relative", className)} {...props}>
