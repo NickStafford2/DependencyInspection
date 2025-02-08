@@ -5,10 +5,10 @@ interface GlobalState {
   count: Signal<number>;
   messages: Signal<string[]>;
   addMessage: (newMessage: string) => void;
+  clearMessages: () => void;
 }
 
 export const CountContext = createContext<GlobalState | null>(null);
-// export const CountContext = createContext(signal(0));
 
 function createAppState() {
   const count: Signal<number> = signal(0);
@@ -16,8 +16,12 @@ function createAppState() {
   const addMessage = (newMessage: string) => {
     messages.value = [...messages.value, newMessage];
   };
+  const clearMessages = () => {
+    console.log("clearMessages");
+    messages.value = [];
+  };
 
-  return { count, messages, addMessage };
+  return { count, messages, addMessage, clearMessages };
 }
 
 export const CounterProvider = ({
@@ -25,7 +29,6 @@ export const CounterProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  // const state: GlobalState = { count, messages };
   return (
     <CountContext.Provider value={createAppState()}>
       {children}

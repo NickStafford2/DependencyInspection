@@ -1,4 +1,3 @@
-// import { useMyContext } from "@/context";
 import { FaRegTrashAlt, FaTrashAlt } from "react-icons/fa";
 import {
   Tooltip,
@@ -17,10 +16,8 @@ const Messages = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { messages, addMessages } = useContext(CountContext);
-  const closeMessages = () => {
-    addMessages([]);
-  };
+  const { messages, clearMessages } = useContext(CountContext);
+
   return (
     <div ref={ref} className={cn("relative", className)} {...props}>
       <div className="absolute right-0 top-0 ">
@@ -28,13 +25,13 @@ const Messages = React.forwardRef<
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div
+                <button
                   className="pr-2 top-[-15px] group relative"
-                  onClick={closeMessages}
+                  onClick={clearMessages}
                 >
                   <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0 " />
                   <FaRegTrashAlt className="text-red-600 absolute opacity-0 group-hover:opacity-100  " />
-                </div>
+                </button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Clear Messages.</p>
