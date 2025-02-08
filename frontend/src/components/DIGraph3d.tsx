@@ -1,6 +1,5 @@
 import { ForceGraph3D } from "react-force-graph";
 import { useEffect, useState, useRef, useContext } from "react";
-import { GraphData } from "../utils/models";
 import { CountContext } from "@/context";
 // import SpriteText from "https://esm.sh/three-spritetext";
 // import SpriteText from "three-spritetext";

@@ -35,7 +35,6 @@ export function NodeTableContainer<TData, TValue>({
   scrollTo,
 }: DataTableProps<TData, TValue>) {
   const { tableData } = useContext(CountContext);
-  const data = tableData.value;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -59,7 +58,8 @@ export function NodeTableContainer<TData, TValue>({
     });
 
   const table: Table<TData> = useReactTable({
-    data,
+    // @ts-ignore
+    data: tableData.value,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
