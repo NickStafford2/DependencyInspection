@@ -14,6 +14,7 @@ export default function QuerySearch({
 }) {
   const [query, setQuery] = useState<Query>(new Query());
   const [queryUrl, setQueryUrl] = useState<string>("");
+  const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
   const { messages, currentTab } = useContext(CountContext);
@@ -26,6 +27,7 @@ export default function QuerySearch({
     query.packages.delete(name);
     setQuery(query);
     setQueryUrl(query.toUrl());
+    if (query.packages.size == 0) setSearchDisabled(true);
   };
 
   const addPackage = useCallback(
@@ -34,9 +36,10 @@ export default function QuerySearch({
         query.packages.add(name);
         setQuery(query);
         setQueryUrl(query.toUrl());
+        if (searchDisabled) setSearchDisabled(false);
       }
     },
-    [query, setQueryUrl, setQuery],
+    [query, setQueryUrl, setQuery, setSearchDisabled],
   );
 
   const startSSEConnection = useCallback(() => {
@@ -123,7 +126,11 @@ export default function QuerySearch({
 
         <div className="">
           {/* <Button className="h-full " onClick={callBackend}> */}
-          <Button className="" onClick={startSSEConnection}>
+          <Button
+            className=""
+            disabled={searchDisabled}
+            onClick={startSSEConnection}
+          >
             Search
           </Button>
         </div>
