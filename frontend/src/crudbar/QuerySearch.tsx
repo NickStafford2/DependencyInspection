@@ -57,6 +57,9 @@ export default function QuerySearch({
           removePackage(name);
         });
         setQuery(new Query());
+        setTimeout(() => {
+          currentTab.value = "network";
+        }, 500);
       });
       sseConnection.onerror = (e) => {
         console.error("SSE error:", e);
