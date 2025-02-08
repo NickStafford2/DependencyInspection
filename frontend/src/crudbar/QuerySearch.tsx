@@ -14,26 +14,18 @@ export default function QuerySearch({
 }) {
   const [query, setQuery] = useState<Query>(new Query());
   const [queryUrl, setQueryUrl] = useState<string>("");
-  // const { messages, setMessages } = useMyContext();
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
-  const { messages } = useContext(CountContext);
+  const { messages, currentTab } = useContext(CountContext);
 
   const addMessage = (newMessage: string) => {
     messages.value = [...messages.value, newMessage];
   };
-  // if (messages || queryUrl) {
-  //   console.log();
-  // }
 
   const removePackage = (name: string) => {
-    // console.log(name);
-    // const oldQuery = query;
-    // console.log(query);
     query.packages.delete(name);
     setQuery(query);
     setQueryUrl(query.toUrl());
-    // console.log(query);
   };
 
   const addPackage = useCallback(
@@ -48,8 +40,8 @@ export default function QuerySearch({
   );
 
   const startSSEConnection = useCallback(() => {
-    // console.log(queryUrl);
-    // console.log("startSSEConnection");
+    messages.value = [];
+    currentTab.value = "messages";
     if (!sse) {
       const sseConnection = new EventSource(query.toUrl(), {
         withCredentials: false,
@@ -65,9 +57,6 @@ export default function QuerySearch({
           removePackage(name);
         });
         setQuery(new Query());
-        // setTimeout(() => {
-        //   setMessages([]);
-        // }, 1000);
       });
       sseConnection.onerror = (e) => {
         console.error("SSE error:", e);

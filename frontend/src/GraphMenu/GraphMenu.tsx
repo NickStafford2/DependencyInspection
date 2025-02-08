@@ -7,7 +7,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useState, useContext } from "react";
 import { CountContext } from "@/context";
@@ -30,12 +29,9 @@ export default function GraphMenu() {
   return (
     <div className="relative">
       <Card className=" absolute top-4 flex flex-col max-w-[20rem] right-4 z-50">
-        <span>Current: {currentTab.value}</span>
-        <Button onClick={clicker}>Value: {currentTab.value}</Button>
         <Tabs
           defaultValue="welcome"
           value={currentTab.value}
-          // value={graphMenuTab.value}
           onValueChange={onTabChange}
           className=""
         >
