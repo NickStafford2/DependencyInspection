@@ -13,7 +13,6 @@ const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
     height: 0,
   });
 
-  // The function to update size
   const updateSize = () => {
     if (graphRef.current) {
       const newWidth = graphRef.current.clientWidth;
@@ -26,7 +25,6 @@ const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
     // Set the initial size when the component mounts
     updateSize();
 
-    // Create a ResizeObserver to update size on resize
     const resizeObserver = new ResizeObserver(() => {
       updateSize();
     });
