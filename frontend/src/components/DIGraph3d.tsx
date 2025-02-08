@@ -43,27 +43,29 @@ const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
     <div ref={graphRef} className="relative w-full h-full">
       <div className="absolute top-0 left-0">
         {/* {JSON.stringify(graphData.value)} */}
-        <ForceGraph3D
-          width={dimensions.width}
-          height={dimensions.height}
-          // nodeVal={j}
-          onNodeClick={(node) => {
-            onNodeSelected(node);
-          }}
-          nodeAutoColorBy="group"
-          linkDirectionalArrowLength={3.5}
-          linkDirectionalArrowRelPos={1}
-          linkCurvature={0.05}
-          nodeLabel={"test"}
-          // nodeThreeObject={(node) => {
-          // 	const sprite = new SpriteText(node.id);
-          // 	sprite.color = node.color;
-          // 	// console.log(node);
-          // 	sprite.textHeight = (18 + node.val) / 12;
-          // 	return sprite;
-          // }}
-          graphData={graphData.value}
-        />
+        {graphData.value && (
+          <ForceGraph3D
+            width={dimensions.width}
+            height={dimensions.height}
+            // nodeVal={j}
+            onNodeClick={(node) => {
+              onNodeSelected(node);
+            }}
+            nodeAutoColorBy="group"
+            linkDirectionalArrowLength={3.5}
+            linkDirectionalArrowRelPos={1}
+            linkCurvature={0.05}
+            nodeLabel={"test"}
+            // nodeThreeObject={(node) => {
+            // 	const sprite = new SpriteText(node.id);
+            // 	sprite.color = node.color;
+            // 	// console.log(node);
+            // 	sprite.textHeight = (18 + node.val) / 12;
+            // 	return sprite;
+            // }}
+            graphData={graphData.value}
+          />
+        )}
       </div>
     </div>
   );
