@@ -19,10 +19,10 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { useContext } from "react";
-import { CountContext } from "@/context";
+import { GlobalStateContext } from "@/context";
 
 function Crudbar() {
-  const { graphData, tableData } = useContext(CountContext);
+  const { graphData, tableData } = useContext(GlobalStateContext);
   const getAllDBNetworks = async () => {
     fetchGraphData("api/getAllDBNetworks").then((data) => {
       if (data) {

@@ -9,7 +9,7 @@ import {
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { CountContext } from "@/context";
+import { GlobalStateContext } from "@/context";
 import { useContext } from "react";
 
 /** @useSignals */
@@ -17,7 +17,7 @@ const Messages = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { messages } = useContext(CountContext);
+  const { messages } = useContext(GlobalStateContext);
 
   const clearMessages = () => {
     messages.value = [];

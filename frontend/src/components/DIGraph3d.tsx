@@ -1,12 +1,12 @@
 import { ForceGraph3D } from "react-force-graph";
 import { useEffect, useState, useRef, useContext } from "react";
-import { CountContext } from "@/context";
+import { GlobalStateContext } from "@/context";
 // import SpriteText from "https://esm.sh/three-spritetext";
 // import SpriteText from "three-spritetext";
 
 /** @useSignals */
 const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
-  const { graphData } = useContext(CountContext);
+  const { graphData } = useContext(GlobalStateContext);
   const graphRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({
     width: 0,

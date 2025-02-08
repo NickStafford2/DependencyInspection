@@ -10,7 +10,7 @@ interface GlobalState {
   tableData: Signal<Node[]>;
 }
 
-export const CountContext = createContext<GlobalState | null>(null);
+export const GlobalStateContext = createContext<GlobalState | null>(null);
 
 function createAppState(): GlobalState {
   return {
@@ -22,14 +22,14 @@ function createAppState(): GlobalState {
   };
 }
 
-export const CounterProvider = ({
+export const GlobalStateProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   return (
-    <CountContext.Provider value={createAppState()}>
+    <GlobalStateContext.Provider value={createAppState()}>
       {children}
-    </CountContext.Provider>
+    </GlobalStateContext.Provider>
   );
 };

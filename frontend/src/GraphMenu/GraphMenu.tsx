@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
 import { useState, useContext } from "react";
-import { CountContext } from "@/context";
+import { GlobalStateContext } from "@/context";
 
 /** @useSignals */
 export default function GraphMenu() {
-  const { currentTab } = useContext(CountContext);
+  const { currentTab } = useContext(GlobalStateContext);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const onTabChange = (tabName: string) => {
     currentTab.value = tabName;

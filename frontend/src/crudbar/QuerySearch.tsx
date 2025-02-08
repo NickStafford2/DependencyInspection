@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
-import { CountContext } from "@/context";
+import { GlobalStateContext } from "@/context";
 import { table } from "console";
 
 export default function QuerySearch() {
@@ -15,7 +15,7 @@ export default function QuerySearch() {
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
   const { messages, currentTab, graphData, tableData } =
-    useContext(CountContext);
+    useContext(GlobalStateContext);
 
   const addMessage = (newMessage: string) => {
     messages.value = [...messages.value, newMessage];
