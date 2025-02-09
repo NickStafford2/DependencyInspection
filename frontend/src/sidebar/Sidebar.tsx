@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useContext } from "react";
 import { GlobalStateContext } from "@/context";
 import { NodeTableContainer } from "@/components/table/NodeTableContainer";
+import Messages from "@/components/Messages";
 
 export default function Sidebar() {
   const { currentTab } = useContext(GlobalStateContext);
@@ -10,13 +11,12 @@ export default function Sidebar() {
     currentTab.value = tabName;
   };
   return (
-    <Card>
-      {currentTab.value}
+    <Card className="h-full ">
       <Tabs
         defaultValue="welcome"
         value={currentTab.value}
         onValueChange={onTabChange}
-        className=""
+        className="h-full flex flex-col"
       >
         <TabsList className="w-full flex flex-row justify-around relative">
           <TabsTrigger className="flex-grow" value="welcome">
@@ -24,6 +24,9 @@ export default function Sidebar() {
           </TabsTrigger>
           <TabsTrigger className="flex-grow" value="network">
             Network
+          </TabsTrigger>
+          <TabsTrigger className="flex-grow" value="messages">
+            Messages
           </TabsTrigger>
           <TabsTrigger className="flex-grow" value="dependencies">
             Dependencies
@@ -41,8 +44,11 @@ export default function Sidebar() {
         <TabsContent className="p-4" value="network">
           <p>Network info here</p>
         </TabsContent>
-        <TabsContent className="p-4" value="dependencies">
-          <NodeTableContainer></NodeTableContainer>
+        <TabsContent className="p-4" value="messages">
+          <Messages />
+        </TabsContent>
+        <TabsContent className="h-full w-full " value="dependencies">
+          <NodeTableContainer />
         </TabsContent>
       </Tabs>
     </Card>

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import Crudbar from "./crudbar/Crudbar";
 import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
-import GraphMenu from "./GraphMenu/GraphMenu";
 import Sidebar from "./sidebar/Sidebar";
 import { GlobalStateContext } from "./context";
 
@@ -18,7 +17,6 @@ const App = () => {
         </div>
         <div className="w-full h-full">
           <div className="absolute z-10">{selectedNodeId}</div>
-          <GraphMenu />
           <DIGraph3d></DIGraph3d>
         </div>
       </div>

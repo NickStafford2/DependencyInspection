@@ -72,7 +72,7 @@ export function NodeTableContainer<TData, TValue>() {
   });
 
   return (
-    <div className="rounded-md border h-full flex flex-col">
+    <div className="h-full flex flex-col">
       <div className="flex flex-row items-center py-4 gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex flex-row flex-nowrap">
