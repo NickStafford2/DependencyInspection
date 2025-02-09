@@ -76,7 +76,11 @@ export function NodeTable<TData, TValue>({
   //   }
   // }, [scrollTo, table]);
   return (
-    <div ref={wrapperRef} className="relative w-full h-full">
+    <div
+      id="node-table-container"
+      ref={wrapperRef}
+      className="relative w-full h-full"
+    >
       <div className="absolute top-0 left-0 bottom-0 right-0">
         <Table
           ref={tableScrollerRef}

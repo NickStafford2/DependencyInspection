@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useState, useRef, useContext } from "react";
 
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./scroll-area";
@@ -43,7 +42,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&_tr:last-child]:border-0 overflow-scroll", className)}
+    className={cn("[&_tr:last-child]:border-0", className)}
     // style={{ height: "800px", maxHeight: "800px" }}
     {...props}
   />

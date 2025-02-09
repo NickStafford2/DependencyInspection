@@ -13,11 +13,11 @@ const App = () => {
       <Crudbar />
       <div className="flex flex-row grow shrink overflow-hidden">
         <div className="">
-          <Sidebar></Sidebar>
+          <Sidebar />
         </div>
         <div className="w-full h-full">
-          <div className="absolute z-10">{selectedNodeId}</div>
-          <DIGraph3d></DIGraph3d>
+          <span className="absolute z-10 text-2xl p-4">{selectedNodeId}</span>
+          <DIGraph3d />
         </div>
       </div>
       {import.meta.env.MODE == "production" || <BackendTools />}
