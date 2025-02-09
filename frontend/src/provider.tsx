@@ -3,11 +3,11 @@ import { GlobalState, GlobalStateContext } from "./context";
 
 function createAppState(): GlobalState {
   return {
-    count: signal(0),
     currentTab: signal("welcome"),
     messages: signal([]),
     graphData: signal(null),
     tableData: signal([]),
+    selectedNodeId: signal(""),
   };
 }
 

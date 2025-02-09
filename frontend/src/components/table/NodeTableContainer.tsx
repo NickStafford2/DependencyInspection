@@ -1,3 +1,4 @@
+import { columns } from "./columns";
 import {
   ColumnDef,
   getFilteredRowModel,
@@ -21,20 +22,12 @@ import {
 
 // import { NodeTable2 } from "./NodeTable2"
 import { NodeTable } from "./NodeTable";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalStateContext } from "@/context";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  scrollTo: string;
-}
-
 /** @useSignals **/
-export function NodeTableContainer<TData, TValue>({
-  columns,
-  scrollTo,
-}: DataTableProps<TData, TValue>) {
-  const { tableData } = useContext(GlobalStateContext);
+export function NodeTableContainer<TData, TValue>() {
+  const { tableData, selectedNodeId } = useContext(GlobalStateContext);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -119,7 +112,7 @@ export function NodeTableContainer<TData, TValue>({
       <NodeTable
         columns={columns}
         table={table}
-        scrollTo={scrollTo}
+        scrollTo={selectedNodeId.value}
       ></NodeTable>
     </div>
   );

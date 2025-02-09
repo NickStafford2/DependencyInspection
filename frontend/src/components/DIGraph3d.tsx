@@ -5,8 +5,8 @@ import { GlobalStateContext } from "@/context";
 // import SpriteText from "three-spritetext";
 
 /** @useSignals */
-const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
-  const { graphData } = useContext(GlobalStateContext);
+const DIGraph3d = () => {
+  const { graphData, selectedNodeId } = useContext(GlobalStateContext);
   const graphRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({
     width: 0,
@@ -49,7 +49,7 @@ const DIGraph3d = ({ onNodeSelected }: { onNodeSelected?: (node) => void }) => {
             height={dimensions.height}
             // nodeVal={j}
             onNodeClick={(node) => {
-              onNodeSelected(node);
+              selectedNodeId.value = node.id;
             }}
             nodeAutoColorBy="group"
             linkDirectionalArrowLength={3.5}
