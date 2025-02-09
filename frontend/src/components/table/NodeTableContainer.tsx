@@ -22,7 +22,7 @@ import {
 
 // import { NodeTable2 } from "./NodeTable2"
 import { NodeTable } from "./NodeTable";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { GlobalStateContext } from "@/context";
 
 /** @useSignals **/
@@ -70,6 +70,13 @@ export function NodeTableContainer<TData, TValue>() {
       columnVisibility,
     },
   });
+  const [inputValue, setInputValue] = useState<string>("");
+  const inputRef = useRef(null);
+  useEffect(() => {
+    console.log(selectedNodeId.value);
+    setInputValue(selectedNodeId.value);
+    table.getColumn("id")?.setFilterValue(selectedNodeId.value);
+  }, [selectedNodeId.value, table]);
 
   return (
     <div className="h-full flex flex-col">
@@ -101,8 +108,9 @@ export function NodeTableContainer<TData, TValue>() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Input
+          ref={inputRef}
           placeholder="Filter packages..."
-          value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
+          value={inputValue}
           onChange={(event) =>
             table.getColumn("id")?.setFilterValue(event.target.value)
           }

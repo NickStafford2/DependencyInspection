@@ -64,10 +64,22 @@ export function NodeTable<TData, TValue>({
     };
   }, []); // Empty dependency array: this runs once on mount
 
+  const tableScrollerRef = useRef<HTMLDivElement>(null);
+  // React.useEffect(() => {
+  //   // console.log(scrollTo)
+  //   if (scrollTo) {
+  //     const row = table.getRow(scrollTo);
+  //     // console.log(row);
+  //     // console.log(tableScrollerRef.current?.scrollTo);
+  //     tableScrollerRef.current?.scrollTo({ top: row.index });
+  //     // tableBodyRef.current?.scrollIntoView();
+  //   }
+  // }, [scrollTo, table]);
   return (
     <div ref={wrapperRef} className="relative w-full h-full">
       <div className="absolute top-0 left-0 bottom-0 right-0">
         <Table
+          ref={tableScrollerRef}
           width={dimensions.width}
           height={dimensions.height}
           wrapperClassName=""
