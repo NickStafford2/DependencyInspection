@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef, useCallback, useContext } from "react";
-import { GraphData } from "@/utils/models";
 import { Button } from "@/components/ui/button";
-// import { fetchGraphData } from "@/crudbar/api";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import { Query } from "@/query";
 import { GlobalStateContext } from "@/context";
-import { table } from "console";
 
 export default function QuerySearch() {
   const [query, setQuery] = useState<Query>(new Query());
@@ -48,7 +45,6 @@ export default function QuerySearch() {
         withCredentials: false,
       });
       sseConnection.onmessage = (e) => {
-        // console.log("Received data:", e);
         addMessage(e.data);
       };
       sseConnection.addEventListener("network", (e) => {
@@ -58,9 +54,9 @@ export default function QuerySearch() {
           removePackage(name);
         });
         setQuery(new Query());
-        // setTimeout(() => {
-        //   currentTab.value = "network";
-        // }, 500);
+        setTimeout(() => {
+          currentTab.value = "network";
+        }, 500);
       });
       sseConnection.onerror = (e) => {
         console.error("SSE error:", e);

@@ -3,7 +3,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useContext } from "react";
 import { GlobalStateContext } from "@/context";
 import { NodeTableContainer } from "@/components/table/NodeTableContainer";
-import Messages from "@/components/Messages";
 
 export default function Sidebar() {
   const { currentTab } = useContext(GlobalStateContext);
@@ -25,9 +24,6 @@ export default function Sidebar() {
           <TabsTrigger className="flex-grow" value="network">
             Network
           </TabsTrigger>
-          <TabsTrigger className="flex-grow" value="messages">
-            Messages
-          </TabsTrigger>
           <TabsTrigger className="flex-grow" value="dependencies">
             Dependencies
           </TabsTrigger>
@@ -43,9 +39,6 @@ export default function Sidebar() {
 
         <TabsContent className="p-4" value="network">
           <p>Network info here</p>
-        </TabsContent>
-        <TabsContent className="p-4" value="messages">
-          <Messages />
         </TabsContent>
         <TabsContent className="h-full w-full " value="dependencies">
           <NodeTableContainer />

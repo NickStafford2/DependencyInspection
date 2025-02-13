@@ -5,6 +5,7 @@ function createAppState(): GlobalState {
   return {
     currentTab: signal("welcome"),
     messages: signal([]),
+    showMessages: signal(false),
     graphData: signal(null),
     tableData: signal([]),
     selectedNodeId: signal(""),
