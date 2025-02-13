@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { ScrollArea } from "./scroll-area";
+import { ScrollArea, ScrollBar } from "./scroll-area";
 
 interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   wrapperClassName?: string;
@@ -10,12 +10,18 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
 const Table = React.forwardRef<HTMLDivElement, TableProps>(
   ({ wrapperClassName, className, ...props }, ref) => {
     return (
-      <div id="scroll" ref={ref} className="overflow-scroll h-full w-full">
+      <ScrollArea
+        ref={ref}
+        id="table-scroll-area"
+        className={cn("h-full w-full overflow-auto", wrapperClassName)}
+      >
         <table
           className={cn("w-full caption-bottom text-sm", className)}
           {...props}
         />
-      </div>
+        <ScrollBar orientation="vertical" />
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     );
   },
 );
