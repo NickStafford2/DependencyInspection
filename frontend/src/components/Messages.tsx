@@ -24,27 +24,25 @@ const Messages = React.forwardRef<
   };
 
   return (
-    <div ref={ref} className={cn("relative", className)} {...props}>
-      <div className="absolute right-0 top-0 ">
-        {messages.value.length > 0 && (
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  className="pr-2 top-[-15px] group relative"
-                  onClick={clearMessages}
-                >
-                  <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0 " />
-                  <FaRegTrashAlt className="text-red-600 absolute opacity-0 group-hover:opacity-100  " />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Clear Messages.</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
-      </div>
+    <div ref={ref} className={cn("", className)} {...props}>
+      {messages.value.length > 0 && (
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className="group flex float-right justify-center items-center w-8 h-8 "
+                onClick={clearMessages}
+              >
+                <FaTrashAlt className="opacity-100 group-hover:opacity-0" />
+                <FaRegTrashAlt className="opacity-0 group-hover:opacity-100" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Clear Messages.</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
 
       <ol className="list-disc pl-8 flex flex-col gap-1">
         {messages.value.map((message, index) => (

@@ -1,5 +1,4 @@
 import Messages from "@/components/Messages";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import {
   Tooltip,
@@ -8,84 +7,38 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
-import { useState, useContext } from "react";
-import { GlobalStateContext } from "@/context";
+import { useState } from "react";
 
 /** @useSignals */
 export default function GraphMenu() {
-  const { currentTab } = useContext(GlobalStateContext);
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const onTabChange = (tabName: string) => {
-    currentTab.value = tabName;
-  };
-  const clicker = () => {
-    if (currentTab.value == "welcome") {
-      currentTab.value = "network";
-    } else {
-      currentTab.value = "welcome";
-    }
-  };
 
   return (
     <div className="relative">
-      <Card className=" absolute top-4 flex flex-col max-w-[20rem] right-4 z-50">
-        <Tabs
-          defaultValue="welcome"
-          value={currentTab.value}
-          onValueChange={onTabChange}
-          className=""
-        >
-          <TabsList className="w-full justify-around relative">
-            {isVisible && (
-              <>
-                <TabsTrigger onSelect={clicker} value="welcome">
-                  Welcome
-                </TabsTrigger>
-                <TabsTrigger value="messages">Messages</TabsTrigger>
-                <TabsTrigger value="network">Network</TabsTrigger>
-              </>
-            )}
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    className="p-3 text-card-background"
-                    onClick={() => setIsVisible(!isVisible)}
-                  >
-                    {!isVisible && <MdExpandMore />}
-                    {isVisible && <MdExpandLess />}
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>
-                    {!isVisible && "Show Messages"}
-                    {isVisible && "Hide Messages"}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </TabsList>
-
-          {isVisible && (
-            <>
-              <TabsContent className="p-4" value="welcome">
+      <Card className=" absolute items-end top-4 flex flex-col max-w-[20rem] right-4 z-50">
+        <div className="flex flex-row justify-between w-full">
+          {isVisible && <h2 className="text-2xl pl-8 py-2">Messages</h2>}
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="p-3 text-card-background"
+                  onClick={() => setIsVisible(!isVisible)}
+                >
+                  {!isVisible && <MdExpandMore />}
+                  {isVisible && <MdExpandLess />}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
                 <p>
-                  Use DependencyInspection to review the dependencies of your
-                  npm packages. Query any number of packages, and
-                  DependencyInspection build a network of all the dependencies,
-                  their vulnerabilities, and all sorts of information.
+                  {!isVisible && "Show Messages"}
+                  {isVisible && "Hide Messages"}
                 </p>
-              </TabsContent>
-
-              <TabsContent className="p-4" value="network">
-                <p>Network info here</p>
-              </TabsContent>
-              <TabsContent className="p-4" value="messages">
-                <Messages />
-              </TabsContent>
-            </>
-          )}
-        </Tabs>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        {isVisible && <Messages />}
       </Card>
     </div>
   );

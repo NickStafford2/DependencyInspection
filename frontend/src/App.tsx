@@ -4,6 +4,7 @@ import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
 import Sidebar from "./sidebar/Sidebar";
 import { GlobalStateContext } from "./context";
+import GraphMenu from "./GraphMenu/GraphMenu";
 
 const App = () => {
   const { selectedNodeId } = useContext(GlobalStateContext);
@@ -17,6 +18,7 @@ const App = () => {
         </div>
         <div className="w-full h-full">
           <span className="absolute z-10 text-2xl p-4">{selectedNodeId}</span>
+          <GraphMenu />
           <DIGraph3d />
         </div>
       </div>
