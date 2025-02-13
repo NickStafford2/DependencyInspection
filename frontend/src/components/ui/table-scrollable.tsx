@@ -10,12 +10,12 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
 const Table = React.forwardRef<HTMLDivElement, TableProps>(
   ({ wrapperClassName, className, ...props }, ref) => {
     return (
-      <ScrollArea id="scroll-area" className="h-full">
+      <div id="scroll" ref={ref} className="overflow-scroll h-full w-full">
         <table
           className={cn("w-full caption-bottom text-sm", className)}
           {...props}
         />
-      </ScrollArea>
+      </div>
     );
   },
 );
@@ -28,7 +28,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "sticky top-0 bg-background border-b [&_tr]:border-0 [&_tr]:shadow-[inset_0_-1px_0] [&_tr]:shadow-border",
+      "sticky top-0 z-20 border-b  [&_tr]:border-0 [&_tr]:shadow-[inset_0_-1px_0] [&_tr]:shadow-border",
       className,
     )}
     {...props}
@@ -42,7 +42,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&_tr:last-child]:border-0", className)}
+    className={cn("[&_tr:last-child]:border-0 ", className)}
     // style={{ height: "800px", maxHeight: "800px" }}
     {...props}
   />
@@ -71,7 +71,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      "border-b relative z-0 transition-colors  hover:bg-muted/50 data-[state=selected]:bg-muted",
       className,
     )}
     {...props}
@@ -86,7 +86,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "sticky  top-0 bg-background first:left-0 first:top-0 first:z-50 z-40 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
       className,
     )}
     {...props}
@@ -100,7 +100,10 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    className={cn(
+      "p-4 first:sticky first:left-0 z-20 align-middle first:z-30 first:bg-background",
+      className,
+    )}
     {...props}
   />
 ));
