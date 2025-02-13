@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { GlobalStateContext } from "@/context";
 
 /** @useSignals */

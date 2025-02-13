@@ -11,7 +11,7 @@ export default function QuerySearch() {
   const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
-  const { messages, currentTab, graphData, tableData } =
+  const { messages, currentTab, showMessages, graphData, tableData } =
     useContext(GlobalStateContext);
 
   const addMessage = (newMessage: string) => {
@@ -40,6 +40,7 @@ export default function QuerySearch() {
   const startSSEConnection = useCallback(() => {
     messages.value = [];
     currentTab.value = "messages";
+    showMessages.value = true;
     if (!sse) {
       const sseConnection = new EventSource(query.toUrl(), {
         withCredentials: false,
@@ -57,6 +58,9 @@ export default function QuerySearch() {
         setTimeout(() => {
           currentTab.value = "network";
         }, 500);
+        setTimeout(() => {
+          showMessages.value = false;
+        }, 1500);
       });
       sseConnection.onerror = (e) => {
         console.error("SSE error:", e);
