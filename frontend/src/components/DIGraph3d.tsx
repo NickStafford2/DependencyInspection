@@ -1,4 +1,4 @@
-import { ForceGraph3D } from "react-force-graph";
+import ForceGraph3D from "react-force-graph-3d";
 import { useEffect, useState, useRef, useContext } from "react";
 import { GlobalStateContext } from "@/context";
 // import SpriteText from "https://esm.sh/three-spritetext";
