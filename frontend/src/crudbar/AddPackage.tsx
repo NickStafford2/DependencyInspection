@@ -23,11 +23,7 @@ export default function AddPackage({
     setAddPackageValue("");
   };
   return (
-    <div
-      className="flex flex-row w-64
-           ring-offset-background file:border-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm
-      "
-    >
+    <div className="flex flex-row w-64 ring-offset-background file:border-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
       <Input
         className="grow-0  rounded-r-none border-2 border-r-0 focus-visible:ring-0"
         placeholder="Add Package"
@@ -37,7 +33,8 @@ export default function AddPackage({
         onKeyDown={handleKeyDown}
       />
       <button
-        className="rounded-l-none px-4 border-2 border-l-0 bg-transparent rounded-r-md hover:bg-white/5 font-bold text-lg text-green-300"
+        className="rounded-l-none px-4 border-2 border-l-0 bg-transparent rounded-r-md hover:bg-white/5 font-bold text-lg text-green-300 disabled:text-gray-400 disabled:cursor-not-allowed"
+        disabled={addPackageValue === ""}
         onClick={plusClicked}
       >
         +
