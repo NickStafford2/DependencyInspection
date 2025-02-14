@@ -35,9 +35,7 @@ const RowFilter = React.forwardRef<HTMLDivElement, RowFilterProps>(
     return (
       <div
         ref={ref}
-        className="flex flex-row w-64
-           ring-offset-background file:border-0   border-2 focus-visible:ring-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm
-      "
+        className="flex flex-row w-64 ring-offset-background file:border-0   border-2 focus-visible:ring-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
       >
         <input
           ref={inputRef}
@@ -52,7 +50,7 @@ const RowFilter = React.forwardRef<HTMLDivElement, RowFilterProps>(
         />
         {inputValue.length === 0 || (
           <button
-            className="px-4 bg-transparent rounded-r-md hover:bg-white/5 font-bold text-md text-gray-700"
+            className="px-4 bg-transparent rounded-r-md hover:bg-white/5 hover:text-red-400 font-bold text-md text-gray-700"
             onClick={clearClicked}
           >
             x
