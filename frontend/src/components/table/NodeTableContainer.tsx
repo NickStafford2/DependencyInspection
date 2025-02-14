@@ -1,6 +1,5 @@
 import { columns } from "./columns";
 import {
-  ColumnDef,
   getFilteredRowModel,
   getCoreRowModel,
   VisibilityState,
@@ -10,9 +9,7 @@ import {
   getSortedRowModel,
   Table,
 } from "@tanstack/react-table";
-// import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -20,13 +17,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// import { NodeTable2 } from "./NodeTable2"
 import { NodeTable } from "./NodeTable";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { GlobalStateContext } from "@/context";
+import { RowFilter } from "./RowFilter";
 
 /** @useSignals **/
-export function NodeTableContainer<TData, TValue>() {
+export function NodeTableContainer<TData>() {
   const { tableData, selectedNodeId } = useContext(GlobalStateContext);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -70,14 +67,6 @@ export function NodeTableContainer<TData, TValue>() {
       columnVisibility,
     },
   });
-  const [inputValue, setInputValue] = useState<string>("");
-  const inputRef = useRef(null);
-  useEffect(() => {
-    console.log(selectedNodeId.value);
-    setInputValue(selectedNodeId.value);
-    table.getColumn("id")?.setFilterValue(selectedNodeId.value);
-  }, [selectedNodeId.value, table]);
-
   return (
     <div className="h-full flex flex-col">
       <div className="flex flex-row items-center py-4 gap-2">
@@ -107,15 +96,7 @@ export function NodeTableContainer<TData, TValue>() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Input
-          ref={inputRef}
-          placeholder="Filter packages..."
-          value={inputValue}
-          onChange={(event) =>
-            table.getColumn("id")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <RowFilter table={table} />
       </div>
       <NodeTable
         columns={columns}
