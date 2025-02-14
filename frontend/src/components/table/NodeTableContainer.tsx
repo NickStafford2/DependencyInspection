@@ -21,6 +21,7 @@ import { NodeTable } from "./NodeTable";
 import React, { useContext } from "react";
 import { GlobalStateContext } from "@/context";
 import { RowFilter } from "./RowFilter";
+import { PackageNode } from "@/utils/models";
 
 /** @useSignals **/
 export function NodeTableContainer() {
@@ -47,7 +48,7 @@ export function NodeTableContainer() {
       isSeed: false,
     });
 
-  const table: Table<Node> = useReactTable<Node>({
+  const table: Table<PackageNode> = useReactTable<PackageNode>({
     data: tableData.value,
     columns: columns,
     onSortingChange: setSorting,

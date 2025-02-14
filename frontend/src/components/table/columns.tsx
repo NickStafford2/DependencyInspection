@@ -1,9 +1,11 @@
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, Column, createColumnHelper } from "@tanstack/react-table";
+
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { CellDependencies } from "./CellDependencies";
 import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
 import { PackageNode } from "@/utils/models";
+import { NodeTableHeader } from "./NodeTableHeader";
 
 const columnHelper = createColumnHelper<PackageNode>();
 
@@ -12,23 +14,14 @@ const formatNumber = (value: number, decimals: number) => {
 };
 
 export const columns: ColumnDef<PackageNode>[] = [
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown />
-        </Button>
-      );
+  columnHelper.accessor("id", {
+    id: "id",
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Package" />;
     },
     // If 'id' is not a number, no formatting needed.
     cell: (info) => info.getValue(),
-  },
+  }),
   {
     accessorKey: "inDegree",
     header: ({ column }) => {
