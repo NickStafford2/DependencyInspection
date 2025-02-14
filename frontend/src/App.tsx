@@ -1,4 +1,9 @@
 import { useContext } from "react";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import Crudbar from "./crudbar/Crudbar";
 import BackendTools from "./components/BackendTools";
 import DIGraph3d from "./components/DIGraph3d";
@@ -12,16 +17,18 @@ const App = () => {
   return (
     <div className="flex flex-col w-full h-full justify-between">
       <Crudbar />
-      <div className="flex flex-row grow shrink overflow-hidden">
-        <div className="">
+
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel>
           <Sidebar />
-        </div>
-        <div className="w-full h-full">
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel>
           <span className="absolute z-10 text-2xl p-4">{selectedNodeId}</span>
           <GraphMenu />
           <DIGraph3d />
-        </div>
-      </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
       {import.meta.env.MODE == "production" || <BackendTools />}
     </div>
   );
