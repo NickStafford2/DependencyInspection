@@ -34,7 +34,7 @@ export default function QuerySearch() {
         if (searchDisabled) setSearchDisabled(false);
       }
     },
-    [query, setQueryUrl, setQuery, setSearchDisabled],
+    [query, setQueryUrl, setQuery, setSearchDisabled, searchDisabled],
   );
 
   const startSSEConnection = useCallback(() => {
@@ -73,7 +73,18 @@ export default function QuerySearch() {
       };
       setSse(sseConnection);
     }
-  }, [setSse, query, sse]);
+  }, [
+    setSse,
+    query,
+    sse,
+    showMessages,
+    currentTab,
+    addMessage,
+    graphData,
+    messages,
+    removePackage,
+    tableData,
+  ]);
 
   useEffect(() => {
     return () => {
