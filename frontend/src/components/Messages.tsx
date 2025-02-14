@@ -33,8 +33,8 @@ const Messages = React.forwardRef<
                 className="group flex float-right justify-center items-center w-8 h-8 "
                 onClick={clearMessages}
               >
-                <FaTrashAlt className="opacity-100 group-hover:opacity-0" />
-                <FaRegTrashAlt className="opacity-0 group-hover:opacity-100" />
+                <FaTrashAlt className="absolute opacity-100 group-hover:opacity-0" />
+                <FaRegTrashAlt className="absolute opacity-0 group-hover:opacity-100" />
               </button>
             </TooltipTrigger>
             <TooltipContent>
