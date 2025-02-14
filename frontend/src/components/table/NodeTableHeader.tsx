@@ -10,14 +10,16 @@ interface NodeTableHeaderProps {
 
 const NodeTableHeader = ({ column, title }: NodeTableHeaderProps) => {
   return (
-    <Button
-      variant="ghost"
-      className="break-words whitespace-normal"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    >
+    <div className="flex flex-row items-center font-semibold underline break-words whitespace-normal">
       {title}
-      <ArrowUpDown />
-    </Button>
+      <Button
+        variant="ghost"
+        className=""
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        <ArrowUpDown />
+      </Button>
+    </div>
   );
 };
 export { NodeTableHeader };
