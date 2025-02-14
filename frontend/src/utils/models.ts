@@ -1,22 +1,24 @@
 export type Node = {
   id: string;
-  index: number
-  val: number
-  inDegree?: number
-  outDegree?: number
-  predeccessors: string[]
-  dependencies: string[]
-  closenessCentrality: number
-  eigenvectorCentrality: number
-  pagerank: number
-  betweennessCentrality: number
-  isSeed: boolean
+  index: number;
+  val: number;
+  inDegree?: number;
+  outDegree?: number;
+  dependencies: string[];
+  dependencyOf: string[];
+  allDependencies: string[];
+  allDependencyOf: string[];
+  closenessCentrality: number;
+  eigenvectorCentrality: number;
+  pagerank: number;
+  betweennessCentrality: number;
+  isSeed: boolean;
 };
 
 export type Link = {
   source: string;
   target: string;
-}
+};
 
 export class GraphData {
   directed: boolean;

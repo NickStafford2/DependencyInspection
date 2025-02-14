@@ -50,13 +50,15 @@ export default function QuerySearch() {
       };
       sseConnection.addEventListener("network", (e) => {
         graphData.value = JSON.parse(e.data);
+        console.log(graphData.value);
         tableData.value = graphData.value.nodes;
         query.packages.forEach((name: string) => {
           removePackage(name);
         });
         setQuery(new Query());
         setTimeout(() => {
-          currentTab.value = "network";
+          // currentTab.value = "network";
+          currentTab.value = "dependencies"; // todo: change to packages
         }, 500);
         setTimeout(() => {
           showMessages.value = false;

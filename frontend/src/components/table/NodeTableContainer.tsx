@@ -23,7 +23,7 @@ import { GlobalStateContext } from "@/context";
 import { RowFilter } from "./RowFilter";
 
 /** @useSignals **/
-export function NodeTableContainer<TData>() {
+export function NodeTableContainer() {
   const { tableData, selectedNodeId } = useContext(GlobalStateContext);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -47,10 +47,9 @@ export function NodeTableContainer<TData>() {
       isSeed: false,
     });
 
-  const table: Table<TData> = useReactTable({
-    // @ts-ignore
+  const table: Table<Node> = useReactTable<Node>({
     data: tableData.value,
-    columns,
+    columns: columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -58,7 +57,6 @@ export function NodeTableContainer<TData>() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     getRowId: (originalRow) => {
-      // @ts-ignore
       return originalRow.id;
     },
     state: {
