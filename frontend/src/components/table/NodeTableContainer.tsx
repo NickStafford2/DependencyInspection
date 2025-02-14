@@ -68,7 +68,7 @@ export function NodeTableContainer<TData>() {
     },
   });
   return (
-    <div className="h-full flex flex-col">
+    <div id="node-table-container" className="h-full flex flex-col">
       <div className="flex flex-row items-center py-4 gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex flex-row flex-nowrap">

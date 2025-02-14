@@ -28,30 +28,32 @@ export default function Sidebar() {
             Dependencies
           </TabsTrigger>
         </TabsList>
-        <TabsContent className="p-4 flex flex-col gap-2" value="welcome">
-          <h1 className="text-3xl">Welcome. :)</h1>
-          <p>
-            Use this tool to review the dependencies of your npm packages. Query
-            any number of packages, and DependencyInspection build a network of
-            all the dependencies, their vulnerabilities, and all sorts of
-            information.
-          </p>
-          <h1 className="pt-4 text-3xl">Incoming Features</h1>
-          <h2 className="ml-4 text-xl">Already working on the backend.</h2>
-          <ol className="list-disc ml-8">
-            <li>List of indirect dependencies of each package</li>
-            <li>List of packages that indirectly depend on each package</li>
-            <li>List of direct dependencies of each package</li>
-            <li>List of direct packages that depend on each package</li>
-            <li>Data Scraping from Github</li>
-            <li>Liscense info and threat level.</li>
-          </ol>
-          <h2 className="text-xl ml-4">Longer Term Goals</h2>
-          <ol className="list-disc ml-8">
-            <li>Depreciation Status</li>
-            <li>Rugpull Threat assessment</li>
-            <li>Current NPM Audit status</li>
-          </ol>
+        <TabsContent value="welcome">
+          <div className="p-4 flex flex-col gap-2">
+            <h1 className="text-3xl">Welcome. :)</h1>
+            <p>
+              Use this tool to review the dependencies of your npm packages.
+              Query any number of packages, and DependencyInspection build a
+              network of all the dependencies, their vulnerabilities, and all
+              sorts of information.
+            </p>
+            <h1 className="pt-4 text-3xl">Incoming Features</h1>
+            <h2 className="ml-4 text-xl">Already working on the backend.</h2>
+            <ol className="list-disc ml-8">
+              <li>List of indirect dependencies of each package</li>
+              <li>List of packages that indirectly depend on each package</li>
+              <li>List of direct dependencies of each package</li>
+              <li>List of direct packages that depend on each package</li>
+              <li>Data Scraping from Github</li>
+              <li>Liscense info and threat level.</li>
+            </ol>
+            <h2 className="text-xl ml-4">Longer Term Goals</h2>
+            <ol className="list-disc ml-8">
+              <li>Depreciation Status</li>
+              <li>Rugpull Threat assessment</li>
+              <li>Current NPM Audit status</li>
+            </ol>
+          </div>
         </TabsContent>
 
         <TabsContent className="p-4" value="network">
