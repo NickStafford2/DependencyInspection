@@ -3,14 +3,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { CellDependencies } from "./CellDependencies";
 import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
+import { PackageNode } from "@/utils/models";
 
-const columnHelper = createColumnHelper<Node>();
+const columnHelper = createColumnHelper<PackageNode>();
 
 const formatNumber = (value: number, decimals: number) => {
   return value.toFixed(decimals);
 };
 
-export const columns: ColumnDef<Node>[] = [
+export const columns: ColumnDef<PackageNode>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {

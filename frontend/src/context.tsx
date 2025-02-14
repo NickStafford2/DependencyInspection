@@ -1,13 +1,13 @@
 import { createContext } from "react";
 import { Signal } from "@preact/signals-react";
-import { GraphData, Node } from "./utils/models";
+import { GraphData, PackageNode } from "./utils/models";
 
 export interface GlobalState {
   currentTab: Signal<string>;
   messages: Signal<string[]>;
   showMessages: Signal<boolean>;
   graphData: Signal<GraphData | null>;
-  tableData: Signal<Node[]>;
+  tableData: Signal<PackageNode[]>;
   selectedNodeId: Signal<string>;
 }
 

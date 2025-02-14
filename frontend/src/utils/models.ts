@@ -1,4 +1,4 @@
-export type Node = {
+export type PackageNode = {
   id: string;
   index: number;
   val: number;
@@ -25,7 +25,7 @@ export class GraphData {
   graph: object;
   links: Link[];
   multigraph: boolean;
-  nodes: Node[];
+  nodes: PackageNode[];
   analytics?: object;
 
   constructor(
@@ -33,7 +33,7 @@ export class GraphData {
     graph: object,
     links: Link[],
     multigraph: boolean,
-    nodes: Node[],
+    nodes: PackageNode[],
     analytics?: object,
   ) {
     this.directed = directed;
