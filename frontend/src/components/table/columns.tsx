@@ -22,221 +22,98 @@ export const columns: ColumnDef<PackageNode>[] = [
     // If 'id' is not a number, no formatting needed.
     cell: (info) => info.getValue(),
   }),
-  {
-    accessorKey: "inDegree",
-    header: ({ column }) => {
+  columnHelper.accessor("inDegree", {
+    id: "inDegree",
+    header: ({ column }: { column: Column<PackageNode> }) => {
       return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Direct Dependent of (in degree)
-          <ArrowUpDown />
-        </Button>
+        <NodeTableHeader
+          column={column}
+          title="Direct Dependent of (in degree)"
+        />
       );
     },
-    // 'In Degree' is typically an integer, no decimals needed.
     cell: (info) => formatNumber(info.getValue(), 0),
-  },
+  }),
 
-  {
-    accessorKey: "outDegree",
-    header: ({ column }) => {
+  columnHelper.accessor("outDegree", {
+    id: "outDegree",
+    header: ({ column }: { column: Column<PackageNode> }) => {
       return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Direct Dependent of (out degree)
-          <ArrowUpDown />
-        </Button>
+        <NodeTableHeader
+          column={column}
+          title="Direct Dependent of (out degree)"
+        />
       );
     },
-    // Assume 'outDegree' is a whole number, no decimal places needed.
     cell: (info) => formatNumber(info.getValue(), 0),
-  },
-  {
-    accessorKey: "dependencyOf",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dependcy Of
-          <ArrowUpDown />
-        </Button>
-      );
+  }),
+  columnHelper.accessor("dependencies", {
+    id: "dependencies",
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Dependencies" />;
     },
-    // If 'id' is not a number, no formatting needed.
-
-    cell: (cell) => {
-      return (
-        <CellDependenciesRecursive cellData={cell}></CellDependenciesRecursive>
-      );
-    },
-  },
-  {
-    accessorKey: "dependencies",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dependencies
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    // If 'id' is not a number, no formatting needed.
     cell: (cell) => {
       return <CellDependencies cellData={cell}></CellDependencies>;
     },
-  },
-  {
-    accessorKey: "allDependencyOf",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          All Dependency Of
-          <ArrowUpDown />
-        </Button>
-      );
+  }),
+  columnHelper.accessor("allDependencyOf", {
+    id: "allDependencyOf",
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="All Dependency Of" />;
     },
-    // If 'id' is not a number, no formatting needed.
-
     cell: (cell) => {
       return <span>test</span>;
     },
-  },
-  {
-    accessorKey: "all_dependencies",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          All Dependencies
-          <ArrowUpDown />
-        </Button>
-      );
+  }),
+  columnHelper.accessor("allDependencies", {
+    id: "all_dependencies",
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="All Dependencies" />;
     },
-    // If 'id' is not a number, no formatting needed.
     cell: (cell) => {
       return <span>test</span>;
     },
-  },
-  {
-    accessorKey: "closenessCentrality",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Closeness Centrality
-          <ArrowUpDown />
-        </Button>
-      );
+  }),
+  columnHelper.accessor("closenessCentrality", {
+    id: "closenessCentrality",
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Closeness Centrality" />;
     },
-    // Closeness Centrality can be a value with a few decimal points.
     cell: (info) => formatNumber(info.getValue(), 4),
-  },
+  }),
   {
     accessorKey: "eigenvectorCentrality",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Eigenvector Centrality
-          <ArrowUpDown />
-        </Button>
-      );
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Closeness Centrality" />;
     },
-    // Eigenvector Centrality typically has several decimal points.
     cell: (info) => formatNumber(info.getValue(), 4),
   },
   {
     accessorKey: "clusteringCoefficient",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Clustering Coefficient
-          <ArrowUpDown />
-        </Button>
-      );
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Clustering Coefficient" />;
     },
-    // Clustering Coefficient is often a value between 0 and 1, format with 3 decimals.
     cell: (info) => formatNumber(info.getValue(), 3),
   },
   {
     accessorKey: "pagerank",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Pagerank
-          <ArrowUpDown />
-        </Button>
-      );
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Pagerank" />;
     },
-    // Pagerank values often have multiple decimals.
     cell: (info) => formatNumber(info.getValue(), 5),
   },
   {
     accessorKey: "betweennessCentrality",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Betweenness Centrality
-          <ArrowUpDown />
-        </Button>
-      );
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Betweenness Centrality" />;
     },
-    // Betweenness Centrality might have more decimal places.
     cell: (info) => formatNumber(info.getValue(), 4),
   },
   {
     accessorKey: "isSeed",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="break-words whitespace-normal"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Is Seed
-          <ArrowUpDown />
-        </Button>
-      );
+    header: ({ column }: { column: Column<PackageNode> }) => {
+      return <NodeTableHeader column={column} title="Is Seed" />;
     },
-    // Betweenness Centrality might have more decimal places.
     cell: (info) => {
       const value = info.getValue(); // This gets the boolean value
       return <span>{value ? "Yes" : "No"}</span>; // Render "Yes" for true and "No" for false
