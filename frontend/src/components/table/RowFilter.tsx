@@ -12,38 +12,51 @@ export interface RowFilterProps
 }
 
 /** @useSignals **/
-const RowFilter = React.forwardRef<HTMLInputElement, RowFilterProps>(
-  ({ className, table, ...props }) => {
+const RowFilter = React.forwardRef<HTMLDivElement, RowFilterProps>(
+  ({ className, table, ...props }, ref) => {
     const { selectedNodeId } = useContext(GlobalStateContext);
     const [inputValue, setInputValue] = useState<string>("");
-    const ref = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const onChange = (event) => {
       setInputValue(event.target.value);
       table.getColumn("id")?.setFilterValue(event.target.value);
     };
 
     useEffect(() => {
-      console.log(ref);
-      console.log(selectedNodeId.value);
-      // setInputValue(selectedNodeId.value);
-      // ref= selectedNodeId.value
-      // console.log(table);
-      // if (ref.current?.value) {
-      //
-      // }
       setInputValue(selectedNodeId.value);
-      // ref.current?.value = selectedNodeId.value;
       table?.getColumn("id")?.setFilterValue(selectedNodeId.value);
     }, [selectedNodeId.value, table]);
+
+    const clearClicked = () => {
+      setInputValue("");
+      selectedNodeId.value = "";
+      table?.getColumn("id")?.setFilterValue(selectedNodeId.value);
+    };
     return (
-      <Input
+      <div
         ref={ref}
-        placeholder="Filter packages..."
-        onChange={onChange}
-        value={inputValue}
-        className={cn(className, "max-w-sm mx-2")}
-        {...props}
-      />
+        className="flex flex-row w-64
+           ring-offset-background file:border-0 rounded-md bg-background  focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm
+      "
+      >
+        <Input
+          ref={inputRef}
+          placeholder="Filter packages..."
+          onChange={onChange}
+          value={inputValue}
+          className={cn(
+            className,
+            "grow-0  rounded-r-none border-2 border-r-0 focus-visible:ring-0",
+          )}
+          {...props}
+        />
+        <button
+          className="rounded-l-none px-4 border-2 border-l-0 bg-transparent rounded-r-md hover:bg-white/5 font-bold text-lg text-gray-700"
+          onClick={clearClicked}
+        >
+          x
+        </button>
+      </div>
     );
   },
 );
