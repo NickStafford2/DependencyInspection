@@ -1,9 +1,7 @@
 import { ColumnDef, Column, createColumnHelper } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
 import { CellDependencies } from "./CellDependencies";
-import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
+// import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
 import { PackageNode } from "@/utils/models";
 import { NodeTableHeader } from "./NodeTableHeader";
 
