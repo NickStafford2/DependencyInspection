@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -14,6 +14,7 @@ import GraphMenu from "./GraphMenu/GraphMenu";
 const App = () => {
   const { selectedNodeId } = useContext(GlobalStateContext);
 
+  const MemoizedGraph = React.memo(DIGraph3d);
   return (
     <div className="flex flex-col w-full h-full justify-between">
       <Crudbar />
@@ -26,7 +27,7 @@ const App = () => {
         <ResizablePanel>
           <span className="absolute z-10 text-2xl p-4">{selectedNodeId}</span>
           <GraphMenu />
-          <DIGraph3d />
+          <MemoizedGraph />
         </ResizablePanel>
       </ResizablePanelGroup>
       {import.meta.env.MODE == "production" || <BackendTools />}
