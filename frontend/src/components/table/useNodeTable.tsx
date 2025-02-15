@@ -1,4 +1,3 @@
-// useNodeTable.ts
 import { useState } from "react";
 import {
   useReactTable,
