@@ -23,7 +23,7 @@ export const columns: ColumnDef<PackageNode>[] = [
       return <NodeTableHeader column={column} title="Package" />;
     },
     // If 'id' is not a number, no formatting needed.
-    cell: (info: CellContext<PackageNode, number>) => info.getValue(),
+    cell: (info: CellContext<PackageNode, string>) => info.getValue(),
   }),
   columnHelper.accessor("inDegree", {
     id: "inDegree",
