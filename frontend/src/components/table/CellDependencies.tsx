@@ -10,7 +10,7 @@ import { CellContext } from "@tanstack/react-table";
 import { PackageNode } from "@/utils/models";
 
 export function CellDependencies({
-  cell: cell,
+  cell,
 }: {
   cell: CellContext<PackageNode, string[]>;
 }) {

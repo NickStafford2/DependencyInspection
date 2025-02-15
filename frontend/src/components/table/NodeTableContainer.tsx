@@ -15,8 +15,8 @@ import { GlobalStateContext } from "@/context";
 
 /** @useSignals **/
 export function NodeTableContainer() {
-  const { tableData, selectedNodeId } = useContext(GlobalStateContext);
-  const { table } = useNodeTable(tableData);
+  const { selectedNodeId } = useContext(GlobalStateContext);
+  const { table } = useNodeTable();
 
   return (
     <div id="node-table-container" className="h-full flex flex-col">
