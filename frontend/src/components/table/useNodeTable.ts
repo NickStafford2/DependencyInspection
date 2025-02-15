@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -11,9 +11,10 @@ import {
 } from "@tanstack/react-table";
 import { columns } from "./columns";
 import { PackageNode } from "@/utils/models";
-import { Signal } from "@preact/signals-react";
+import { GlobalStateContext } from "@/context";
 
-export function useNodeTable(tableData: Signal<PackageNode[]>) {
+const useNodeTable = () => {
+  const { tableData } = useContext(GlobalStateContext);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -55,4 +56,6 @@ export function useNodeTable(tableData: Signal<PackageNode[]>) {
     setColumnFilters,
     setColumnVisibility,
   };
-}
+};
+
+export { useNodeTable };
