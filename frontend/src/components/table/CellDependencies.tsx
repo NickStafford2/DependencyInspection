@@ -1,8 +1,4 @@
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
+import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { Button } from "../ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
@@ -30,28 +26,35 @@ function CellDependenciesBase<T>({
     );
   } else {
     return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
-        <CollapsibleTrigger asChild>
-          <span className="flex flex-row flex-nowrap justify-between items-center h-9">
-            <h4 className="text-sm font-semibold">
-              {packages.length}
-              {packages.length > 1 ? " packages" : " package"}
-            </h4>
-            <Button variant="ghost" size="sm">
-              <ChevronsUpDown className="h-4 w-4" />
-            </Button>
-          </span>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <ul>
-            {packages.map((value, index) => (
-              <li className="text-nowrap" key={index}>
-                {renderItem(value)}
-              </li>
-            ))}
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
+      <div className="flex flex-col">
+        <div className="flex flex-row flex-nowrap justify-between items-center h-9">
+          <h4 className="text-sm font-semibold text-nowrap">
+            {packages.length}
+            {packages.length > 1 ? " packages" : " package"}
+          </h4>
+
+          <Button
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+            variant="ghost"
+            size="sm"
+          >
+            <ChevronsUpDown className="h-4 w-4" />
+          </Button>
+        </div>
+        <Collapsible open={isOpen} className="space-y-2">
+          <CollapsibleContent asChild>
+            <ul>
+              {packages.map((value, index) => (
+                <li className="text-nowrap" key={index}>
+                  {renderItem(value)}
+                </li>
+              ))}
+            </ul>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
     );
   }
 }
