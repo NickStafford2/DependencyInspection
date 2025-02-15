@@ -1,14 +1,4 @@
 import { columns } from "./columns";
-import {
-  getFilteredRowModel,
-  getCoreRowModel,
-  VisibilityState,
-  ColumnFiltersState,
-  useReactTable,
-  SortingState,
-  getSortedRowModel,
-  Table,
-} from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,54 +8,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { NodeTable } from "./NodeTable";
-import React, { useContext } from "react";
-import { GlobalStateContext } from "@/context";
 import { RowFilter } from "./RowFilter";
-import { PackageNode } from "@/utils/models";
+import { useNodeTable } from "./useNodeTable";
+import { useContext } from "react";
+import { GlobalStateContext } from "@/context";
 
 /** @useSignals **/
 export function NodeTableContainer() {
   const { tableData, selectedNodeId } = useContext(GlobalStateContext);
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
+  const { table } = useNodeTable(tableData);
 
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({
-      id: true,
-      inDegree: false,
-      outDegree: false,
-      dependencies: false,
-      dependency_of: false,
-      all_dependencies: false,
-      all_dependency_of: false,
-      closenessCentrality: false,
-      eigenvectorCentrality: false,
-      clusteringCoefficient: true,
-      pagerank: true,
-      betweennessCentrality: true,
-      isSeed: false,
-    });
-
-  const table: Table<PackageNode> = useReactTable<PackageNode>({
-    data: tableData.value,
-    columns: columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    getRowId: (originalRow) => {
-      return originalRow.id;
-    },
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-    },
-  });
   return (
     <div id="node-table-container" className="h-full flex flex-col">
       <div className="flex flex-row items-center py-4 gap-2">
@@ -101,7 +53,7 @@ export function NodeTableContainer() {
         columns={columns}
         table={table}
         scrollTo={selectedNodeId.value}
-      ></NodeTable>
+      />
     </div>
   );
 }
