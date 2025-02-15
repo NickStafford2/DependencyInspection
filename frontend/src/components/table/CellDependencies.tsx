@@ -34,7 +34,8 @@ function CellDependenciesBase<T>({
         <CollapsibleTrigger asChild>
           <span className="flex flex-row flex-nowrap justify-between items-center h-9">
             <h4 className="text-sm font-semibold">
-              {packages.length} packages
+              {packages.length}
+              {packages.length > 1 ? " packages" : " package"}
             </h4>
             <Button variant="ghost" size="sm">
               <ChevronsUpDown className="h-4 w-4" />
