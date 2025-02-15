@@ -6,17 +6,18 @@ export const fetchGraphData = async (
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      const message = `Failed to call ${url}`;
-      // setResponseMessage(message);
-      throw new Error(message);
+      throw new Error(`Failed to call ${url}`);
     }
+
     const data = await response.json();
     if (isGraphData(data)) {
       return data;
+    } else {
+      console.error("Invalid GraphData format received", data);
+      return null;
     }
-    // setResponseMessage(data);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching graph data:", err);
     return null;
   }
 };
