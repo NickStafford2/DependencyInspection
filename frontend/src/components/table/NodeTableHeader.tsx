@@ -30,9 +30,9 @@ const NodeTableHeader = ({ column, title }: NodeTableHeaderProps) => {
     }
   }, [column, isSorted]); // Use the extracted isSorted value here
   return (
-    <div className="flex flex-row items-center font-semibold underline break-words whitespace-normal">
+    <div className="flex justify-between flex-row items-center font-semibold underline break-words whitespace-normal">
       {title}
-      <Button variant="ghost" className="" onClick={toggleSort}>
+      <Button variant="ghost" className="px-2" onClick={toggleSort}>
         {sortIcon}
       </Button>
     </div>
