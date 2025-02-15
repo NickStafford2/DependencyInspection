@@ -6,9 +6,7 @@ import {
 } from "@tanstack/react-table";
 import { DependencyVersion, PackageNode } from "@/utils/models";
 import { NodeTableHeader } from "./NodeTableHeader";
-import { CellDependencies } from "./CellDependencies";
-import { CellDependenciesVersion } from "./CellDependenciesVersion";
-// import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
+import { CellDependencies, CellDependenciesVersion } from "./CellDependencies";
 
 const columnHelper = createColumnHelper<PackageNode>();
 const formatNumber = (value: number, decimals: number) => {
