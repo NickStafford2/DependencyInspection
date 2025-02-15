@@ -61,6 +61,15 @@ export const columns: ColumnDef<PackageNode>[] = [
       return <CellDependenciesVersion cell={cell} />;
     },
   }),
+  columnHelper.accessor("allDependencies", {
+    id: "all_dependencies",
+    header: ({ column }: HeaderProps) => {
+      return <NodeTableHeader column={column} title="All Dependencies" />;
+    },
+    cell: (cell) => {
+      return <CellDependencies cell={cell} />;
+    },
+  }),
   columnHelper.accessor("dependencyOf", {
     id: "dependencyOf",
     header: ({ column }: HeaderProps) => {
@@ -75,15 +84,6 @@ export const columns: ColumnDef<PackageNode>[] = [
     id: "allDependencyOf",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="All Dependency Of" />;
-    },
-    cell: (cell) => {
-      return <CellDependencies cell={cell} />;
-    },
-  }),
-  columnHelper.accessor("allDependencies", {
-    id: "all_dependencies",
-    header: ({ column }: HeaderProps) => {
-      return <NodeTableHeader column={column} title="All Dependencies" />;
     },
     cell: (cell) => {
       return <CellDependencies cell={cell} />;
