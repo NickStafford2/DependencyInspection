@@ -50,8 +50,8 @@ export default function QuerySearch() {
       };
       sseConnection.addEventListener("network", (e) => {
         graphData.value = JSON.parse(e.data);
-        console.log(graphData.value);
         tableData.value = graphData.value.nodes;
+        console.log(graphData.value);
         query.packages.forEach((name: string) => {
           removePackage(name);
         });
