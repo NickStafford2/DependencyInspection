@@ -7,7 +7,6 @@ import { GlobalStateContext } from "@/context";
 
 export default function QuerySearch() {
   const [query, setQuery] = useState<Query>(new Query());
-  const [queryUrl, setQueryUrl] = useState<string>("");
   const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
@@ -21,7 +20,6 @@ export default function QuerySearch() {
   const removePackage = (name: string) => {
     query.packages.delete(name);
     setQuery(query);
-    setQueryUrl(query.toUrl());
     if (query.packages.size == 0) setSearchDisabled(true);
   };
 
@@ -30,11 +28,10 @@ export default function QuerySearch() {
       if (name !== "") {
         query.packages.add(name);
         setQuery(query);
-        setQueryUrl(query.toUrl());
         if (searchDisabled) setSearchDisabled(false);
       }
     },
-    [query, setQueryUrl, setQuery, setSearchDisabled, searchDisabled],
+    [query, setQuery, setSearchDisabled, searchDisabled],
   );
 
   const startSSEConnection = useCallback(() => {
