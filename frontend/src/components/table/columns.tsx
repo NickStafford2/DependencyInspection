@@ -24,7 +24,7 @@ export const columns: ColumnDef<PackageNode>[] = [
       return <NodeTableHeader column={column} title="Package" />;
     },
     // If 'id' is not a number, no formatting needed.
-    cell: (info) => info.getValue(),
+    cell: (info: CellContext<PackageNode, number>) => info.getValue(),
   }),
   columnHelper.accessor("inDegree", {
     id: "inDegree",
@@ -36,7 +36,8 @@ export const columns: ColumnDef<PackageNode>[] = [
         />
       );
     },
-    cell: (info) => formatNumber(info.getValue(), 0),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 0),
   }),
 
   columnHelper.accessor("outDegree", {
@@ -49,7 +50,8 @@ export const columns: ColumnDef<PackageNode>[] = [
         />
       );
     },
-    cell: (info) => formatNumber(info.getValue(), 0),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 0),
   }),
   columnHelper.accessor("dependencies", {
     id: "dependencies",
@@ -97,42 +99,47 @@ export const columns: ColumnDef<PackageNode>[] = [
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Closeness Centrality" />;
     },
-    cell: (info) => formatNumber(info.getValue(), 4),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 4),
   }),
   {
     accessorKey: "eigenvectorCentrality",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Closeness Centrality" />;
     },
-    cell: (info) => formatNumber(info.getValue(), 4),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 4),
   },
   {
     accessorKey: "clusteringCoefficient",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Clustering Coefficient" />;
     },
-    cell: (info) => formatNumber(info.getValue(), 3),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 3),
   },
   {
     accessorKey: "pagerank",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Pagerank" />;
     },
-    cell: (info) => formatNumber(info.getValue(), 5),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 5),
   },
   {
     accessorKey: "betweennessCentrality",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Betweenness Centrality" />;
     },
-    cell: (info) => formatNumber(info.getValue(), 4),
+    cell: (info: CellContext<PackageNode, number>) =>
+      formatNumber(info.getValue(), 4),
   },
   {
     accessorKey: "isSeed",
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Is Seed" />;
     },
-    cell: (info) => {
+    cell: (info: CellContext<PackageNode, number>) => {
       const value = info.getValue(); // This gets the boolean value
       return <span>{value ? "Yes" : "No"}</span>; // Render "Yes" for true and "No" for false
     },
