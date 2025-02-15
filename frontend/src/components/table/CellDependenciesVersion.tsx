@@ -20,16 +20,14 @@ export function CellDependenciesVersion({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
-      <div className="flex items-center justify-between space-x-4 px-4">
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <h4 className="text-sm font-semibold">
-              <span>{cell.getValue().length} packages</span>
-            </h4>
-            <ChevronsUpDown className="h-4 w-4" />
-          </Button>
-        </CollapsibleTrigger>
-      </div>
+      <CollapsibleTrigger asChild>
+        <Button variant="ghost" size="sm">
+          <h4 className="text-sm font-semibold">
+            {cell.getValue().length} packages
+          </h4>
+          <ChevronsUpDown className="h-4 w-4" />
+        </Button>
+      </CollapsibleTrigger>
       <CollapsibleContent>
         <ul>
           {cell.getValue().map((value: DependencyVersion, index: number) => (
