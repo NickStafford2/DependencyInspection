@@ -13,15 +13,21 @@ export default function QuerySearch() {
   const { messages, currentTab, showMessages, graphData, tableData } =
     useContext(GlobalStateContext);
 
-  const addMessage = (newMessage: string) => {
-    messages.value = [...messages.value, newMessage];
-  };
+  const addMessage = useCallback(
+    (newMessage: string) => {
+      messages.value = [...messages.value, newMessage];
+    },
+    [messages],
+  );
 
-  const removePackage = (name: string) => {
-    query.packages.delete(name);
-    setQuery(query);
-    if (query.packages.size == 0) setSearchDisabled(true);
-  };
+  const removePackage = useCallback(
+    (name: string) => {
+      query.packages.delete(name);
+      setQuery(query);
+      if (query.packages.size == 0) setSearchDisabled(true);
+    },
+    [query],
+  );
 
   const addPackage = useCallback(
     (name: string) => {
