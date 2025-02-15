@@ -1,10 +1,14 @@
+export type DependencyVersion = {
+  packageId: string;
+  version: string;
+};
 export type PackageNode = {
   id: string;
   index: number;
   val: number;
   inDegree?: number;
   outDegree?: number;
-  dependencies: string[];
+  dependencies: DependencyVersion[];
   dependencyOf: string[];
   allDependencies: string[];
   allDependencyOf: string[];

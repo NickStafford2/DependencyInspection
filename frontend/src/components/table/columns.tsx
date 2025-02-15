@@ -4,9 +4,10 @@ import {
   createColumnHelper,
   CellContext,
 } from "@tanstack/react-table";
-import { PackageNode } from "@/utils/models";
+import { DependencyVersion, PackageNode } from "@/utils/models";
 import { NodeTableHeader } from "./NodeTableHeader";
 import { CellDependencies } from "./CellDependencies";
+import { CellDependenciesVersion } from "./CellDependenciesVersion";
 // import { CellDependenciesRecursive } from "./CellDependenciesRecursive";
 
 const columnHelper = createColumnHelper<PackageNode>();
@@ -58,9 +59,8 @@ export const columns: ColumnDef<PackageNode>[] = [
     header: ({ column }: HeaderProps) => {
       return <NodeTableHeader column={column} title="Dependencies" />;
     },
-    cell: (cell: CellContext<PackageNode, string[]>) => {
-      // return <CellDependencies cell={cell} />;
-      return <span>test</span>;
+    cell: (cell: CellContext<PackageNode, DependencyVersion[]>) => {
+      return <CellDependenciesVersion cell={cell} />;
     },
   }),
   columnHelper.accessor("dependencyOf", {
@@ -71,7 +71,6 @@ export const columns: ColumnDef<PackageNode>[] = [
 
     cell: (cell: CellContext<PackageNode, string[]>) => {
       return <CellDependencies cell={cell} />;
-      // return <span>test</span>;
     },
   }),
   columnHelper.accessor("allDependencyOf", {
@@ -81,7 +80,6 @@ export const columns: ColumnDef<PackageNode>[] = [
     },
     cell: (cell) => {
       return <CellDependencies cell={cell} />;
-      // return <span>test</span>;
     },
   }),
   columnHelper.accessor("allDependencies", {
@@ -91,7 +89,6 @@ export const columns: ColumnDef<PackageNode>[] = [
     },
     cell: (cell) => {
       return <CellDependencies cell={cell} />;
-      // return <span>test</span>;
     },
   }),
   columnHelper.accessor("closenessCentrality", {

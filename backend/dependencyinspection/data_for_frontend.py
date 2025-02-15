@@ -6,6 +6,12 @@ from dependencyinspection._models.package import PackageData
 
 
 @dataclass
+class DependencyFrontend:
+    packageId: str
+    version: str
+
+
+@dataclass
 class PackageDataAnalyzed:
     id: str
     package_data: PackageData | None
@@ -44,7 +50,17 @@ class PackageDataAnalyzed:
             "val": self.val,
             "isSeed": self.is_seed,
             "inDegree": self.in_degree,
-            "dependencies": self.dependencies,
+            "dependencies": (
+                sorted(
+                    [
+                        DependencyFrontend(dep.package_id, dep.version)
+                        for dep in self.package_data.dependencies
+                    ],
+                    key=lambda dep: dep.packageId,
+                )
+                if self.package_data
+                else None
+            ),
             "dependencyOf": self.dependency_of,
             "allDependencies": self.all_dependencies,
             "allDependencyOf": self.all_dependency_of,

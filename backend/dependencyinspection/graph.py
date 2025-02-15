@@ -187,14 +187,14 @@ def format_as_nx(
     _set_val(graph_data)
     _color_nodes(graph_data, G)
     _set_seed_nodes(graph_data, seed_nodes)
-    _remove_unwanted_data(graph_data)
+    # _remove_unwanted_data(graph_data)
     return graph_data
 
 
 def _set_direct_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
     for node in graph_data.nodes:
         node.dependency_of = list(G.predecessors(node.id))
-        # node.dependency = list(G.predecessors(node))
+        # node.dependencies = list(G.predecessors(node))
 
 
 def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
@@ -302,8 +302,11 @@ def _get_random_color():
 
 def format_for_frontend(seed_nodes: set[str], data: dict[str, PackageData]):
     # print(f"data: {data}")
+    print("format_for_frontend 1")
     data_with_analysis = PackageDataAnalyzed.from_package_data(data)
+    print("format_for_frontend 2")
     data_for_frontend: DataForFrontend = format_as_nx(seed_nodes, data_with_analysis)
+    print("format_for_frontend 3")
     # print(f"\n\nnx_graph: {nx_graph}")
     serialized_data_for_frontend = data_for_frontend.to_dict()
     x = json.dumps(serialized_data_for_frontend)
