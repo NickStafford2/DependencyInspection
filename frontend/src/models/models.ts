@@ -1,3 +1,5 @@
+import { _isArray, _isObject, _isString } from "./utils";
+
 export type DependencyVersion = {
   packageId: string;
   version: string;
@@ -48,17 +50,6 @@ export class GraphData {
     this.analytics = analytics;
   }
 }
-
-const _isObject = (value: unknown): value is object =>
-  typeof value === "object" && value !== null;
-const _isString = (value: unknown): value is string =>
-  typeof value === "string";
-const _isArray = <T>(
-  value: unknown,
-  checkItem: (item: unknown) => item is T,
-): value is T[] => {
-  return Array.isArray(value) && value.every(checkItem);
-};
 
 const _isLink = (link: unknown): link is { source: string; target: string } => {
   return (
@@ -132,39 +123,3 @@ export class Analysis {
     this.size = size;
   }
 }
-
-export class DataFromBackend {
-  graphData: GraphData;
-  analysis: Analysis;
-
-  constructor(graphData: GraphData, analysis: Analysis) {
-    this.graphData = graphData;
-    this.analysis = analysis;
-  }
-}
-export const isDataFromBackend = (data: unknown): data is DataFromBackend => {
-  if (!_isObject(data)) {
-    console.error("Data is not an object");
-    return false;
-  }
-
-  const obj = data as { [key: string]: unknown };
-
-  if (!obj.graphData) {
-    console.error("Invalid DataFromBackend: graphData missing");
-    return false;
-  }
-  if (!obj.analysis) {
-    console.error("Invalid DataFromBackend: analysis missing");
-    return false;
-  }
-
-  if (typeof obj.graphData !== "object") {
-    console.error("Invalid type for graphData: expected object");
-    return false;
-  }
-  if (typeof obj.analysis !== "object") {
-    console.error("Invalid type for analysis: expected object");
-    return false;
-  }
-};
