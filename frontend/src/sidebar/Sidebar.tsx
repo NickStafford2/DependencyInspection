@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useContext } from "react";
 import { GlobalStateContext } from "@/context";
 import { NodeTableContainer } from "@/sidebar/table/NodeTableContainer";
+import { NetworkMetadata } from "./NetworkMetadata";
 
 export default function Sidebar() {
   const { currentTab } = useContext(GlobalStateContext);
@@ -53,7 +54,7 @@ export default function Sidebar() {
         </TabsContent>
 
         <TabsContent className="p-4" value="network">
-          <p>Network info here</p>
+          <NetworkMetadata />
         </TabsContent>
         <TabsContent className="h-full w-full " value="dependencies">
           <NodeTableContainer />

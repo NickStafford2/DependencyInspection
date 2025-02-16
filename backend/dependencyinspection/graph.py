@@ -72,7 +72,7 @@ async def _get_networks(package_names: list[str], max_count: int = 99999999):
     # yield formatted_data
     yield await send_frontend_message("Building network...")
     yield ServerSentEvent(formatted_data, "network", "network").encode()
-    networkMetadata = create_network_metadata()
+    networkMetadata = create_network_metadata(package_names, found)
     yield await send_frontend_message("Building network metadata...")
     yield ServerSentEvent(
         networkMetadata, "networkMetadata", "networkMetadata"
@@ -161,8 +161,8 @@ def _create_nx_graph(data: dict[str, PackageDataAnalyzed]):
     return G
 
 
-def create_network_metadata():
-    data = NetworkMetadataForFrontend(["abc"], 2)
+def create_network_metadata(package_names: list[str], found: dict[str, PackageData]):
+    data = NetworkMetadataForFrontend(package_names, len(found))
     x = data.to_dict()
     return json.dumps(x)
 
