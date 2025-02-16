@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { CellContext } from "@tanstack/react-table";
-import { PackageNode, DependencyVersion } from "@/utils/models";
+import { PackageNode, DependencyVersion } from "@/models/models";
 
 type CellDependenciesProps<T> = {
   cell: CellContext<PackageNode, T[]>;

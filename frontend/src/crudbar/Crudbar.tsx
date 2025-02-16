@@ -26,8 +26,8 @@ function Crudbar() {
   const getAllDBNetworks = async () => {
     fetchGraphData("api/getAllDBNetworks").then((data) => {
       if (data) {
-        graphData.value = data;
-        tableData.value = data.nodes;
+        graphData.value = data.graphData;
+        tableData.value = data.graphData.nodes;
       }
     });
   };
