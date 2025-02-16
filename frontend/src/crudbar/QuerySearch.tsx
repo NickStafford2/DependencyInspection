@@ -15,7 +15,7 @@ export default function QuerySearch() {
     currentTab,
     showMessages,
     graphData,
-    networkMetadata: networkMetaData,
+    networkMetadata,
     tableData,
   } = useContext(GlobalStateContext);
 
@@ -59,7 +59,7 @@ export default function QuerySearch() {
       };
 
       sseConnection.addEventListener("networkMetadata", (e) => {
-        networkMetaData.value = JSON.parse(e.data);
+        networkMetadata.value = JSON.parse(e.data);
       });
       // sseConnection.addEventListener("analysis", (e) => {
       //   console.log(e);
@@ -68,7 +68,7 @@ export default function QuerySearch() {
       sseConnection.addEventListener("network", (e) => {
         graphData.value = JSON.parse(e.data);
         tableData.value = graphData.value.nodes;
-        console.log(graphData.value);
+        // console.log(graphData.value);
         query.packages.forEach((name: string) => {
           removePackage(name);
         });
@@ -94,6 +94,7 @@ export default function QuerySearch() {
     }
   }, [
     setSse,
+    networkMetadata,
     query,
     sse,
     showMessages,
