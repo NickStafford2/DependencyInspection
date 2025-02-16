@@ -43,10 +43,7 @@ export function useQuerySearch() {
     [query, searchDisabled],
   );
 
-  const startSSEConnection = useCallback(() => {
-    messages.value = [];
-    currentTab.value = "messages";
-    showMessages.value = true;
+  const setupSSEConnection = useCallback(() => {
     if (!sse) {
       const sseConnection = new EventSource(query.toUrl(), {
         withCredentials: false,
@@ -98,10 +95,18 @@ export function useQuerySearch() {
     currentTab,
     addMessage,
     graphData,
-    messages,
     removePackage,
     tableData,
   ]);
+
+  const startSSEConnection = useCallback(() => {
+    if (!sse) {
+      messages.value = [];
+      currentTab.value = "messages";
+      showMessages.value = true;
+      setupSSEConnection();
+    }
+  }, [currentTab, setupSSEConnection, showMessages, messages, sse]);
 
   useEffect(() => {
     return () => {
