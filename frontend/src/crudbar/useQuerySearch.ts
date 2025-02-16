@@ -1,20 +1,21 @@
-import { useState, useEffect, useRef, useCallback, useContext } from "react";
-import { Query } from "@/query";
+import { useSSEConnection } from "./useSSEConnection";
+import { GraphData } from "@/models/GraphData";
 import { GlobalStateContext } from "@/context";
+import { useCallback, useContext } from "react";
+import { useQueryBuilder } from "./useQueryBuilder";
+import { NetworkMetadata } from "@/models/NetworkMetadata";
 
-export function useQuerySearch() {
-  const [query, setQuery] = useState<Query>(new Query());
-  const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
-  const [sse, setSse] = useState<EventSource | null>(null);
-  const pageload_query_has_run = useRef(false);
+export default function useQuerySearch() {
   const {
     messages,
+    networkMetadata,
+    graphData,
+    tableData,
     currentTab,
     showMessages,
-    graphData,
-    networkMetadata,
-    tableData,
   } = useContext(GlobalStateContext);
+  const { query, searchDisabled, addPackage, removePackage, resetQuery } =
+    useQueryBuilder();
 
   const addMessage = useCallback(
     (newMessage: string) => {
@@ -23,115 +24,50 @@ export function useQuerySearch() {
     [messages],
   );
 
-  const removePackage = useCallback(
-    (name: string) => {
-      query.packages.delete(name);
-      setQuery(query);
-      if (query.packages.size == 0) setSearchDisabled(true);
-    },
-    [query],
-  );
+  const onConnectionStart = () => {
+    messages.value = [];
+    currentTab.value = "messages";
+    showMessages.value = true;
+  };
+  const handleMessage = (message: string) => {
+    addMessage(message);
+    messages.value = [];
+    currentTab.value = "messages";
+    showMessages.value = true;
+  };
+  const handleGraphMetadata = (nmd: NetworkMetadata) => {
+    networkMetadata.value = nmd;
+  };
+  const handleGraphData = (gd: GraphData) => {
+    graphData.value = gd;
+    tableData.value = graphData.value.nodes;
+    // console.log(graphData.value);
+    // query.packages.forEach((name: string) => {
+    //   removePackage(name);
+    // });
+    resetQuery();
+    setTimeout(() => {
+      // currentTab.value = "network";
+      currentTab.value = "dependencies"; // todo: change to packages
+    }, 500);
+    setTimeout(() => {
+      showMessages.value = false;
+    }, 1500);
+  };
 
-  const addPackage = useCallback(
-    (name: string) => {
-      if (name !== "") {
-        query.packages.add(name);
-        setQuery(query);
-        if (searchDisabled) setSearchDisabled(false);
-      }
-    },
-    [query, searchDisabled],
-  );
-
-  const setupSSEConnection = useCallback(() => {
-    if (!sse) {
-      const sseConnection = new EventSource(query.toUrl(), {
-        withCredentials: false,
-      });
-      sseConnection.onmessage = (e) => {
-        addMessage(e.data);
-      };
-
-      sseConnection.addEventListener("networkMetadata", (e) => {
-        networkMetadata.value = JSON.parse(e.data);
-      });
-      // sseConnection.addEventListener("analysis", (e) => {
-      //   console.log(e);
-      //   console.log(JSON.parse(e.data));
-      // });
-      sseConnection.addEventListener("network", (e) => {
-        graphData.value = JSON.parse(e.data);
-        tableData.value = graphData.value.nodes;
-        // console.log(graphData.value);
-        query.packages.forEach((name: string) => {
-          removePackage(name);
-        });
-        setQuery(new Query());
-        setTimeout(() => {
-          // currentTab.value = "network";
-          currentTab.value = "dependencies"; // todo: change to packages
-        }, 500);
-        setTimeout(() => {
-          showMessages.value = false;
-        }, 1500);
-      });
-      sseConnection.onerror = (e) => {
-        console.error("SSE error:", e);
-        sseConnection.close();
-        setSse(null);
-        // console.log(messages);
-      };
-      sseConnection.onopen = (e) => {
-        console.log("SSE open ", e);
-      };
-      setSse(sseConnection);
-    }
-  }, [
-    setSse,
-    networkMetadata,
+  const { startSSEConnection } = useSSEConnection(
     query,
-    sse,
-    showMessages,
-    currentTab,
-    addMessage,
-    graphData,
-    removePackage,
-    tableData,
-  ]);
-
-  const startSSEConnection = useCallback(() => {
-    if (!sse) {
-      messages.value = [];
-      currentTab.value = "messages";
-      showMessages.value = true;
-      setupSSEConnection();
-    }
-  }, [currentTab, setupSSEConnection, showMessages, messages, sse]);
-
-  useEffect(() => {
-    return () => {
-      if (sse) {
-        sse.close();
-      }
-    };
-  }, [sse]);
-
-  useEffect(() => {
-    if (!pageload_query_has_run.current) {
-      // Function to be executed only the first time
-      addPackage("npm");
-      startSSEConnection();
-
-      // Mark the flag as true so it won't run again
-      pageload_query_has_run.current = true;
-    }
-  }, [addPackage, startSSEConnection]);
+    onConnectionStart,
+    handleGraphData,
+    handleGraphMetadata,
+    handleMessage,
+  );
 
   return {
     query,
-    searchDisabled,
     addPackage,
     removePackage,
     startSSEConnection,
+    searchDisabled,
   };
 }

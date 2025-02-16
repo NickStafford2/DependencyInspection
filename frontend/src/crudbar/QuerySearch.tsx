@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
-import { useQuerySearch } from "./useQuerySearch";
+import useQuerySearch from "./useQuerySearch";
 
 export default function QuerySearch() {
   const {
     query,
-    searchDisabled,
     addPackage,
     removePackage,
     startSSEConnection,
+    searchDisabled,
   } = useQuerySearch();
+
   return (
     <div className="flex flex-col gap-2 ">
       <h3 className="text-xl">Create a New Query:</h3>
