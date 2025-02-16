@@ -1,4 +1,4 @@
-import { GraphData, isGraphData } from "@/models/models";
+import { GraphData, isGraphData } from "@/models/GraphData";
 
 export const fetchGraphData = async (
   url: string,

@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table-scrollable";
-import { PackageNode } from "@/models/models";
+import { PackageNode } from "@/models/GraphData";
 
 interface DataTableProps {
   columns: ColumnDef<PackageNode>[];

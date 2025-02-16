@@ -1,7 +1,7 @@
 // import useFetchGraphData from "../hooks/useFetch";
 import * as d3 from "d3";
 import { useEffect } from "react";
-import { GraphData } from "../models/models";
+import { GraphData } from "../models/GraphData";
 import { useResizeDetector } from "react-resize-detector";
 import "./GraphDiagram.css";
 

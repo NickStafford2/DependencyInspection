@@ -10,7 +10,7 @@ import {
   Table,
 } from "@tanstack/react-table";
 import { columns } from "./columns";
-import { PackageNode } from "@/models/models";
+import { PackageNode } from "@/models/GraphData";
 import { GlobalStateContext } from "@/context";
 
 const useNodeTable = () => {

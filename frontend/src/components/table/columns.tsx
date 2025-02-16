@@ -4,7 +4,7 @@ import {
   createColumnHelper,
   CellContext,
 } from "@tanstack/react-table";
-import { DependencyVersion, PackageNode } from "@/models/models";
+import { DependencyVersion, PackageNode } from "@/models/GraphData";
 import { NodeTableHeader } from "./NodeTableHeader";
 import { CellDependencies, CellDependenciesVersion } from "./CellDependencies";
 

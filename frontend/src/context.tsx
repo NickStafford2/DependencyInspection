@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { Signal } from "@preact/signals-react";
-import { GraphData, PackageNode } from "./models/models";
+import { GraphData, PackageNode } from "./models/GraphData";
 
 export interface GlobalState {
   currentTab: Signal<string>;

@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { GlobalStateContext } from "@/context";
 import { Table } from "@tanstack/react-table";
-import { PackageNode } from "@/models/models";
+import { PackageNode } from "@/models/GraphData";
 
 export interface RowFilterProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

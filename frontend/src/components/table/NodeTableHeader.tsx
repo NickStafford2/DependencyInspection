@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { PackageNode } from "@/models/models";
+import { PackageNode } from "@/models/GraphData";
 import { Column } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { LuArrowUp, LuArrowDown } from "react-icons/lu";

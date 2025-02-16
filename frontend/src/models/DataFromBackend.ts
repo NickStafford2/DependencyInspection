@@ -1,4 +1,5 @@
-import { Analysis, GraphData } from "./models";
+import { Analysis } from "./Analysis";
+import { GraphData } from "./GraphData";
 import { _isObject } from "./utils";
 
 export class DataFromBackend {
