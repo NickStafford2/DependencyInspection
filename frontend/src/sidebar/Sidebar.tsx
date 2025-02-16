@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useContext } from "react";
 import { GlobalStateContext } from "@/context";
-import { NodeTableContainer } from "@/components/table/NodeTableContainer";
+import { NodeTableContainer } from "@/sidebar/table/NodeTableContainer";
 
 export default function Sidebar() {
   const { currentTab } = useContext(GlobalStateContext);

@@ -1,5 +1,8 @@
-import { Collapsible, CollapsibleContent } from "../ui/collapsible";
-import { Button } from "../ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+} from "../../components/ui/collapsible";
+import { Button } from "../../components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { CellContext } from "@tanstack/react-table";
