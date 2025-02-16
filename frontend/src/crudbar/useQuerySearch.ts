@@ -40,7 +40,7 @@ export function useQuerySearch() {
         if (searchDisabled) setSearchDisabled(false);
       }
     },
-    [query, setQuery, setSearchDisabled, searchDisabled],
+    [query, searchDisabled],
   );
 
   const startSSEConnection = useCallback(() => {
