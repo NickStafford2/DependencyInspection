@@ -1,3 +1,4 @@
+"use no memo";
 import { columns } from "./columns";
 import { ChevronDown } from "lucide-react";
 import {

@@ -1,3 +1,4 @@
+"use no memo";
 import { useRef } from "react";
 import {
   ColumnDef,
