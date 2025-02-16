@@ -122,3 +122,49 @@ export const isGraphData = (data: unknown): data is GraphData => {
   // All checks passed
   return true;
 };
+
+export class Analysis {
+  seeds: string[];
+  size: number;
+
+  constructor(seeds: string[], size: number) {
+    this.seeds = seeds;
+    this.size = size;
+  }
+}
+
+export class DataFromBackend {
+  graphData: GraphData;
+  analysis: Analysis;
+
+  constructor(graphData: GraphData, analysis: Analysis) {
+    this.graphData = graphData;
+    this.analysis = analysis;
+  }
+}
+export const isDataFromBackend = (data: unknown): data is DataFromBackend => {
+  if (!_isObject(data)) {
+    console.error("Data is not an object");
+    return false;
+  }
+
+  const obj = data as { [key: string]: unknown };
+
+  if (!obj.graphData) {
+    console.error("Invalid DataFromBackend: graphData missing");
+    return false;
+  }
+  if (!obj.analysis) {
+    console.error("Invalid DataFromBackend: analysis missing");
+    return false;
+  }
+
+  if (typeof obj.graphData !== "object") {
+    console.error("Invalid type for graphData: expected object");
+    return false;
+  }
+  if (typeof obj.analysis !== "object") {
+    console.error("Invalid type for analysis: expected object");
+    return false;
+  }
+};
