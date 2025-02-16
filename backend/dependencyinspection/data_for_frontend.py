@@ -83,7 +83,31 @@ class Edge:
 
 
 @dataclass
-class DataForFrontend:
+class NetworkMetadataForFrontend:
+    seeds: list[str]
+    size: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "seeds": self.seeds,
+            "size": self.size,
+        }
+
+
+@dataclass
+class AnalysisForFrontend:
+    seeds: list[str]
+    size: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "seeds": self.seeds,
+            "size": self.size,
+        }
+
+
+@dataclass
+class GraphDataForFrontend:
     links: list[Any]
     nodes: list[PackageDataAnalyzed]
     graph: dict
@@ -91,13 +115,23 @@ class DataForFrontend:
     directed: bool
 
     def to_dict(self) -> dict[str, Any]:
-        # Serialize the DataForFrontend object, including converting each node with to_dict()
         return {
-            "links": self.links,  # Assuming this is already in the correct format
-            "nodes": [
-                node.to_dict() for node in self.nodes
-            ],  # Call `to_dict` for each node
-            "graph": self.graph,  # Assuming this is already in the correct format
+            "links": self.links,
+            "nodes": [node.to_dict() for node in self.nodes],
+            "graph": self.graph,
             "multigraph": self.multigraph,
             "directed": self.directed,
         }
+
+
+#
+# @dataclass
+# class FrontendData:
+#     graph_data: GraphDataForFrontend
+#     analysis: AnalysisForFrontend
+#
+#     def to_dict(self) -> dict[str, Any]:
+#         return {
+#             "graphData": self.graph_data.to_dict(),
+#             "analysis": self.analysis.to_dict(),
+#         }

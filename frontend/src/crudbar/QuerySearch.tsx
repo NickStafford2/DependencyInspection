@@ -10,8 +10,14 @@ export default function QuerySearch() {
   const [searchDisabled, setSearchDisabled] = useState<boolean>(true);
   const [sse, setSse] = useState<EventSource | null>(null);
   const pageload_query_has_run = useRef(false);
-  const { messages, currentTab, showMessages, graphData, tableData } =
-    useContext(GlobalStateContext);
+  const {
+    messages,
+    currentTab,
+    showMessages,
+    graphData,
+    networkMetadata: networkMetaData,
+    tableData,
+  } = useContext(GlobalStateContext);
 
   const addMessage = useCallback(
     (newMessage: string) => {
@@ -51,6 +57,14 @@ export default function QuerySearch() {
       sseConnection.onmessage = (e) => {
         addMessage(e.data);
       };
+
+      sseConnection.addEventListener("networkMetadata", (e) => {
+        networkMetaData.value = JSON.parse(e.data);
+      });
+      // sseConnection.addEventListener("analysis", (e) => {
+      //   console.log(e);
+      //   console.log(JSON.parse(e.data));
+      // });
       sseConnection.addEventListener("network", (e) => {
         graphData.value = JSON.parse(e.data);
         tableData.value = graphData.value.nodes;

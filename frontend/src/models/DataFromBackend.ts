@@ -1,6 +1,6 @@
 import { Analysis } from "./Analysis";
 import { GraphData } from "./GraphData";
-import { _isObject } from "./utils";
+import { _isObject, checkFieldTypes, checkRequiredFields } from "./utils";
 
 export class DataFromBackend {
   graphData: GraphData;
@@ -11,6 +11,7 @@ export class DataFromBackend {
     this.analysis = analysis;
   }
 }
+
 export const isDataFromBackend = (data: unknown): data is DataFromBackend => {
   if (!_isObject(data)) {
     console.error("Data is not an object");
@@ -19,21 +20,16 @@ export const isDataFromBackend = (data: unknown): data is DataFromBackend => {
 
   const obj = data as { [key: string]: unknown };
 
-  if (!obj.graphData) {
-    console.error("Invalid DataFromBackend: graphData missing");
+  const requiredFields = ["graphData", "analysis"];
+  if (checkRequiredFields("DataFromBackend", obj, requiredFields) === false)
     return false;
-  }
-  if (!obj.analysis) {
-    console.error("Invalid DataFromBackend: analysis missing");
-    return false;
-  }
 
-  if (typeof obj.graphData !== "object") {
-    console.error("Invalid type for graphData: expected object");
+  const fieldTypes = {
+    graphData: "[object Object]",
+    analysis: "[object Object]",
+  };
+  if (checkFieldTypes("DataFromBackend", obj, fieldTypes) === false)
     return false;
-  }
-  if (typeof obj.analysis !== "object") {
-    console.error("Invalid type for analysis: expected object");
-    return false;
-  }
+
+  return true;
 };

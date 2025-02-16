@@ -1,6 +1,6 @@
 import { _isObject, checkFieldTypes, checkRequiredFields } from "./utils";
 
-export class Analysis {
+export class NetworkMetadata {
   seeds: string[];
   size: number;
 
@@ -10,7 +10,7 @@ export class Analysis {
   }
 }
 
-export const isAnalysis = (data: unknown): data is Analysis => {
+export const isNetworkMetadata = (data: unknown): data is NetworkMetadata => {
   if (!_isObject(data)) {
     console.error("Data is not an object");
     return false;
@@ -19,14 +19,15 @@ export const isAnalysis = (data: unknown): data is Analysis => {
   const obj = data as { [key: string]: unknown };
 
   const requiredFields = ["seeds", "size"];
-  if (checkRequiredFields("Analysis", obj, requiredFields) === false)
+  if (checkRequiredFields("NetworkMetadata", obj, requiredFields) === false)
     return false;
 
   const fieldTypes = {
     seeds: "string[]",
     size: "number",
   };
-  if (checkFieldTypes("Analysis", obj, fieldTypes) === false) return false;
+  if (checkFieldTypes("NetworkMetadata", obj, fieldTypes) === false)
+    return false;
 
   return true;
 };

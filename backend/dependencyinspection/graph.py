@@ -13,7 +13,12 @@ from dependencyinspection.data import database, main
 from dependencyinspection.server_sent_event import ServerSentEvent
 
 from . import dfs
-from .data_for_frontend import DataForFrontend, PackageDataAnalyzed
+from .data_for_frontend import (
+    AnalysisForFrontend,
+    NetworkMetadataForFrontend,
+    GraphDataForFrontend,
+    PackageDataAnalyzed,
+)
 
 bp = Blueprint("network", __name__)
 
@@ -63,10 +68,18 @@ async def _get_networks(package_names: list[str], max_count: int = 99999999):
         set(package_names), max_count
     )
     yield await send_frontend_message(f"Found: {len(found)} packages.")
-    yield await send_frontend_message("Analysing the network...")
     formatted_data = format_for_frontend(set(package_names), found)
     # yield formatted_data
+    yield await send_frontend_message("Building network...")
     yield ServerSentEvent(formatted_data, "network", "network").encode()
+    networkMetadata = create_network_metadata()
+    yield await send_frontend_message("Building network metadata...")
+    yield ServerSentEvent(
+        networkMetadata, "networkMetadata", "networkMetadata"
+    ).encode()
+    # analysis = create_analysis()
+    # yield await send_frontend_message("Analysing the network...")
+    # yield ServerSentEvent(analysis, "analysis", "analysis").encode()
     yield await send_frontend_message("Network complete.")
 
 
@@ -148,9 +161,21 @@ def _create_nx_graph(data: dict[str, PackageDataAnalyzed]):
     return G
 
 
+def create_network_metadata():
+    data = NetworkMetadataForFrontend(["abc"], 2)
+    x = data.to_dict()
+    return json.dumps(x)
+
+
+def create_analysis():
+    analysis = AnalysisForFrontend(["abc"], 2)
+    x = analysis.to_dict()
+    return json.dumps(x)
+
+
 def format_as_nx(
     seed_nodes: set[str], data: dict[str, PackageDataAnalyzed]
-) -> DataForFrontend:
+) -> GraphDataForFrontend:
     """
     Converts the given package data into a NetworkX graph and formats it into a structure
     with in-degrees and colors based on SCCs.
@@ -176,7 +201,7 @@ def format_as_nx(
         edges = [{**d, "source": u, "target": v} for u, v, d in G.edges(data=True)]
 
     nodes: list[PackageDataAnalyzed] = list(data.values())
-    graph_data = DataForFrontend(
+    graph_data = GraphDataForFrontend(
         links=edges, nodes=nodes, multigraph=multigraph, graph=G.graph, directed=True
     )
     _set_indirect_relationships(graph_data, G)
@@ -191,13 +216,13 @@ def format_as_nx(
     return graph_data
 
 
-def _set_direct_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
+def _set_direct_relationships(graph_data: GraphDataForFrontend, G: nx.DiGraph):
     for node in graph_data.nodes:
         node.dependency_of = list(G.predecessors(node.id))
         # node.dependencies = list(G.predecessors(node))
 
 
-def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
+def _set_indirect_relationships(graph_data: GraphDataForFrontend, G: nx.DiGraph):
     all_dependencies = dfs.all_successors(G)
     all_depends_on = dfs.all_predecessors(G)
     for node in graph_data.nodes:
@@ -206,17 +231,17 @@ def _set_indirect_relationships(graph_data: DataForFrontend, G: nx.DiGraph):
         node.all_dependency_of = list(all_depends_on.get(node.id, []))
 
 
-def _set_seed_nodes(graph_data: DataForFrontend, seed_nodes: set[str]):
+def _set_seed_nodes(graph_data: GraphDataForFrontend, seed_nodes: set[str]):
     for node in graph_data.nodes:
         node.is_seed = node.id in seed_nodes
 
 
-def _remove_unwanted_data(graph_data: DataForFrontend):
+def _remove_unwanted_data(graph_data: GraphDataForFrontend):
     for node in graph_data.nodes:
         node.package_data = None
 
 
-def _set_val(graph_data: DataForFrontend):
+def _set_val(graph_data: GraphDataForFrontend):
     # Set the base size multiplier (you can adjust this to control overall size)
     size_exponent = 1.15
     size_multiplier = 4  # Adjust this to fine-tune node size scaling
@@ -234,7 +259,7 @@ def _set_val(graph_data: DataForFrontend):
     return graph_data  # pyright: ignore[reportUnknownVariableType]
 
 
-def _set_graph_metrics(graph_data: DataForFrontend, G):
+def _set_graph_metrics(graph_data: GraphDataForFrontend, G):
     # Calculate various centrality measures and metrics
     betweenness_centrality = nx.betweenness_centrality(
         G, normalized=True, endpoints=False
@@ -259,21 +284,21 @@ def _set_graph_metrics(graph_data: DataForFrontend, G):
     return graph_data
 
 
-def _set_in_degree(graph_data: DataForFrontend, G):
+def _set_in_degree(graph_data: GraphDataForFrontend, G):
     in_degrees: dict[str, int] = dict(G.in_degree())
     for node in graph_data.nodes:
         node.in_degree = in_degrees[node.id]
     return graph_data
 
 
-def _set_out_degree(graph_data: DataForFrontend, G):
+def _set_out_degree(graph_data: GraphDataForFrontend, G):
     out_degrees: dict[str, int] = dict(G.out_degree())
     for node in graph_data.nodes:
         node.out_degree = out_degrees[node.id]
     return graph_data
 
 
-def _color_nodes(graph_data: DataForFrontend, G):
+def _color_nodes(graph_data: GraphDataForFrontend, G):
     undirected = G.copy().to_undirected()
     communities = nx.community.louvain_communities(undirected)
     node_colors = {}
@@ -302,13 +327,12 @@ def _get_random_color():
 
 def format_for_frontend(seed_nodes: set[str], data: dict[str, PackageData]):
     # print(f"data: {data}")
-    print("format_for_frontend 1")
     data_with_analysis = PackageDataAnalyzed.from_package_data(data)
-    print("format_for_frontend 2")
-    data_for_frontend: DataForFrontend = format_as_nx(seed_nodes, data_with_analysis)
-    print("format_for_frontend 3")
+    graph_data: GraphDataForFrontend = format_as_nx(seed_nodes, data_with_analysis)
+    # analysis = AnalysisForFrontend(["abc"], 2)
+    # data_for_frontend: FrontendData = FrontendData(graph_data, analysis)
     # print(f"\n\nnx_graph: {nx_graph}")
-    serialized_data_for_frontend = data_for_frontend.to_dict()
+    serialized_data_for_frontend = graph_data.to_dict()
     x = json.dumps(serialized_data_for_frontend)
     # print(json.dumps(serialized_data_for_frontend))
     return x

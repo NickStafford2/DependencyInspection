@@ -8,6 +8,8 @@ function createAppState(): GlobalState {
     showMessages: signal(false),
     graphData: signal(null),
     tableData: signal([]),
+    networkMetadata: signal(null),
+    analysis: signal(null),
     selectedNodeId: signal(""),
   };
 }
