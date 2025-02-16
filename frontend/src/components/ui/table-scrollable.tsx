@@ -19,7 +19,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>(
           className={cn("w-full caption-bottom text-sm", className)}
           {...props}
         />
-        <ScrollBar orientation="vertical" />
+        <ScrollBar className="z-50" orientation="vertical" />
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     );
