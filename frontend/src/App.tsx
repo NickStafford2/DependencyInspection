@@ -10,7 +10,7 @@ import DIGraph3d from "./components/DIGraph3d";
 import Sidebar from "./sidebar/Sidebar";
 import { GlobalStateContext } from "./context";
 import GraphMenu from "./GraphMenu/GraphMenu";
-import { useSearchOnPageLoad } from "./crudbar/useSearchOnPageLoad";
+import { useSearchOnPageLoad } from "./api/useSearchOnPageLoad";
 
 const App = () => {
   const { selectedNodeId } = useContext(GlobalStateContext);

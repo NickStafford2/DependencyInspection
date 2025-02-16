@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 // import { GraphData } from "@/utils/models";
 // import { PackageJSONUpload } from "@/components/PackageJSONUpload";
-import { fetchGraphData } from "@/crudbar/api";
 // import { useEffect, useState } from "react";
 import QuerySearch from "./QuerySearch";
 import {
@@ -18,19 +17,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useContext } from "react";
-import { GlobalStateContext } from "@/context";
+import { useCustomRoutes } from "@/api/useCustomRoutes";
 
 function Crudbar() {
-  const { graphData, tableData } = useContext(GlobalStateContext);
-  const getAllDBNetworks = async () => {
-    fetchGraphData("api/getAllDBNetworks").then((data) => {
-      if (data) {
-        graphData.value = data.graphData;
-        tableData.value = data.graphData.nodes;
-      }
-    });
-  };
+  const { getAllDBNetworks } = useCustomRoutes();
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
       <div className="flex flex-row flex-shrink flex-grow-0 ">

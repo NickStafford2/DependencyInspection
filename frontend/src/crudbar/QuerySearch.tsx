@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
-import useQuerySearch from "./useQuerySearch";
+import useQuerySearch from "../api/useQuerySearch";
 
 export default function QuerySearch() {
   const {

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 // import { GraphData } from "@/utils/models";
 // import { PackageJSONUpload } from "@/components/PackageJSONUpload";
-import { fetchGraphData } from "@/crudbar/api";
+import { fetchGraphData } from "@/api/api";
 // import { useEffect, useState } from "react";
 import QuerySearch from "@/crudbar/QuerySearch";
 import {
