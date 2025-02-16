@@ -4,6 +4,7 @@ export type DependencyVersion = {
   packageId: string;
   version: string;
 };
+
 export type PackageNode = {
   id: string;
   index: number;
@@ -105,21 +106,11 @@ export const isGraphData = (data: unknown): data is GraphData => {
   }
 
   // Validate analytics
-  if (obj.analytics !== undefined && !_isObject(obj.analytics)) {
-    console.error("Invalid type for analytics: expected object or undefined");
-    return false;
-  }
+  // if (obj.analytics !== undefined && !_isObject(obj.analytics)) {
+  //   console.error("Invalid type for analytics: expected object or undefined");
+  //   return false;
+  // }
 
   // All checks passed
   return true;
 };
-
-export class Analysis {
-  seeds: string[];
-  size: number;
-
-  constructor(seeds: string[], size: number) {
-    this.seeds = seeds;
-    this.size = size;
-  }
-}
