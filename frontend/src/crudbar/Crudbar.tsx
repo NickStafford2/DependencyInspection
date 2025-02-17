@@ -21,7 +21,7 @@ import { useCustomRoutes } from "@/api/useCustomRoutes";
 import useQuerySearch2 from "@/api/useQuerySearch2";
 
 function Crudbar() {
-  const { getAllDBNetworks, getPopularNetworks } = useCustomRoutes();
+  const { getAllDBNetworks } = useCustomRoutes();
   const { startSSEConnection } = useQuerySearch2();
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 bg-gradient-to-b from-black to-gray-800  w-full">

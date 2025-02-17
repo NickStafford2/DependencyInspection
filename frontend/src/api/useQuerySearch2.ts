@@ -2,7 +2,6 @@ import { useSSEConnection2 } from "./useSSEConnection2";
 import { GraphData } from "@/models/GraphData";
 import { GlobalStateContext } from "@/context";
 import { useCallback, useContext } from "react";
-import { useQueryBuilder } from "./useQueryBuilder";
 import { NetworkMetadata } from "@/models/NetworkMetadata";
 
 export default function useQuerySearch2() {
