@@ -10,8 +10,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { GlobalStateContext } from "@/context";
-import { useContext, useRef, useEffect } from "react";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { useContext } from "react";
 
 /** @useSignals */
 const Messages = React.forwardRef<
