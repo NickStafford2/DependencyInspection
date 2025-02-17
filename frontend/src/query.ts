@@ -1,8 +1,9 @@
+import { Signal, signal } from "@preact/signals-react";
 export class Query {
-	packages: Set<string> = new Set();
+  packages: Signal<Set<string>> = signal(new Set());
 
-	toUrl(): string {
-		const packageNames = [...this.packages].join(",");
-		return `api/getNetworks/${packageNames}`;
-	}
+  toUrl(): string {
+    const packageNames = [...this.packages.value].join(",");
+    return `api/getNetworks/${packageNames}`;
+  }
 }

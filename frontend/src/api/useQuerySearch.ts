@@ -19,10 +19,7 @@ export default function useQuerySearch() {
 
   const addMessage = useCallback(
     (newMessage: string) => {
-      console.log(`addMessage: ${newMessage}`);
-      console.log(messages.value);
       messages.value = [...messages.value, newMessage];
-      console.log(messages.value);
     },
     [messages],
   );
@@ -45,7 +42,7 @@ export default function useQuerySearch() {
     graphData.value = gd;
     tableData.value = graphData.value.nodes;
     // console.log(graphData.value);
-    query.packages.forEach((name: string) => {
+    query.packages.value.forEach((name: string) => {
       removePackage(name);
     });
     // resetQuery();

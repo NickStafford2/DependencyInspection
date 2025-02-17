@@ -20,13 +20,13 @@ export default function QuerySearch() {
         {/* <span className="text-white">URL: '{queryUrl}'</span> */}
         <div className="flex flex-col gap-2 grow-0">
           <AddPackage onPackageAdded={addPackage} />
-          {query.packages.size ? (
+          {query.packages.value.size ? (
             <div className="flex flex-col gap-3">
               <span className="text-white whitespace-nowrap ">
-                {query.packages.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
+                {query.packages.value.size > 1 ? "Seed Nodes:" : "Seed Nodes:"}
               </span>
               <div className="  relative flex flex-row w-64 flex-wrap justify-items-stretch gap-1">
-                {Array.from(query.packages).map((name, index) => (
+                {Array.from(query.packages.value).map((name, index) => (
                   <PackageTag
                     className="flex-grow"
                     name={name}

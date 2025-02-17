@@ -7,9 +7,9 @@ export function useQueryBuilder() {
 
   const removePackage = useCallback(
     (name: string) => {
-      query.packages.delete(name);
+      query.packages.value.delete(name);
       setQuery(query);
-      if (query.packages.size == 0) setSearchDisabled(true);
+      if (query.packages.value.size == 0) setSearchDisabled(true);
     },
     [query],
   );
@@ -20,9 +20,9 @@ export function useQueryBuilder() {
 
   const addPackage = useCallback(
     (name: string) => {
-      console.log(`addPackage: Name: ${name}`);
+      // console.log(`addPackage: Name: ${name}`);
       if (name !== "") {
-        query.packages.add(name);
+        query.packages.value = new Set([...query.packages.value, name]);
         setQuery(query);
         if (searchDisabled) setSearchDisabled(false);
       }
