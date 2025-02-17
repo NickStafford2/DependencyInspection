@@ -16,7 +16,7 @@ export default function useQuerySearch2() {
 
   const addMessage = useCallback(
     (newMessage: string) => {
-      messages.value = [...messages.value, newMessage];
+      messages.value = [newMessage, ...messages.value];
     },
     [messages],
   );
