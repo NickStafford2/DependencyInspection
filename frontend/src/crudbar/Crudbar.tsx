@@ -19,10 +19,13 @@ import {
 } from "@/components/ui/hover-card";
 import { useCustomRoutes } from "@/api/useCustomRoutes";
 import useQuerySearch2 from "@/api/useQuerySearch2";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 function Crudbar() {
   const { getAllDBNetworks } = useCustomRoutes();
   const { startSSEConnection } = useQuerySearch2();
+  const [randomCount, setRandomCount] = useState(25);
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
       <div className="flex flex-row flex-shrink flex-grow-0 ">
@@ -52,10 +55,10 @@ function Crudbar() {
         </HoverCard>
       </div>
       <QuerySearch />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button>Get Full Network</Button>
+            <Button variant="secondary">Get Full Network</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -73,7 +76,17 @@ function Crudbar() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button onClick={() => startSSEConnection()}>Get Random</Button>
+        <div className="flex flex-row gap-2">
+          <Button onClick={() => startSSEConnection(randomCount)}>
+            Get Random
+          </Button>
+          <Input
+            className="w-16"
+            type="number"
+            onChange={(e) => setRandomCount(Number(e.target.value))}
+            value={randomCount}
+          />
+        </div>
       </div>
       {/* <Button className="button-48" onClick={() => getPopularNetwork()}> */}
       {/* <span className="text">getPopularNetwork</span> */}

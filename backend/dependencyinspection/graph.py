@@ -83,10 +83,18 @@ async def _get_networks(package_names: list[str], max_count: int = 99999999):
     yield await send_frontend_message("Network complete.")
 
 
-@bp.route("/getPopularNetworks", methods=["GET"])
-async def get_popular_networks():
+def clamp(value, min_value, max_value):
+    return max(min_value, min(value, max_value))
+
+
+@bp.route("/getPopularNetworks/<number_of_packages>", methods=["GET"])
+async def get_popular_networks(number_of_packages: int = 30):
+    # number_of_packages = int(request.args.get("number_of_packages", 30))
+    number_of_packages = int(number_of_packages)
+    number_of_packages = clamp(number_of_packages, 1, 1000)
+
     async def send_events():
-        to_search = get_popular_package_names()
+        to_search = get_popular_package_names(number_of_packages)
         async for event in _get_networks(list(to_search)):
             yield event
 

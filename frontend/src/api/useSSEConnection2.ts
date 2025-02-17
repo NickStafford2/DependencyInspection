@@ -11,43 +11,52 @@ export function useSSEConnection2(
 ) {
   const [sse, setSse] = useState<EventSource | null>(null);
 
-  const setupSSEConnection = useCallback(() => {
-    if (!sse) {
-      const sseConnection = new EventSource(url, {
-        withCredentials: false,
-      });
-      sseConnection.onmessage = (e) => {
-        onMessage(e.data);
-      };
+  const setupSSEConnection = useCallback(
+    (numberOfPackages: number) => {
+      if (!sse) {
+        // console.log(numberOfPackages);
+        const sseUrl = `${url}/${numberOfPackages}`;
+        // console.log(sseUrl);
+        const sseConnection = new EventSource(sseUrl, {
+          withCredentials: false,
+        });
+        sseConnection.onmessage = (e) => {
+          onMessage(e.data);
+        };
 
-      sseConnection.addEventListener("networkMetadata", (e) => {
-        onNetworkMetadata(JSON.parse(e.data));
-      });
-      // sseConnection.addEventListener("analysis", (e) => {
-      //   console.log(e);
-      //   console.log(JSON.parse(e.data));
-      // });
-      sseConnection.addEventListener("network", (e) => {
-        onNetworkData(JSON.parse(e.data));
-      });
-      sseConnection.onerror = (e) => {
-        console.error("SSE error:", e);
-        sseConnection.close();
-        setSse(null);
-      };
-      sseConnection.onopen = (e) => {
-        console.log("SSE open ", e);
-      };
-      setSse(sseConnection);
-    }
-  }, [url, onMessage, onNetworkMetadata, onNetworkData, setSse, sse]);
+        sseConnection.addEventListener("networkMetadata", (e) => {
+          onNetworkMetadata(JSON.parse(e.data));
+        });
+        // sseConnection.addEventListener("analysis", (e) => {
+        //   console.log(e);
+        //   console.log(JSON.parse(e.data));
+        // });
+        sseConnection.addEventListener("network", (e) => {
+          onNetworkData(JSON.parse(e.data));
+        });
+        sseConnection.onerror = (e) => {
+          console.error("SSE error:", e);
+          sseConnection.close();
+          setSse(null);
+        };
+        sseConnection.onopen = (e) => {
+          console.log("SSE open ", e);
+        };
+        setSse(sseConnection);
+      }
+    },
+    [url, onMessage, onNetworkMetadata, onNetworkData, setSse, sse],
+  );
 
-  const startSSEConnection = useCallback(() => {
-    if (!sse) {
-      onConnectionStart();
-      setupSSEConnection();
-    }
-  }, [onConnectionStart, setupSSEConnection, sse]);
+  const startSSEConnection = useCallback(
+    (numberOfPackages: number) => {
+      if (!sse) {
+        onConnectionStart();
+        setupSSEConnection(numberOfPackages);
+      }
+    },
+    [onConnectionStart, setupSSEConnection, sse],
+  );
 
   useEffect(() => {
     return () => {

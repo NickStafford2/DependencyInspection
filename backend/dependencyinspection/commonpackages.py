@@ -2,7 +2,7 @@ import random
 
 
 # TODO. turn this into a json file or something
-def get_popular_package_names() -> set[str]:
+def get_popular_package_names(number_of_packages: int = 20) -> set[str]:
     x = [
         "lodash",
         "chalk",
@@ -1005,4 +1005,4 @@ def get_popular_package_names() -> set[str]:
         "xpath",
         "fresh",
     ]
-    return set(random.sample(x, 30))
+    return set(random.sample(x, min(1000, number_of_packages)))
