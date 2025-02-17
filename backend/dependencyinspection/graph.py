@@ -85,8 +85,22 @@ async def _get_networks(package_names: list[str], max_count: int = 99999999):
 
 @bp.route("/getPopularNetworks", methods=["GET"])
 async def get_popular_networks():
-    to_search = get_popular_package_names()
-    return _get_networks(list(to_search), max_count=1000)
+    async def send_events():
+        to_search = get_popular_package_names()
+        async for event in _get_networks(list(to_search)):
+            yield event
+
+    response = await make_response(
+        send_events(),
+        {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Transfer-Encoding": "chunked",
+        },
+    )
+
+    response.timeout = None
+    return response
 
 
 @bp.route("/getAllNetworks", methods=["GET"])

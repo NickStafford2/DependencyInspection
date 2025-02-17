@@ -18,9 +18,11 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { useCustomRoutes } from "@/api/useCustomRoutes";
+import useQuerySearch2 from "@/api/useQuerySearch2";
 
 function Crudbar() {
-  const { getAllDBNetworks } = useCustomRoutes();
+  const { getAllDBNetworks, getPopularNetworks } = useCustomRoutes();
+  const { startSSEConnection } = useQuerySearch2();
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
       <div className="flex flex-row flex-shrink flex-grow-0 ">
@@ -50,26 +52,29 @@ function Crudbar() {
         </HoverCard>
       </div>
       <QuerySearch />
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button>Get Full Network</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>This May be Huge.</DialogTitle>
-            <DialogDescription>
-              This retrieves every node in the Database. Depending on the state
-              of development, this may be massive. Be sure you have a machine
-              powerful enough.{" "}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button className="button-48" onClick={() => getAllDBNetworks()}>
-              <span className="text">My Machine can Handle it.</span>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <div className="flex flex-col gap-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Get Full Network</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>This May be Huge.</DialogTitle>
+              <DialogDescription>
+                This retrieves every node in the Database. Depending on the
+                state of development, this may be massive. Be sure you have a
+                machine powerful enough.{" "}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button className="button-48" onClick={() => getAllDBNetworks()}>
+                <span className="text">My Machine can Handle it.</span>
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Button onClick={() => startSSEConnection()}>Get Random</Button>
+      </div>
       {/* <Button className="button-48" onClick={() => getPopularNetwork()}> */}
       {/* <span className="text">getPopularNetwork</span> */}
       {/* </Button> */}

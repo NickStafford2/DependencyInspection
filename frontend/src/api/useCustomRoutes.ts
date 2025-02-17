@@ -12,5 +12,13 @@ export function useCustomRoutes() {
       }
     });
   };
-  return { getAllDBNetworks };
+  const getPopularNetworks = async () => {
+    fetchGraphData("api/getPopularNetworks").then((data) => {
+      if (data) {
+        graphData.value = data;
+        tableData.value = data.nodes;
+      }
+    });
+  };
+  return { getAllDBNetworks, getPopularNetworks };
 }
