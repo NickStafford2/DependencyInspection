@@ -14,7 +14,7 @@ export default function useQuerySearch() {
     currentTab,
     showMessages,
   } = useContext(GlobalStateContext);
-  const { query, searchDisabled, addPackage, removePackage, resetQuery } =
+  const { query, searchDisabled, addPackage, removePackage } =
     useQueryBuilder();
 
   const addMessage = useCallback(

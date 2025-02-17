@@ -5,12 +5,12 @@ import path from "path";
 // interface FrontendEnv extends UserConfig {
 // 	VITE_APP_BACKEND_ADDRESS: string;
 // }
-const ReactCompilerConfig = {
-  target: "18", // '17' | '18' | '19'
-  sources: (filename) => {
-    return filename.indexOf("src/") !== -1;
-  },
-};
+// const ReactCompilerConfig = {
+//   target: "18", // '17' | '18' | '19'
+//   sources: (filename) => {
+//     return filename.indexOf("src/") !== -1;
+//   },
+// };
 
 export default defineConfig(({ mode }) => {
   const env: UserConfig = loadEnv(mode, process.cwd());
