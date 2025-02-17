@@ -1,6 +1,6 @@
 # Dependency Inspection
 
-![Sample Force Graph](/docs/screenshots/Screenshot from 2025-02-17 15-40-10.png?raw=true "Dependeny Network of NPM and Express")
+![Sample Force Graph](/docs/screenshots/screenshot2?raw=true "Dependency Network of NPM and Express")
 
 A simple tool that inspects your project's dependencies, and identifies vulnerabilities and risks that could arise from them. <a href="www.dependencyinspection.com">Check it out.</a>
 
@@ -14,4 +14,5 @@ I still have a ton of work to do. I will be adding better data sources over the 
 # Data Sources:
 - <a href="https://google.github.io/osv.dev/data/#converted-data">Open Source Vulnerabilities (OBS)</a>
 
+![Web Page](/docs/screenshots/screenshot1?raw=true)
 Created by Nicholas Stafford
