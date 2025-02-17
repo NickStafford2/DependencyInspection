@@ -11,6 +11,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { GlobalStateContext } from "@/context";
 import { useContext } from "react";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 /** @useSignals */
 const Messages = React.forwardRef<
@@ -44,11 +45,15 @@ const Messages = React.forwardRef<
         </TooltipProvider>
       )}
 
-      <ol className="list-disc pl-8 flex flex-col gap-1">
-        {messages.value.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
-      </ol>
+      <ScrollArea>
+        <ol className="max-h-[34rem] list-disc pl-8 flex flex-col gap-1">
+          {messages.value.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ol>
+
+        <ScrollBar orientation="vertical" />
+      </ScrollArea>
     </div>
   );
 });

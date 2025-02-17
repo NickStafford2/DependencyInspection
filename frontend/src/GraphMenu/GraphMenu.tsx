@@ -16,7 +16,7 @@ export default function GraphMenu() {
 
   return (
     <div className="relative">
-      <Card className=" absolute items-end top-4 flex flex-col max-w-[20rem] right-4 z-50">
+      <Card className="max-h-[40rem] overflow-hidden absolute items-end top-4 flex flex-col max-w-[20rem] right-4 z-50">
         <div className="flex flex-row justify-between w-full">
           {showMessages.value && (
             <h2 className="text-2xl pl-8 py-2">Messages</h2>
