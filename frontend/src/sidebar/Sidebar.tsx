@@ -5,7 +5,9 @@ import { GlobalStateContext } from "@/context";
 import { NodeTableContainer } from "@/sidebar/table/NodeTableContainer";
 import { NetworkMetadata } from "./NetworkMetadata";
 import Search from "./Search";
+// import QuerySearch from "@/crudbar/QuerySearch";
 
+/** @useSignals **/
 export default function Sidebar() {
   const { currentTab } = useContext(GlobalStateContext);
   const onTabChange = (tabName: string) => {
@@ -13,6 +15,7 @@ export default function Sidebar() {
   };
   return (
     <Card className="h-full ">
+      {/* <QuerySearch /> */}
       <Tabs
         defaultValue="welcome"
         value={currentTab.value}
@@ -30,10 +33,11 @@ export default function Sidebar() {
             Dependencies
           </TabsTrigger>
         </TabsList>
+
         <TabsContent value="welcome">
+          {/* <QuerySearch /> */}
           <Search />
         </TabsContent>
-
         <TabsContent className="p-4" value="network">
           <NetworkMetadata />
         </TabsContent>

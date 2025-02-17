@@ -20,6 +20,7 @@ export function useQueryBuilder() {
 
   const addPackage = useCallback(
     (name: string) => {
+      console.log(`addPackage: Name: ${name}`);
       if (name !== "") {
         query.packages.add(name);
         setQuery(query);

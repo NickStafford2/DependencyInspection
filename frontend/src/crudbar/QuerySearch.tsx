@@ -3,6 +3,7 @@ import PackageTag from "./PackageTag";
 import AddPackage from "./AddPackage";
 import useQuerySearch from "../api/useQuerySearch";
 
+/** @useSignals **/
 export default function QuerySearch() {
   const {
     query,

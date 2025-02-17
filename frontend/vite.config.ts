@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
       react({
         babel: {
           plugins: [
-            ["babel-plugin-react-compiler", ReactCompilerConfig], // must run first!
+            // ["babel-plugin-react-compiler", ReactCompilerConfig], // must run first!
             ["module:@preact/signals-react-transform"],
           ],
         },

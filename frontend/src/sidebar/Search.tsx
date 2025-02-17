@@ -1,36 +1,7 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-// import { GraphData } from "@/utils/models";
-// import { PackageJSONUpload } from "@/components/PackageJSONUpload";
-import { fetchGraphData } from "@/api/api";
-// import { useEffect, useState } from "react";
-import QuerySearch from "@/crudbar/QuerySearch";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { useContext } from "react";
-import { GlobalStateContext } from "@/context";
+// import QuerySearch from "@/crudbar/QuerySearch";
 
+/** @useSignals **/
 function Search() {
-  // const { graphData, tableData } = useContext(GlobalStateContext);
-  // const getAllDBNetworks = async () => {
-  //   fetchGraphData("api/getAllDBNetworks").then((data) => {
-  //     if (data) {
-  //       graphData.value = data.graphData;
-  //       tableData.value = data.graphData.nodes;
-  //     }
-  //   });
-  // };
   return (
     <div className="p-4 flex flex-col gap-2">
       <h1 className="text-3xl">Welcome. :)</h1>
