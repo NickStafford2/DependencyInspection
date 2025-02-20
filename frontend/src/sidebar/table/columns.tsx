@@ -3,6 +3,7 @@ import {
   Column,
   createColumnHelper,
   CellContext,
+  Row,
 } from "@tanstack/react-table";
 import { DependencyVersion, PackageNode } from "@/models/GraphData";
 import { NodeTableHeader } from "./NodeTableHeader";
@@ -15,6 +16,17 @@ const formatNumber = (value: number, decimals: number) => {
 type HeaderProps = {
   column: Column<PackageNode>;
 };
+
+function sortDependencies<T>(
+  rowA: Row<PackageNode>,
+  rowB: Row<PackageNode>,
+  columnId: string,
+): number {
+  const a = (rowA.getValue(columnId) as T[]).length;
+  const b = (rowB.getValue(columnId) as T[]).length;
+  // I reversed > and < to make it sort the largestArray on the top on the first click.
+  return a < b ? 1 : a > b ? -1 : 0;
+}
 
 export const columns: ColumnDef<PackageNode>[] = [
   columnHelper.accessor("id", {
@@ -60,6 +72,7 @@ export const columns: ColumnDef<PackageNode>[] = [
     cell: (cell: CellContext<PackageNode, DependencyVersion[]>) => {
       return <CellDependenciesVersion cell={cell} />;
     },
+    sortingFn: sortDependencies,
   }),
   columnHelper.accessor("allDependencies", {
     id: "all_dependencies",
@@ -69,6 +82,7 @@ export const columns: ColumnDef<PackageNode>[] = [
     cell: (cell) => {
       return <CellDependencies cell={cell} />;
     },
+    sortingFn: sortDependencies,
   }),
   columnHelper.accessor("dependencyOf", {
     id: "dependencyOf",
@@ -79,6 +93,7 @@ export const columns: ColumnDef<PackageNode>[] = [
     cell: (cell: CellContext<PackageNode, string[]>) => {
       return <CellDependencies cell={cell} />;
     },
+    sortingFn: sortDependencies,
   }),
   columnHelper.accessor("allDependencyOf", {
     id: "allDependencyOf",
@@ -88,6 +103,7 @@ export const columns: ColumnDef<PackageNode>[] = [
     cell: (cell) => {
       return <CellDependencies cell={cell} />;
     },
+    sortingFn: sortDependencies,
   }),
   columnHelper.accessor("closenessCentrality", {
     id: "closenessCentrality",
