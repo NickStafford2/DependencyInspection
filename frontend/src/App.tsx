@@ -18,7 +18,7 @@ const App = () => {
 
   const MemoizedGraph = React.memo(DIGraph3d);
   return (
-    <div className="flex flex-col w-full h-full justify-between">
+    <div className="flex  flex-col w-full h-full justify-between">
       <Crudbar />
 
       <ResizablePanelGroup direction="horizontal">

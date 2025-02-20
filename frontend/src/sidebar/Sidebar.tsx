@@ -14,7 +14,7 @@ export default function Sidebar() {
     currentTab.value = tabName;
   };
   return (
-    <Card className="h-full ">
+    <Card className="h-full border-blue-400 border-none rounded-none ">
       {/* <QuerySearch /> */}
       <Tabs
         defaultValue="welcome"
@@ -22,7 +22,7 @@ export default function Sidebar() {
         onValueChange={onTabChange}
         className="h-full flex flex-col"
       >
-        <TabsList className="w-full flex flex-row justify-around relative">
+        <TabsList className="rounded-none w-full flex flex-row justify-around relative">
           <TabsTrigger className="flex-grow" value="welcome">
             Welcome
           </TabsTrigger>

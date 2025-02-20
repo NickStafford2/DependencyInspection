@@ -27,7 +27,7 @@ function Crudbar() {
   const { startSSEConnection } = useQuerySearch2();
   const [randomCount, setRandomCount] = useState(25);
   return (
-    <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 bg-gradient-to-b from-black to-gray-800  w-full">
+    <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 border-b border-border w-full">
       <div className="flex flex-row flex-shrink flex-grow-0 ">
         <h1 className="text-white text-3xl whitespace-nowrap ">
           Dependency Inspection
