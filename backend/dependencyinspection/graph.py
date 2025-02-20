@@ -1,6 +1,7 @@
 # import asyncio
 import uuid
 import random
+import urllib.parse
 
 import networkx as nx
 from dependencyinspection import config
@@ -27,8 +28,10 @@ async def send_frontend_message(message: str):
     return ServerSentEvent(message, "message", str(uuid.uuid4())).encode()
 
 
-@bp.route("/getNetworks/<package_names>", methods=["GET"])
-async def get_networks(package_names: str) -> Response:
+@bp.route("/getNetworks/<path:encoded_package_names>", methods=["GET"])
+async def get_networks(encoded_package_names: str) -> Response:
+    package_names = urllib.parse.unquote(encoded_package_names)
+
     async def send_events():
         as_list = package_names.split(",")
         if not package_names:
@@ -131,8 +134,9 @@ async def get_all_db_networks():
     return formatted_data
 
 
-@bp.route("/analyzeNetwork/<package_name>", methods=["GET"])
-async def analyze_network(package_name: str):
+@bp.route("/analyzeNetwork/<path:encoded_package_name>", methods=["GET"])
+async def analyze_network(encoded_package_name: str):
+    package_name = urllib.parse.unquote(encoded_package_name)
     config.dev_only()
     try:
         response = _get_networks([package_name])

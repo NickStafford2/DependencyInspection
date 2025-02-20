@@ -4,6 +4,7 @@ export class Query {
 
   toUrl(): string {
     const packageNames = [...this.packages.value].join(",");
-    return `api/getNetworks/${packageNames}`;
+    const encodedPackageNames = encodeURIComponent(packageNames);
+    return `api/getNetworks/${encodedPackageNames}`;
   }
 }
