@@ -5,14 +5,14 @@ http:
       rule: "Host(`dependencyinspection.com`) && PathPrefix(`/`) || Host(`www.dependencyinspection.com`) && PathPrefix(`/`)"
       entryPoints:
         - websecure
-      service: "frontend-service"  
+      service: "frontend-service"
       tls:
         certResolver: myresolver
         domains:
           - main: "dependencyinspection.com"
             sans:
               - "www.dependencyinspection.com"
-      middlewares: 
+      middlewares:
         - www-redirect
         # - strip-api-prefix
       #   - nick-only
@@ -20,14 +20,14 @@ http:
       rule: "Host(`dependencyinspection.com`) && PathPrefix(`/api`) || Host(`www.dependencyinspection.com`) && PathPrefix(`/api`)"
       entryPoints:
         - websecure
-      service: "backend-service"  
+      service: "backend-service"
       tls:
         certResolver: myresolver
         domains:
           - main: "dependencyinspection.com"
             sans:
               - "www.dependencyinspection.com"
-      middlewares: 
+      middlewares:
         - www-redirect
         # - strip-api-prefix
       #   - nick-only
@@ -47,16 +47,16 @@ http:
           - "107.10.235.119/32"
     www-redirect:
       redirectRegex:
-        regex: "^http://www\\.(.*)"
-        replacement: "http://$1"
+        regex: "^https?://www\\.(.*)"
+        replacement: "https://$1"
         permanent: true
   services:
     frontend-service:
-      loadbalancer: 
+      loadbalancer:
         servers:
           - url: "http://frontend-service:8081"
     backend-service:
-      loadbalancer: 
+      loadbalancer:
         servers:
           - url: "http://backend-service:5001"
     neo4j-service:
