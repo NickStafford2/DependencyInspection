@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
-  ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import Crudbar from "./crudbar/Crudbar";
 import BackendTools from "./components/BackendTools";
