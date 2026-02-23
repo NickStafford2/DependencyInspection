@@ -12,11 +12,6 @@ import {
 // import { PackageJSONUpload } from "@/components/PackageJSONUpload";
 // import { useEffect, useState } from "react";
 import QuerySearch from "./QuerySearch";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { useCustomRoutes } from "@/api/useCustomRoutes";
 import useQuerySearch2 from "@/api/useQuerySearch2";
 import { Input } from "@/components/ui/input";
@@ -32,7 +27,6 @@ function Crudbar() {
         <h1 className="text-white text-3xl whitespace-wrap ">
           Dependency Inspection
         </h1>
-
       </div>
       <QuerySearch />
       <div className="flex flex-col gap-4">
