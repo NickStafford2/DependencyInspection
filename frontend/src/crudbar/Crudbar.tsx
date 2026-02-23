@@ -23,8 +23,8 @@ function Crudbar() {
   const [randomCount, setRandomCount] = useState(25);
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 border-b border-border w-full">
-      <div className="flex flex-row flex-shrink flex-grow-0 ">
-        <h1 className="text-white text-3xl whitespace-wrap hidden md:block">
+      <div className="hidden md:flex md:flex-row md:flex-shrink md:flex-grow-0">
+        <h1 className="text-white text-3xl whitespace-wrap ">
           Dependency Inspection
         </h1>
       </div>
