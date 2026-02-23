@@ -24,12 +24,12 @@ function Crudbar() {
   return (
     <nav className="px-3 py-2 flex flex-row justify-between items-start gap-3 border-b border-border w-full">
       <div className="flex flex-row flex-shrink flex-grow-0 ">
-        <h1 className="text-white text-3xl whitespace-wrap ">
+        <h1 className="text-white text-3xl whitespace-wrap hidden md:block">
           Dependency Inspection
         </h1>
       </div>
       <QuerySearch />
-      <div className="flex flex-col gap-4">
+      <div className="hidden md:flex md:flex-col md:gap-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="secondary">Get Full Network</Button>
