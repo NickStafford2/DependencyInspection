@@ -3,19 +3,19 @@ global:
   checkNewVersion: false
   sendAnonymousUsage: false
 log:
-  level: DEBUG
-accessLog: 
+  level: INFO
+accessLog:
   fields:
     defaultMode: keep
     headers:
-      defaultMode: keep
-# api: 
+      defaultMode: drop
+# api:
 #   dashboard: true
 #   insecure: true
 
-entryPoints: 
-  web: 
-    address: :80 
+entryPoints:
+  web:
+    address: :80
     http:
       redirections:
         entryPoint:
@@ -23,7 +23,7 @@ entryPoints:
           scheme: https
   websecure:
     address: :443
-  
+
 experimental:
   plugins:
     traefiklogger:
@@ -31,12 +31,12 @@ experimental:
       version: "v0.11.0"
 
 providers:
-  docker: 
+  docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
   file:
     filename: "/etc/traefik/traefik_dynamic.yaml"
-    
+
 certificatesResolvers:
   myresolver:
     # Enable ACME (Let's Encrypt): automatic SSL.
