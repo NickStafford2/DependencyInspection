@@ -59,10 +59,10 @@ http:
       loadbalancer:
         servers:
           - url: "http://backend-service:5001"
-    neo4j-service:
-      loadbalancer: 
-        servers:
-          - url: "http://neo4j-service:7687"
+    # neo4j-service:
+    #   loadbalancer: 
+    #     servers:
+    #       - url: "http://neo4j-service:7687"
       # middlewares: 
       #   - www-redirect
       #   - nick-only
