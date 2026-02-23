@@ -11,6 +11,7 @@ import Sidebar from "./sidebar/Sidebar";
 import { GlobalStateContext } from "./context";
 import GraphMenu from "./GraphMenu/GraphMenu";
 import { useSearchOnPageLoad } from "./api/useSearchOnPageLoad";
+import { ResponsiveResizableGroup } from "./components/ResponsiveResizableGroup";
 
 const App = () => {
   const { selectedNodeId } = useContext(GlobalStateContext);
@@ -20,8 +21,7 @@ const App = () => {
   return (
     <div className="flex  flex-col w-full h-full justify-between">
       <Crudbar />
-
-      <ResizablePanelGroup direction="horizontal">
+      <ResponsiveResizableGroup>
         <ResizablePanel>
           <Sidebar />
         </ResizablePanel>
@@ -31,7 +31,7 @@ const App = () => {
           <GraphMenu />
           <MemoizedGraph />
         </ResizablePanel>
-      </ResizablePanelGroup>
+      </ResponsiveResizableGroup>
       {import.meta.env.MODE == "production" || <BackendTools />}
     </div>
   );
