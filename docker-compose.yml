@@ -13,47 +13,51 @@ services:
     ports:
       # The http Port
       - "80:80"
-      # The https Port 
+      # The https Port
       - "443:443"
       # The traefik Web UI (neabled by --api.insecure=true)
-      - "8080:8080"
-    volumes: 
+      # - "8080:8080"
+    volumes:
       # So that Traefik can listen to Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       # config
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
       - ./traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml:ro
       - letsencrypt:/letsencrypt
     # networks:
     #   internal:
+    security_opt:
+      - no-new-privileges:true
   frontend-service:
     container_name: di-frontend_container
     labels:
-      - "traefik.enable=true" 
-      # - "traefik.http.routers.frontend-service.rule=Host(`dependencyinspection.com`)"  
-      # - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"  
-      # - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"  
+      - "traefik.enable=true"
+      # - "traefik.http.routers.frontend-service.rule=Host(`dependencyinspection.com`)"
+      # - "traefik.http.routers.frontend-service.rule=Host(`localhost`)"
+      # - "traefik.http.services.frontend-service.loadbalancer.server.port=8081"
       # - "traefik.http.routers.frontend-service.entrypoint=web"
       # - "traefik.http.routers.frontend-service.entrypoint=websecure"
       # - "traefik.http.routers.frontend-service.tls.certresolver=myresolver"
     build:
       context: ./frontend
-      args: 
+      args:
         - VITE_APP_BACKEND_ADDRESS=http://backend-service:5001/
-    depends_on: 
+    depends_on:
       backend-service:
         condition: service_healthy
     restart: always
-    # ports: 
+    # ports:
     #   - 8081:8081
     # networks:
     #   internal:
-  backend-service: 
+    security_opt:
+      - no-new-privileges:true
+  backend-service:
     # container_name: di-backend_container
     labels:
-      - "traefik.enable=true"  
-      # - "traefik.http.routers.backend-service.rule=Host(`dependencyinspection.com`)" 
-      # - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)" 
+      - "traefik.enable=true"
+      # - "traefik.http.routers.backend-service.rule=Host(`dependencyinspection.com`)"
+      # - "traefik.http.routers.backend-service.rule=Host(`localhost/api`)"
       # - "traefik.http.services.backend-service.loadbalancer.server.port=5001"
       # - "traefik.http.routers.backend-service.entrypoint=web"
       # - "traefik.http.routers.backend-service.entrypoint=websecure"
@@ -68,10 +72,10 @@ services:
       - ./backend:/backendApp
       - ./neo4j_auth.txt:/app/neo4j_auth.txt
     # potential bind mount so local changes are reflected in docker container
-    # volumes: 
+    # volumes:
     #   - ./app:/usr/src/app
     #   - /usr/src/app/node_modules
-    # links: # apparently depreciated??  
+    # links: # apparently depreciated??
     #   - db:postgress
     depends_on:
       neo4j-service:
@@ -91,13 +95,15 @@ services:
     #   replicas: 3
     # networks:
     #   internal:
-  neo4j-service: 
+    security_opt:
+      - no-new-privileges:true
+  neo4j-service:
     container_name: di-neo4j_container
-    labels:
-      - "traefik.enable=true"  
+    # labels:
+    #  - "traefik.enable=true"
     image: neo4j:5.26.0-bullseye
     # potential data mount so data is persistent across containers
-    volumes: 
+    volumes:
     #   - database:/data/db
         - /$HOME/neo4j/logs:/logs
         - /$HOME/neo4j/config:/config
@@ -121,6 +127,8 @@ services:
       start_period: 3s
     # networks:
     #   internal:
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   letsencrypt:
@@ -128,5 +136,5 @@ volumes:
 secrets:
   neo4j_auth_file:
     file: ./neo4j_auth.txt
-# networks: 
+# networks:
 #   internal:
